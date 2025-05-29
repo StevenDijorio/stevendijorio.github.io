@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Review: Cystic Dilation of Beale's Sacculi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Visualization & Content Choices: 
+        - Report Info: Introduction, PBG Anatomy/Function -> Goal: Foundational Understanding -> Viz/Presentation: Accordion-style text blocks -> Interaction: Click to expand/collapse -> Justification: Manages text density, allows focused reading -> Library/Method: HTML/JS.
+        - Report Info: Histological criteria for Normal PBG, Hyperplasia, PBCs -> Goal: Detailed Differentiation -> Viz/Presentation: Tabbed or card-based content -> Interaction: Click to switch views -> Justification: Organizes distinct but related definitions -> Library/Method: HTML/JS.
+        - Report Info: Quantitative Size Thresholds (e.g., <2mm ectasia vs. ≥2mm cyst) -> Goal: Highlight Key Metrics -> Viz/Presentation: Interactive text highlights or simple non-chart visual cue (e.g. a segmented bar made with divs) -> Interaction: Hover/click to see definitions -> Justification: Clearly presents specific quantitative data points without overcomplicating with a chart for few data points -> Library/Method: HTML/CSS/JS. (Decided against a chart as data is descriptive ranges).
+        - Report Info: Imaging findings (US, CT, MRI, etc.) -> Goal: Compare Modalities -> Viz/Presentation: Tabbed sections per modality -> Interaction: Click tabs -> Justification: Organizes diverse imaging data clearly -> Library/Method: HTML/JS.
+        - Report Info: Clinical contexts, differentiation from malignancy, stem cell role -> Goal: Explain Clinical Significance -> Viz/Presentation: Accordions/expandable sections -> Interaction: Click to expand -> Justification: Details complex clinical aspects in a structured way -> Library/Method: HTML/JS.
+        - Report Info: Table 1 (Comparative Features) -> Goal: Direct Comparison -> Viz/Presentation: HTML table -> Interaction: Static display (potential hover effects for rows for readability) -> Justification: Directly replicates crucial comparative data -> Library/Method: HTML.
+        - Report Info: Conclusion, Knowledge Gaps -> Goal: Summarize & Identify Future Research -> Viz/Presentation: Bulleted lists, expandable text -> Interaction: Click to expand details -> Justification: Clearly presents summary and future directions -> Library/Method: HTML/JS.
+        - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .tab-button.active { background-color: #0D9488; color: white; } /* teal-600 */
+        .tab-button { background-color: #F0FDF4; color: #065F46; } /* teal-50, teal-800 text */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .accordion-button.active + .accordion-content { max-height: 1000px; /* Adjust as needed */ }
+        .nav-button.active { background-color: #14B8A6; color: white; } /* teal-500 */
+        .nav-button { background-color: #E0F2F1; color: #00796B; } /* Lighter teal background, darker teal text */
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: auto; /* Adjusted for dynamic content */
+            min-height: 150px; /* Minimum height for visual representation */
+            max-height: 400px;
+        }
+        .size-bar-container { display: flex; height: 50px; border-radius: 0.375rem; overflow: hidden; margin-bottom: 1rem; }
+        .size-bar-segment { display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; padding: 0 0.5rem; text-align: center; }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800">
+
+    <header class="bg-stone-800 text-white p-6 shadow-md">
+        <h1 class="text-3xl font-bold text-center">Understanding Cystic Dilation of Peribiliary Glands (Beale’s Sacculi)</h1>
+    </header>
+
+    <nav class="bg-stone-200 p-4 shadow sticky top-0 z-50">
+        <ul class="flex flex-wrap justify-center space-x-2 sm:space-x-4">
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="overview">Overview & Basics</button></li>
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="definitions">Defining Dilation</button></li>
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="imaging">Imaging Insights</button></li>
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="clinical">Clinical Picture</button></li>
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="comparison">Comparative View</button></li>
+            <li><button class="nav-button font-semibold py-2 px-3 sm:px-4 rounded-lg transition-colors duration-200" data-target="takeaways">Takeaways & Gaps</button></li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <section id="overview" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">I. Introduction & Foundational Concepts</h2>
+            <p class="text-stone-700 leading-relaxed">This section provides an introduction to Peribiliary Glands (PBGs), also known as Beale's Sacculi. It covers their basic anatomy, histology, function, the evolution of their nomenclature, and the clinical importance of accurately diagnosing their cystic dilation, particularly in distinguishing benign conditions from malignancies.</p>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>A. Overview of Peribiliary Glands (Beale’s Sacculi)</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Peribiliary glands (PBGs), historically termed sacculi of Beale, are normal microscopic seromucinous glandular structures within the biliary system's wall and connective tissue (extrahepatic/larger intrahepatic bile ducts, cystic duct, gallbladder neck).</p>
+                    <p><strong>Histology:</strong> Lobular aggregates of mucous glands lined by cuboidal to columnar biliary epithelium, draining via small channels (sacculi of Beale) into the main bile duct.</p>
+                    <p><strong>Nomenclature Shift:</strong> From "sacculi of Beale" (implying simple outpouchings) to "peribiliary glands" highlights their complex, functional glandular nature (e.g., enzyme secretion, bile composition).</p>
+                    <p><strong>Distribution & Function:</strong> Widespread (intrahepatic, extrahepatic, cystic duct), suggesting a ubiquitous role in biliary homeostasis. Their extensive presence makes them susceptible to various insults, leading to pathologies.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>B. Cystic Dilation (Peribiliary Cysts - PBCs) & Diagnostic Imperative</span>
+                     <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Cystic dilation of PBGs forms peribiliary cysts (PBCs), a recognized pathology. While often benign, they pose diagnostic challenges, primarily in differentiation from serious neoplastic conditions like cholangiocarcinoma (CCA) or intraductal papillary neoplasms of the bile duct (IPNB).</p>
+                    <p><strong>Need for Thresholds:</strong> Clear diagnostic thresholds are crucial to avoid misdiagnosis, which can lead to inappropriate investigations or treatments. The goal is to reduce diagnostic uncertainty, especially when malignancy is suspected.</p>
+                    <p><strong>Incidental Detection:</strong> Increased use of advanced imaging leads to more frequent incidental detection of PBCs, necessitating refined understanding to prevent over-investigation of benign findings.</p>
+                </div>
+            </div>
+             <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>C. Purpose of This Review</span>
+                     <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>This review synthesizes current research to delineate qualitative and quantitative thresholds distinguishing cystic dilation of Beale’s sacculi from normal glands. It covers histological criteria, morphological measurements, imaging findings, and clinical relevance, aiming to highlight knowledge gaps.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="definitions" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">II. Defining Dilation: Histological & Morphological Criteria</h2>
+            <p class="text-stone-700 leading-relaxed">This section delves into the specific histological and morphological characteristics used to define and differentiate various states of Peribiliary Glands. It explores normal gland features, criteria for hyperplasia, the pathology of peribiliary cysts, and the quantitative thresholds proposed for classifying dilation, including the distinction between "ectasia" and "cysts".</p>
+            
+            <div class="bg-white p-5 rounded-lg shadow">
+                <h3 class="text-xl font-semibold text-stone-700 mb-3">A. Histological and Morphological Definitions</h3>
+                 <div class="space-y-4">
+                    <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>1. Normal Peribiliary Gland Histology and Morphology</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p><strong>Structure:</strong> Diminutive intramural/extramural glands lined by a single layer of benign-appearing columnar/cuboidal biliary epithelium. Form lobular aggregates communicating with the bile duct lumen via sacculi of Beale.</p>
+                            <p><strong>Size:</strong> Microscopic, generally not visible on standard clinical imaging unless altered. Detection on imaging implies pathology (dilation/hyperplasia).</p>
+                            <p><strong>Age-related Changes:</strong> Decrease in complexly branched glands, increase in simpler structures, general reduction in total number/density. Some older individuals may show compensatory epithelial increase.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>2. Histological Criteria for Beale's Gland Hyperplasia & Differentiation from Malignancy</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p><strong>Hyperplasia:</strong> Uncommon, benign increase in PBG size/number, maintaining overall lobular architecture.</p>
+                            <p><strong>Differentiation from Adenocarcinoma:</strong> Based on preserved lobular arrangement, lack of significant cytological atypia, absence of perineural invasion, no increased mitotic activity or tumor necrosis. Diagnosis is morphological (no specific markers).</p>
+                            <p><strong>Clinical Mimicry:</strong> Extensive benign hyperplasia can cause biliary obstruction, mimicking malignancy and potentially leading to major surgery for a benign process.</p>
+                        </div>
+                    </div>
+                     <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>3. Pathology of Peribiliary Cysts (PBCs)</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p><strong>Definition:</strong> Cystic dilatations of intrahepatic/extrahepatic extramural PBGs.</p>
+                            <p><strong>Histology:</strong> Lined by a single layer of benign-appearing columnar/cuboidal epithelial cells.</p>
+                            <p><strong>Key Feature:</strong> <strong class="text-red-600">Do NOT communicate</strong> with the biliary tree lumen (crucial for diagnosis and imaging).</p>
+                            <p><strong>Pathogenesis:</strong> Often due to PBG duct obstruction from inflammation, fibrosis (e.g., cirrhosis, portal hypertension), or disrupted periportal blood flow. Genetic factors in ADPKD.</p>
+                            <p><strong>Clinical Association:</strong> Strongly associated with advanced liver disease; may serve as a morphological marker of disease severity/chronicity.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <h3 class="text-xl font-semibold text-stone-700 mb-3">B. Quantitative and Qualitative Thresholds for Cystic Dilation</h3>
+                 <div class="space-y-4">
+                    <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>1. Reported Size Ranges for Normal Glands versus Peribiliary Cysts</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p>Normal PBGs are microscopic. PBCs vary widely in size:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>0.2 to 2.5 cm² (area, approx. 0.5 to 1.8 cm diameter)</li>
+                                <li>1 mm to 8 mm in diameter (some up to >5cm)</li>
+                                <li>General size often stated as <20 mm in diameter.</li>
+                            </ul>
+                            <p>Early autopsy studies noted "grossly recognizable" dilation in polycystic disease vs. "absent or slight" in normal livers. Variability suggests a single size threshold for clinical significance is an oversimplification.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>2. Specific Quantitative Threshold: "Ectasia" vs. "Cyst"</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p>A study by Pedica et al. (on end-stage alcohol-related liver disease) proposed:</p>
+                            <div class="my-3 chart-container p-4 bg-gray-50 rounded-md">
+                                <div class="text-center font-semibold mb-2 text-teal-700">Proposed Size Distinction</div>
+                                <div class="size-bar-container">
+                                    <div class="size-bar-segment bg-sky-500" style="width: 50%;">Ectasia: &lt;2 mm</div>
+                                    <div class="size-bar-segment bg-red-500" style="width: 50%;">Cyst: ≥2 mm</div>
+                                </div>
+                                <p class="text-sm text-center text-stone-600">This visualization represents the threshold proposed by Pedica et al. Ectasia refers to milder dilations, while cysts represent more significant ones.</p>
+                            </div>
+                            <p>In their cohort: Ectasia in 37.8%, Cysts (≥2mm) in 22.6%. Overall dilated gland diameter: 1-8 mm.</p>
+                            <p>This ≥2 mm threshold is one of the most concrete quantitative criteria but needs broader validation and correlation with clinical outcomes. The natural history of "ectatic" glands (<2mm) is a knowledge gap.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="accordion-button w-full text-left text-lg font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                            <span>3. Challenges in Establishing Universal Quantitative Cut-offs</span>
+                            <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                        </button>
+                        <div class="accordion-content mt-2 text-stone-600 space-y-2">
+                            <p>Universal cut-offs are challenging due to:</p>
+                            <ul class="list-disc list-inside ml-4">
+                                <li>Variability in reported cyst sizes across studies.</li>
+                                <li>Differing methodologies (autopsy vs. imaging).</li>
+                                <li>Specific patient cohorts (cirrhosis, ADPKD, normal).</li>
+                                <li>Influence of underlying liver condition on PBG dilation.</li>
+                                <li>"Normal" PBG size in vivo isn't well-quantified (not visible unless altered). Dilation is relative.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="imaging" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">III. Imaging Characteristics and Diagnostic Clues</h2>
+            <p class="text-stone-700 leading-relaxed">This section outlines how Peribiliary Cysts (PBCs) appear on various medical imaging modalities. Understanding these characteristics is crucial for diagnosis and differentiating PBCs from other conditions. It covers common findings on Ultrasound (US), Computed Tomography (CT), and Magnetic Resonance Imaging (MRI), as well as the roles of more specialized techniques like Endoscopic Ultrasound (EUS), Endoscopic Retrograde Cholangiopancreatography (ERCP), and Optical Coherence Tomography (OCT).</p>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <div class="mb-4 border-b border-stone-300">
+                    <nav class="flex flex-wrap -mb-px imaging-tabs">
+                        <button class="tab-button mr-1 py-2 px-4 text-stone-600 hover:text-teal-700 font-medium rounded-t-lg" data-tab="us-ct-mri">US, CT, MRI</button>
+                        <button class="tab-button py-2 px-4 text-stone-600 hover:text-teal-700 font-medium rounded-t-lg" data-tab="eus-ercp-oct">EUS, ERCP, OCT</button>
+                    </nav>
+                </div>
+
+                <div id="us-ct-mri" class="tab-content space-y-4">
+                    <h4 class="text-lg font-semibold text-stone-700">1. Key Findings on Ultrasound (US), Computed Tomography (CT), and Magnetic Resonance Imaging (MRI):</h4>
+                    <p><strong>General Location & Appearance:</strong> PBCs are typically in the hepatic hilum and along portal tracts, close to intrahepatic bile ducts. Often appear as clusters or "string-of-beads" along portal venous branches. Crucially, they <strong class="text-red-600">lack communication</strong> with the biliary tree.</p>
+                    <div class="p-3 bg-stone-50 rounded-md">
+                        <strong class="text-teal-700">Ultrasound (US):</strong>
+                        <ul class="list-disc list-inside ml-4 mt-1 text-stone-600">
+                            <li>Well-demarcated, anechoic (fluid-filled) structures.</li>
+                            <li>Often show posterior acoustic enhancement.</li>
+                            <li>Diagnostic clue: Cystic dilatation on <strong class="text-teal-600">both sides</strong> of portal veins (vs. simple bile duct dilation, usually on one side).</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-stone-50 rounded-md">
+                        <strong class="text-teal-700">Computed Tomography (CT):</strong>
+                         <ul class="list-disc list-inside ml-4 mt-1 text-stone-600">
+                            <li>Low-attenuation (fluid density), well-defined structures.</li>
+                            <li>No enhancement with intravenous contrast.</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-stone-50 rounded-md">
+                        <strong class="text-teal-700">Magnetic Resonance Imaging (MRI):</strong>
+                        <ul class="list-disc list-inside ml-4 mt-1 text-stone-600">
+                            <li>Valuable for soft tissue contrast and fluid sensitivity.</li>
+                            <li>T1-weighted: Hypointense.</li>
+                            <li>T2-weighted: Markedly hyperintense (like CSF).</li>
+                            <li>No enhancement on post-contrast T1 images.</li>
+                            <li>MRCP sequences: Useful to confirm non-communication with biliary tree.</li>
+                        </ul>
+                    </div>
+                    <p class="mt-3 text-sm text-stone-600"><em>Consistency across modalities (fluid characteristics, no enhancement, periportal location) strengthens diagnostic confidence. The "string-of-beads" pattern is highly suggestive.</em></p>
+                </div>
+
+                <div id="eus-ercp-oct" class="tab-content hidden space-y-4">
+                    <h4 class="text-lg font-semibold text-stone-700">2. Role of Endoscopic Ultrasound (EUS), Endoscopic Retrograde Cholangiopancreatography (ERCP), and Optical Coherence Tomography (OCT):</h4>
+                     <div class="p-3 bg-stone-50 rounded-md">
+                        <strong class="text-teal-700">EUS and ERCP:</strong>
+                        <ul class="list-disc list-inside ml-4 mt-1 text-stone-600">
+                            <li>Primarily for common bile duct (CBD) issues (dilation, stones, strictures, malignancies).</li>
+                            <li>ERCP: Visualizes main bile duct lumens; doesn't directly see non-communicating PBCs. Confirms non-communication, rules out other biliary abnormalities.</li>
+                            <li>EUS: High-resolution imaging of bile duct wall & adjacent structures. More for investigating causes of CBD dilation (e.g., small tumors, stones) than diagnosing typical intrahepatic PBCs unless very large and near extrahepatic ducts.</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-stone-50 rounded-md">
+                        <strong class="text-teal-700">Optical Coherence Tomography (OCT):</strong>
+                        <ul class="list-disc list-inside ml-4 mt-1 text-stone-600">
+                            <li>Advanced, high-resolution (10 micrometers) imaging of superficial tissue (2mm depth), performed intraluminally during ERCP.</li>
+                            <li>Pilot studies show feasibility for biliary system imaging, promising for differentiating non-neoplastic vs. neoplastic lesions in strictures.</li>
+                            <li>Theoretically could visualize superficial glands/orifices or ductal lining changes.</li>
+                            <li>Current application: More for evaluating suspicious mucosal lesions/strictures for neoplasia. Specific role in PBG dilation (often extramural/deep intramural) is not yet established; depends on imaging depth and gland proximity to lumen.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clinical" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">IV. Clinical Relevance, Associations, and Differential Diagnosis</h2>
+            <p class="text-stone-700 leading-relaxed">This section discusses the clinical aspects of Peribiliary Cysts (PBCs). It covers the common medical conditions in which PBCs are found, how they typically present, the critical task of differentiating them from serious diseases like cancer, and the emerging understanding of Peribiliary Glands (PBGs) as stem cell niches with potential implications for neoplastic transformation.</p>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>1. Common Clinical Contexts and Presentation</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p><strong>Associated Conditions:</strong> Frequently identified in patients with severe chronic liver disease:</p>
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Cirrhosis (due to alcohol, viral hepatitis, etc.)</li>
+                        <li>Portal hypertension</li>
+                        <li>Autosomal Dominant Polycystic Kidney Disease (ADPKD)</li>
+                    </ul>
+                    <p><strong>Presentation:</strong> Often asymptomatic and discovered incidentally on imaging. Rarely, large/strategically located cysts can cause obstructive jaundice.</p>
+                    <p><strong>Correlation with Disease Severity:</strong> Increase in PBC size/number may correlate with worsening underlying liver disease.</p>
+                    <p><strong>Pathogenesis Context:</strong> In cirrhosis/portal hypertension, PBCs are often secondary to altered hemodynamics and chronic inflammation/fibrosis. In ADPKD, likely part of systemic cystic phenotype due to genetic defects.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>2. Differentiation from Significant Pathologies (Cholangiocarcinoma, IPNB, etc.)</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Critical to differentiate PBCs from malignant conditions (CCA, IPNB) and other benign conditions (Caroli's disease, PSC manifestations).</p>
+                    <p><strong>Key Differentiating Features for PBCs:</strong></p>
+                    <ul class="list-disc list-inside ml-4">
+                        <li>Characteristic imaging: Fluid-filled, non-enhancing, non-communicating with biliary tree, hilar/bilateral distribution around portal veins.</li>
+                        <li>Histology (if available): Benign epithelial lining.</li>
+                    </ul>
+                    <p><strong>Malignancy Features (for contrast):</strong></p>
+                     <ul class="list-disc list-inside ml-4">
+                        <li>CCA: Often enhancing mass, abrupt ductal changes, infiltrative stricture.</li>
+                        <li>IPNB: Typically intraductal mass, mucin production, ductal dilation.</li>
+                    </ul>
+                    <p><strong>Diagnostic Challenge:</strong> Heightened in cirrhotic livers (risk factor for HCC and CCA). Meticulous evaluation needed. Non-communication of PBCs is a powerful differentiator from Caroli's (communicating saccular dilations) and some IPNB forms.</p>
+                </div>
+            </div>
+             <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>3. Peribiliary Glands as Stem Cell Niches and Potential for Neoplastic Transformation</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>PBGs are recognized as containing a niche for biliary tree stem/progenitor cells, crucial for epithelial turnover and regeneration after injury.</p>
+                    <p><strong>Link to Neoplasia:</strong> This stem cell role provides a basis for involvement in both regeneration and, potentially, neoplasia. Chronic injury/inflammation (common in diseases associated with PBCs like cirrhosis/PSC) can drive regeneration and, over time, dysplastic transformation.</p>
+                    <p><strong>Evidence:</strong></p>
+                     <ul class="list-disc list-inside ml-4">
+                        <li>Some biliary neoplasms (IPNB, some CCAs) may arise from PBGs or within pre-existing PBCs.</li>
+                        <li>Pedica et al.: Low-grade IPNB in cystically dilated PBGs (≥2mm) in 4.6% of patients with end-stage alcohol-related liver disease.</li>
+                        <li>Autopsy study: Potential precursor epithelial changes in PBGs in up to 10% of subjects.</li>
+                    </ul>
+                    <p><strong>Implications:</strong> PBCs may not always be inert; can be sites of neoplastic development. This has potential implications for long-term management/surveillance, especially for larger cysts or high-risk patients (guidelines lacking).</p>
+                    <div class="my-4 p-3 border border-teal-300 rounded-md bg-teal-50">
+                        <p class="font-semibold text-teal-700 text-center">Simplified Potential Pathogenic Pathway:</p>
+                        <div class="mt-2 text-sm text-center space-y-1 sm:space-y-0 sm:flex sm:justify-around items-center">
+                            <span class="block sm:inline-block p-1 bg-stone-200 rounded">Normal PBG</span>
+                            <span class="block sm:inline-block text-teal-600 font-bold mx-1">➔</span>
+                            <span class="block sm:inline-block p-1 bg-stone-200 rounded">Chronic Injury/Inflammation</span>
+                            <span class="block sm:inline-block text-teal-600 font-bold mx-1">➔</span>
+                            <span class="block sm:inline-block p-1 bg-stone-200 rounded">Activated Stem Cells</span>
+                            <span class="block sm:inline-block text-teal-600 font-bold mx-1">➔</span>
+                            <span class="block sm:inline-block p-1 bg-stone-200 rounded">Dysplasia/IPNB/CCA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">V. Comparative View: Normal Glands, Cysts, and Malignant Mimics</h2>
+             <p class="text-stone-700 leading-relaxed">This table provides a side-by-side comparison of key features distinguishing Normal Peribiliary Glands, benign Peribiliary Cysts, and their important malignant mimics such as Cholangiocarcinoma (CCA) and Intraductal Papillary Neoplasm of the Bile Duct (IPNB). Understanding these distinctions is vital for accurate diagnosis and appropriate patient management.</p>
+            <div class="overflow-x-auto bg-white p-3 sm:p-5 rounded-lg shadow">
+                <table class="min-w-full divide-y divide-stone-200 border border-stone-300">
+                    <thead class="bg-stone-100">
+                        <tr>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-teal-700 uppercase tracking-wider">Feature</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-teal-700 uppercase tracking-wider">Normal Peribiliary Glands (Beale's Sacculi)</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-teal-700 uppercase tracking-wider">Peribiliary Cysts (Benign Dilation)</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-teal-700 uppercase tracking-wider">Cholangiocarcinoma (CCA) / IPNB</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-stone-200">
+                        <tr class="hover:bg-stone-50 transition-colors">
+                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-stone-800">Typical Size/Morphology</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Microscopic, not typically visible on standard imaging</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Variable, commonly 1mm to >2.5cm (often 2-20mm); "ectasia" &lt;2mm, "cysts" ≥2mm; round/oval, "string-of-beads" pattern</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Variable; CCA often infiltrative mass or stricture; IPNB may present as an intraductal mass with associated mucin</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50 transition-colors">
+                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-stone-800">Key Histological Features</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Benign cuboidal/columnar epithelium, small acini, lobular structure</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Benign cuboidal/columnar epithelium lining dilated cystic spaces; minimal to no atypia; surrounding stroma may be fibrotic</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Atypical/malignant cells, disorganized glandular/papillary structures, stromal invasion (CCA), varying grades of dysplasia (IPNB)</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50 transition-colors">
+                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-stone-800">Communication with Biliary Tree</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Via sacculi of Beale into main duct lumen</td>
+                            <td class="px-4 py-3 text-sm text-stone-600"><strong class="text-red-600">No communication</strong> with the biliary tree lumen</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">CCA typically does not have direct cystic communication; IPNB often arises within and communicates with bile ducts</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50 transition-colors">
+                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-stone-800">Characteristic Imaging Signs (US, CT, MRI)</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Not visualized</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">US: anechoic. CT: low (fluid) density. MRI: T1 hypointense, T2 markedly hyperintense. No contrast enhancement. Typically hilar/periportal location</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">CCA: often an enhancing mass, causing ductal obstruction/dilation. IPNB: intraductal mass, associated ductal dilation, variable enhancement</td>
+                        </tr>
+                        <tr class="hover:bg-stone-50 transition-colors">
+                            <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-stone-800">Common Clinical Context/Significance</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Normal anatomical component of the biliary tree</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Often incidental; frequently associated with cirrhosis, portal hypertension, ADPKD. Rarely causes obstruction. Potential site for IPNB development</td>
+                            <td class="px-4 py-3 text-sm text-stone-600">Often symptomatic (jaundice, pain, weight loss). Associated with risk factors (e.g., PSC, liver flukes). High mortality if malignant</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="takeaways" class="content-section space-y-6">
+            <h2 class="text-2xl font-semibold text-teal-700 border-b-2 border-teal-500 pb-2">VI. Conclusion and Knowledge Gaps</h2>
+            <p class="text-stone-700 leading-relaxed">This final section summarizes the primary criteria for differentiating cystic dilation of Peribiliary Glands and emphasizes the importance of a multi-modal diagnostic approach. It also identifies significant remaining knowledge gaps in the field, highlighting areas for future research to improve understanding, diagnosis, and management of these conditions.</p>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>A. Recapitulation of Primary Criteria for Differentiating Cystic Dilation</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Differentiation relies on a comprehensive assessment:</p>
+                    <ul class="list-disc list-inside ml-4">
+                        <li><strong>Histology:</strong> Benign PBCs show benign epithelial lining, no significant atypia/invasion, non-communication with biliary lumen.</li>
+                        <li><strong>Morphological Size:</strong> Variable; ≥2 mm proposed to distinguish "cysts" from "ectasia" (<2 mm). Grossly visible cysts often 0.2-2.5 cm.</li>
+                        <li><strong>Imaging:</strong> Fluid signal (T2 hyperintense MRI), no contrast enhancement, hilar/periportal "string-of-beads" distribution, no communication with bile ducts.</li>
+                    </ul>
+                    <p>No single "gold standard" threshold; a multi-parametric approach (clinical context, imaging, histology) is essential.</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>B. Emphasis on the Multi-Modal Diagnostic Approach</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Effective diagnosis requires integrating information from:</p>
+                     <ul class="list-disc list-inside ml-4">
+                        <li>Clinical history (cirrhosis, ADPKD, symptoms).</li>
+                        <li>Laboratory findings (often normal in asymptomatic PBCs).</li>
+                        <li>Multiple imaging modalities (US, CT, MRI primarily).</li>
+                    </ul>
+                    <p>Invasive procedures (ERCP, EUS-guided sampling) reserved for ambiguous cases, therapeutic intervention, or high suspicion of malignancy unresolved by non-invasive means. Diagnostic pathway is often sequential.</p>
+                </div>
+            </div>
+             <div class="bg-white p-5 rounded-lg shadow">
+                <button class="accordion-button w-full text-left text-xl font-medium text-stone-700 hover:text-teal-600 transition-colors py-2 flex justify-between items-center">
+                    <span>C. Identification of Remaining Knowledge Gaps</span>
+                    <span class="transform transition-transform duration-200 acc-icon">▶</span>
+                </button>
+                <div class="accordion-content mt-2 text-stone-600 space-y-3">
+                    <p>Despite advancements, several knowledge gaps persist:</p>
+                    <ul class="list-disc list-inside ml-4 space-y-1">
+                        <li><strong>Standardized Quantitative Thresholds:</strong> Need for widely accepted, validated quantitative thresholds for clinically significant dilation vs. incidental ectasia, nuanced for different liver conditions. (≥2 mm threshold needs broader validation).</li>
+                        <li><strong>Natural History and Malignant Potential:</strong> Limited longitudinal data on PBCs (especially smaller "ectasia"). True incidence, risk factors, timeline for neoplastic transformation (to IPNB/CCA) need more research.</li>
+                        <li><strong>Refinement of Imaging and Diagnostic Techniques:</strong> Further development of non-invasive imaging (advanced MRI, CEUS, OCT maturation) to characterize PBCs, differentiate from early/subtle malignancies, and assess for dysplasia without biopsy.</li>
+                        <li><strong>Clinical Significance of "Ectasia":</strong> Importance, natural course, and neoplastic potential of PBG "ectasia" (<2 mm) are poorly understood.</li>
+                        <li><strong>Molecular Pathways:</strong> Deeper understanding of molecular pathways in PBG cystic dilation and neoplastic changes could yield biomarkers for risk stratification, early detection, or targeted therapies.</li>
+                    </ul>
+                    <p>Addressing these gaps is crucial for optimizing diagnosis, management, and outcomes.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-6 mt-10 border-t border-stone-300">
+        <p class="text-sm text-stone-600">Interactive Review based on "Defining Thresholds for Cystic Dilation of Peribiliary Glands (Beale’s Sacculi): A Review of Histological, Morphological, Imaging, and Clinical Criteria."</p>
+        <p class="text-xs text-stone-500 mt-1">For educational and informational purposes only.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            const imagingTabs = document.querySelectorAll('.imaging-tabs .tab-button');
+            const imagingTabContents = document.querySelectorAll('#imaging .tab-content');
+
+            function showSection(targetId) {
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === targetId) {
+                        section.classList.add('active');
+                    }
+                });
+                navButtons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.target === targetId) {
+                        button.classList.add('active');
+                    }
+                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    showSection(button.dataset.target);
+                });
+            });
+
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.classList.toggle('active');
+                    const icon = button.querySelector('.acc-icon');
+                    if (icon) {
+                        icon.textContent = button.classList.contains('active') ? '▼' : '▶';
+                    }
+                });
+            });
+            
+            imagingTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTabContentId = tab.dataset.tab;
+
+                    imagingTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    imagingTabContents.forEach(content => {
+                        content.classList.add('hidden');
+                        if (content.id === targetTabContentId) {
+                            content.classList.remove('hidden');
+                        }
+                    });
+                });
+            });
+
+            // Show the first section and tab by default
+            if (navButtons.length > 0) {
+                showSection(navButtons[0].dataset.target);
+                navButtons[0].classList.add('active');
+            }
+            if (imagingTabs.length > 0) {
+                imagingTabs[0].classList.add('active');
+                if (imagingTabContents.length > 0) {
+                    imagingTabContents[0].classList.remove('hidden');
+                }
+            }
+             // Initialize accordion icons
+            accordionButtons.forEach(button => {
+                const icon = button.querySelector('.acc-icon');
+                if (icon) {
+                    icon.textContent = button.classList.contains('active') ? '▼' : '▶';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
