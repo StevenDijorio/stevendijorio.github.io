@@ -271,63 +271,6 @@
 
     <footer class="text-center py-8 border-t border-slate-200 bg-slate-100">
         <p class="text-sm text-slate-500">&copy; <span id="currentYear"></span> Steven Di Jorio. All rights reserved.</p>
-        <button id="downloadPageBtn" class="mt-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2 px-4 rounded-lg text-xs transition-colors">
-            Download This Page (HTML)
-        </button>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Smooth scroll for navigation links
-            const navLinks = document.querySelectorAll('header nav a[href^="#"]');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        
-                        // Update active nav link (optional)
-                        navLinks.forEach(l => l.classList.remove('active'));
-                        this.classList.add('active');
-                    }
-                });
-            });
-
-            // Set current year in footer
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-            // Simple accordion for Beale's Sacculi sample (if it were to be interactive)
-            const bealeAccordionButtons = document.querySelectorAll('.beale-accordion-button');
-            bealeAccordionButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    button.classList.toggle('active');
-                    const icon = button.querySelector('.transform'); // Basic icon toggle
-                    if (icon) {
-                       icon.textContent = button.classList.contains('active') ? '▼' : '▶';
-                    }
-                });
-            });
-
-            // Download page functionality
-            const downloadButton = document.getElementById('downloadPageBtn');
-            if (downloadButton) {
-                downloadButton.addEventListener('click', function() {
-                    const pageHTML = document.documentElement.outerHTML;
-                    const blob = new Blob([pageHTML], { type: 'text/html' });
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'steven_dijorio_website.html'; // Suggested filename
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                });
-            }
-        });
-    </script>
-
+        
 </body>
 </html>
