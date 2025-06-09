@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+HTML<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
             font-family: 'Roboto', sans-serif;
             background-color: #003F5C; /* Deep Blue */
         }
-       .chart-container {
+      .chart-container {
             position: relative;
             width: 100%;
             max-width: 500px;
@@ -24,19 +24,19 @@
             max-height: 400px;
         }
         @media (min-width: 768px) {
-           .chart-container {
+          .chart-container {
                 height: 350px;
             }
         }
-       .flowchart-node {
+      .flowchart-node {
             border: 2px solid #7A5195; /* Purple */
             background-color: #f8fafc; /* Light gray */
         }
-       .flowchart-arrow {
+      .flowchart-arrow {
             color: #7A5195; /* Purple */
             font-weight: bold;
         }
-       .details-button {
+      .details-button {
             background-color: #FFA600; /* Yellow/Orange */
             color: white;
             padding: 0.25rem 0.75rem;
@@ -44,52 +44,50 @@
             font-size: 0.875rem;
             transition: background-color 0.3s;
         }
-       .details-button:hover {
+      .details-button:hover {
             background-color: #FF764A; /* Orange */
         }
-       .details-content {
+      .details-content {
             background-color: #f0f9ff; /* Very light blue */
             border-left: 4px solid #7A5195; /* Purple */
             padding: 1rem;
             margin-top: 1rem;
             border-radius: 0.25rem;
         }
-       .details-content h4 {
+      .details-content h4 {
             color: #003F5C; /* Deep Blue */
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-       .details-content p,.details-content ul {
+      .details-content p,.details-content ul {
             font-size: 0.875rem; /* 14px */
             color: #334155; /* Slate 700 */
             margin-bottom: 0.5rem;
         }
-       .details-content ul {
+      .details-content ul {
             list-style-type: disc;
             padding-left: 1.25rem;
         }
-       .sources-section h3 {
+      .sources-section h3 { /* Retained for potential future use, though current h2 is primary */
             color: #003F5C; /* Deep Blue */
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
-       .sources-section ul {
-            list-style-type: none;
-            padding-left: 0;
+      .ama-sources-list {
+            list-style-type: decimal; /* Standard 1, 2, 3 numbering */
+            padding-left: 20px; /* Standard indent for ordered lists */
+            margin-top: 1rem;
         }
-       .sources-section li {
+      .ama-sources-list li {
+            margin-bottom: 0.75rem; /* Increased spacing for readability */
+            padding-left: 5px; /* Space after the number */
             font-size: 0.875rem;
             color: #334155;
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
         }
-       .sources-section li::before {
-            content: attr(data-cite);
-            position: absolute;
-            left: 0;
+      .ama-sources-list.cite-key {
             font-weight: bold;
             color: #7A5195; /* Purple */
+            margin-right: 0.4em;
         }
     </style>
 </head>
@@ -112,11 +110,11 @@
                 <p class="mb-4">Within the bile duct wall lie microscopic intramural peribiliary glands (PBGs), essential for biliary health. They provide protective mucus and house biliary tree stem cells (BTSCs), vital for regeneration. Their sole reliance on the arterial peribiliary vascular plexus (PVP) makes them extremely vulnerable in transplantation.</p>
                 <div id="introDetails" class="hidden details-content">
                     <h4>Anatomy and Physiology of PBGs:</h4>
-                    <p>PBGs are simple tubular structures rich in mucin, sparsely distributed within the bile duct wall.[1] They are crucial for secreting mucins that protect the biliary epithelium and play a role in local immunity.[1] Critically, PBGs serve as a niche for BTSCs, which can proliferate and differentiate to regenerate damaged biliary epithelium.[2, 3, 5, 6]</p>
+                    <p>PBGs are simple tubular structures rich in mucin, sparsely distributed within the bile duct wall.[1] They are crucial for secreting mucins that protect the biliary epithelium and play a role in local immunity.[1] Critically, PBGs serve as a niche for BTSCs, which can proliferate and differentiate to regenerate damaged biliary epithelium.[2, 3, 4, 5]</p>
                     <h4>The Peribiliary Vascular Plexus (PVP):</h4>
-                    <p>The PVP is a delicate network of small blood vessels from the hepatic artery, providing the sole arterial blood supply to PBGs.[3, 4] Unlike hepatocytes (dual supply from hepatic artery and portal vein), PBGs' singular arterial dependence makes them highly susceptible to ischemic insults common in liver transplantation.[4]</p>
+                    <p>The PVP is a delicate network of small blood vessels from the hepatic artery, providing the sole arterial blood supply to PBGs.[3, 6] Unlike hepatocytes (dual supply from hepatic artery and portal vein), PBGs' singular arterial dependence makes them highly susceptible to ischemic insults common in liver transplantation.[6]</p>
                     <h4>Significance in Transplantation:</h4>
-                    <p>PBG integrity is paramount for allograft health. Their compromise impairs not only routine protection and immunity but also the crucial regenerative response to injuries like ischemia-reperfusion or rejection, leading to a compounded vulnerability.[3, 5]</p>
+                    <p>PBG integrity is paramount for allograft health. Their compromise impairs not only routine protection and immunity but also the crucial regenerative response to injuries like ischemia-reperfusion or rejection, leading to a compounded vulnerability.[3, 4]</p>
                 </div>
                 <div class="flex flex-col md:flex-row items-center justify-center p-4 rounded-lg bg-slate-50 mt-4">
                      <div class="text-center md:text-left md:w-2/3">
@@ -146,11 +144,11 @@
                 <p class="mb-4">Ischemia-Reperfusion Injury (IRI) is the first major hurdle, causing direct damage to PBGs and their blood supply. Livers from Donors after Circulatory Death (DCD) suffer more severe ischemic damage, leading to a higher incidence of biliary complications.</p>
                 <div id="iriDetails" class="hidden details-content">
                     <h4>Pathophysiology of IRI:</h4>
-                    <p>IRI results from hypoxia during organ procurement/preservation, followed by reoxygenation that triggers reactive oxygen species (ROS), inflammation, and microcirculatory disturbances.[7, 8, 9] The biliary epithelium is highly vulnerable.[4, 7, 10] DCD livers, experiencing prolonged ischemia, show more PBG damage and are prone to non-anastomotic strictures (NAS).[6, 8, 9, 11]</p>
+                    <p>IRI results from hypoxia during organ procurement/preservation, followed by reoxygenation that triggers reactive oxygen species (ROS), inflammation, and microcirculatory disturbances.[7, 8, 9] The biliary epithelium is highly vulnerable.[6, 7, 10] DCD livers, experiencing prolonged ischemia, show more PBG damage and are prone to non-anastomotic strictures (NAS).[5, 8, 9, 11]</p>
                     <h4>Histopathological Changes:</h4>
-                    <p>IRI causes PBG epithelial disruption, pyknotic nuclei, and distorted morphology.[6] The PVP shows reduced density, endothelial apoptosis, subintimal edema, and arteriolonecrosis.[3, 6, 12]</p>
+                    <p>IRI causes PBG epithelial disruption, pyknotic nuclei, and distorted morphology.[5] The PVP shows reduced density, endothelial apoptosis, subintimal edema, and arteriolonecrosis.[3, 5, 12]</p>
                     <h4>Molecular Responses & The "Double-Edged Sword":</h4>
-                    <p>PBGs upregulate HIF-1α and VEGF-A, attempting repair.[5, 6] However, if the microenvironment is severely compromised (e.g., persistent hypoxia), this proliferative drive might become dysregulated, contributing to fibrosis rather than effective re-epithelialization.[3, 5, 6, 13]</p>
+                    <p>PBGs upregulate HIF-1α and VEGF-A, attempting repair.[4, 5] However, if the microenvironment is severely compromised (e.g., persistent hypoxia), this proliferative drive might become dysregulated, contributing to fibrosis rather than effective re-epithelialization.[3, 4, 5, 13]</p>
                     <h4>Functional Consequences:</h4>
                     <p>IRI impairs PBG regenerative capacity, leading to reduced PBG mass and increased apoptosis in grafts developing NAS.[3] Pre-transplant injury to deep PBGs (>50% loss) strongly predicts post-transplant NAS.[7]</p>
                 </div>
@@ -223,16 +221,16 @@
                 <p class="mb-4">Non-anastomotic strictures (NAS) are a dreaded complication from a cascade of events, rooted in failed PBG-mediated regeneration. Unrepaired biliary epithelium leads to a vicious cycle of bile salt toxicity and fibrosis, causing scarring and duct narrowing.</p>
                 <div id="nasDetails" class="hidden details-content">
                     <h4>Role of PBG/PVP Damage in NAS:</h4>
-                    <p>Damage to PBGs and the PVP is critical in NAS development.[3, 6, 7, 8, 9] NAS are often multiple strictures proximal to the anastomosis, common after IRI, especially in DCD livers.[6, 8, 9, 11, 27, 28]</p>
+                    <p>Damage to PBGs and the PVP is critical in NAS development.[3, 5, 7, 8, 9] NAS are often multiple strictures proximal to the anastomosis, common after IRI, especially in DCD livers.[5, 8, 9, 11, 27, 28]</p>
                     <h4>Mechanisms of Failed Regeneration:</h4>
                     <ul>
                         <li><strong>Reduced PBG Viability:</strong> Livers developing NAS show reduced PBG mass, decreased PBG cell proliferation, and increased apoptosis.[3]</li>
                         <li><strong>Compromised Microenvironment:</strong> PVP damage leads to persistent local hypoxia, hampering regeneration.[8, 9]</li>
                         <li><strong>Bile Salt Toxicity & Dysregulated Healing:</strong> Delayed repair exposes denuded areas to cytotoxic bile salts, aggravating injury and promoting a fibrotic (rather than regenerative) wound-healing response.[9]</li>
-                        <li><strong>Exhaustion/Dysregulation:</strong> Initial PBG activation (e.g., ↑VEGF-A [6]) may become overwhelmed by chronic insults (hypoxia, inflammation, bile toxicity), leading to senescence or a shift towards pro-fibrotic signaling.[3, 5, 8, 9]</li>
+                        <li><strong>Exhaustion/Dysregulation:</strong> Initial PBG activation (e.g., ↑VEGF-A [5]) may become overwhelmed by chronic insults (hypoxia, inflammation, bile toxicity), leading to senescence or a shift towards pro-fibrotic signaling.[3, 4, 8, 9]</li>
                     </ul>
                     <h4>Predictors and Contributing Factors:</h4>
-                    <p>Injury to deep PBGs pre-transplant is a strong NAS predictor.[7] The higher NAS incidence in DCD livers underscores the PBG/PVP complex's vulnerability to severe warm ischemia.[6, 8, 9] Immunological insults (rejection, ABO incompatibility) can also contribute to PBG damage and NAS.[8, 9, 11, 27]</p>
+                    <p>Injury to deep PBGs pre-transplant is a strong NAS predictor.[7] The higher NAS incidence in DCD livers underscores the PBG/PVP complex's vulnerability to severe warm ischemia.[5, 8, 9] Immunological insults (rejection, ABO incompatibility) can also contribute to PBG damage and NAS.[8, 9, 11, 27]</p>
                 </div>
                 <div class="flex flex-col items-center space-y-4 p-4 mt-4">
                     <div class="flowchart-node w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
@@ -272,7 +270,7 @@
                     <h4>Challenges in Diagnosis:</h4>
                     <p>A significant diagnostic challenge in post-transplant liver biopsies is dissecting the relative contributions of co-existing pathologies (e.g., IRI, ACR, chronic rejection, CMV). PBG alterations (atrophy, inflammation) can be non-specific. Therefore, PBG findings must be integrated with other histological features (type/location of inflammation, vascular changes, viral inclusions) and the broader clinical context.[14, 15]</p>
                     <h4>Immunohistochemistry (IHC) Utility:</h4>
-                    <p>CK7 highlights biliary epithelium (including PBGs) and assesses ductopenia.[15] For CMV, IHC for viral antigens or ISH/RNAscope for nucleic acids are key.[18, 20] Research markers for PBG stem cells (Sox9, Nanog, EpCAM) exist but are not routine.[5]</p>
+                    <p>CK7 highlights biliary epithelium (including PBGs) and assesses ductopenia.[15] For CMV, IHC for viral antigens or ISH/RNAscope for nucleic acids are key.[18, 20] Research markers for PBG stem cells (Sox9, Nanog, EpCAM) exist but are not routine.[4]</p>
                 </div>
                 <div class="w-full mt-4">
                     <table class="w-full text-sm text-left border-collapse">
@@ -287,8 +285,8 @@
                         <tbody>
                             <tr class="border-b hover:bg-slate-50">
                                 <td class="p-3 border font-semibold">Ischemia-Reperfusion Injury</td>
-                                <td class="p-3 border">Epithelial disruption, pyknotic nuclei, necrosis, reduced mass [3, 6]</td>
-                                <td class="p-3 border">Endothelial cell apoptosis, reduced density, subintimal edema, arteriolonecrosis [3, 6, 12]</td>
+                                <td class="p-3 border">Epithelial disruption, pyknotic nuclei, necrosis, reduced mass [3, 5]</td>
+                                <td class="p-3 border">Endothelial cell apoptosis, reduced density, subintimal edema, arteriolonecrosis [3, 5, 12]</td>
                                 <td class="p-3 border">Hypoxia/Reoxygenation, Oxidative Stress</td>
                             </tr>
                             <tr class="border-b hover:bg-slate-50">
@@ -316,28 +314,28 @@
 
             <section class="lg:col-span-3 bg-white rounded-lg shadow-xl p-6 sources-section">
                 <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Sources</h2>
-                <p class="mb-4 text-sm text-gray-700">The reference indicators below correspond to citations in the comprehensive research report from which this infographic is derived, indicating the evidence base for the detailed information provided in the "Learn More" sections.</p>
-                <ul>
-                    <li data-cite="[1, 2]">Anatomical/histological characteristics of PBGs; PBGs as a niche for Biliary Tree Stem/Progenitor Cells (BTSCs); PBG involvement in ductopenic rejection.</li>
-                    <li data-cite="[3, 4]">The Peribiliary Vascular Plexus (PVP), its hepatic artery dependence, and vulnerability to ischemia; PBG damage in IRI and NAS.</li>
-                    <li data-cite="[5, 6]">PBG stem cell function, activation in response to injury (proliferation, VEGF-A, HIF-1α); PBG damage in DCD livers and NAS.</li>
-                    <li data-cite="[7, 8, 9]">Ischemia-Reperfusion Injury (IRI) as a principal cause of biliary complications; PBG/PVP damage; link to Non-Anastomotic Strictures (NAS), especially in DCD livers; bile salt toxicity.</li>
-                    <li data-cite="[10]">Biliary epithelium vulnerability to ischemia; BDI score limitations.</li>
-                    <li data-cite="[11]">Higher NAS incidence in DCD livers; multifactorial NAS pathogenesis including IRI and immune factors.</li>
-                    <li data-cite="[12]">Histological manifestations of PVP injury in IRI (subintimal edema, arteriolonecrosis, hemorrhage).</li>
-                    <li data-cite="[13]">Periductal fibrosis in chronic rejection; dysregulated PBG regeneration contributing to fibrosis.</li>
-                    <li data-cite="[14]">Acute Cellular Rejection (ACR) mechanisms, histopathology (lymphocytic infiltrates, ductitis); diagnostic challenges with co-existing pathologies.</li>
-                    <li data-cite="[15, 16]">Chronic (Ductopenic) Rejection pathogenesis, histopathology (ductopenia, obliterative arteriopathy); CK7 utility; evolution from ACR.</li>
-                    <li data-cite="[17]">Implications of PBG stem cell loss in chronic rejection for graft survival.</li>
-                    <li data-cite="[27, 29]">Biliary strictures (including NAS) as major post-transplant complications; multifactorial etiology of NAS.</li>
-                    <li data-cite="[28]">Characteristics of NAS (proximal, multiple).</li>
-                    <li data-cite="[18, 19, 20]">CMV cholangiopathy, association with biliary complications; CMV detection (bile vs. blood, IHC/ISH/RNAscope); direct viral cytopathic effects.</li>
-                    <li data-cite="[21]">CMV predilection for activated/proliferating tissues (e.g., regenerating PBGs); link to chronic rejection.</li>
-                    <li data-cite="[22]">CMV as a risk factor for anastomotic biliary strictures.</li>
-                    <li data-cite="[24, 25]">Indirect mechanisms of CMV damage (immunomodulation).</li>
-                    <li data-cite="[23]">CMV cytopathic changes (amphophilic changes) in PBG glandular epithelium.</li>
-                    <li data-cite="[26]">Confirmation of CMV in tissue via IHC/ISH/RNAscope.</li>
-                </ul>
+                <p class="mb-4 text-sm text-gray-700">The numbered items below correspond to reference indicators (e.g., [1, 2]) used in the "Learn More" sections. These indicators link to topics from the comprehensive research report from which this infographic is derived, referencing citations within that main report.</p>
+                <ol class="ama-sources-list">
+                    <li><span class="cite-key">[1, 2]</span> Anatomical/histological characteristics of PBGs; PBGs as a niche for Biliary Tree Stem/Progenitor Cells (BTSCs); PBG involvement in ductopenic rejection.</li>
+                    <li><span class="cite-key">[3, 6]</span> The Peribiliary Vascular Plexus (PVP), its hepatic artery dependence, and vulnerability to ischemia; PBG damage in IRI and NAS.</li>
+                    <li><span class="cite-key">[4, 5]</span> PBG stem cell function, activation in response to injury (proliferation, VEGF-A, HIF-1α); PBG damage in DCD livers and NAS.</li>
+                    <li><span class="cite-key">[7, 8, 9]</span> Ischemia-Reperfusion Injury (IRI) as a principal cause of biliary complications; PBG/PVP damage; link to Non-Anastomotic Strictures (NAS), especially in DCD livers; bile salt toxicity.</li>
+                    <li><span class="cite-key">[10]</span> Biliary epithelium vulnerability to ischemia; BDI score limitations.</li>
+                    <li><span class="cite-key">[11]</span> Higher NAS incidence in DCD livers; multifactorial NAS pathogenesis including IRI and immune factors.</li>
+                    <li><span class="cite-key">[12]</span> Histological manifestations of PVP injury in IRI (subintimal edema, arteriolonecrosis, hemorrhage).</li>
+                    <li><span class="cite-key">[13]</span> Periductal fibrosis in chronic rejection; dysregulated PBG regeneration contributing to fibrosis.</li>
+                    <li><span class="cite-key">[14]</span> Acute Cellular Rejection (ACR) mechanisms, histopathology (lymphocytic infiltrates, ductitis); diagnostic challenges with co-existing pathologies.</li>
+                    <li><span class="cite-key">[15, 16]</span> Chronic (Ductopenic) Rejection pathogenesis, histopathology (ductopenia, obliterative arteriopathy); CK7 utility; evolution from ACR.</li>
+                    <li><span class="cite-key">[17]</span> Implications of PBG stem cell loss in chronic rejection for graft survival.</li>
+                    <li><span class="cite-key">[27, 29]</span> Biliary strictures (including NAS) as major post-transplant complications; multifactorial etiology of NAS.</li>
+                    <li><span class="cite-key">[28]</span> Characteristics of NAS (proximal, multiple).</li>
+                    <li><span class="cite-key">[18, 19, 20]</span> CMV cholangiopathy, association with biliary complications; CMV detection (bile vs. blood, IHC/ISH/RNAscope); direct viral cytopathic effects.</li>
+                    <li><span class="cite-key">[21]</span> CMV predilection for activated/proliferating tissues (e.g., regenerating PBGs); link to chronic rejection.</li>
+                    <li><span class="cite-key">[22]</span> CMV as a risk factor for anastomotic biliary strictures.</li>
+                    <li><span class="cite-key">[24, 25]</span> Indirect mechanisms of CMV damage (immunomodulation).</li>
+                    <li><span class="cite-key">[23]</span> CMV cytopathic changes (amphophilic changes) in PBG glandular epithelium.</li>
+                    <li><span class="cite-key">[26]</span> Confirmation of CMV in tissue via IHC/ISH/RNAscope.</li>
+                </ol>
             </section>
 
              <section class="lg:col-span-3 text-center mt-8">
@@ -420,7 +418,7 @@
             type: 'doughnut',
             data: {
                 labels:,
-                datasets:, // Example data
+                datasets:, 
                     backgroundColor:,
                     borderColor: '#fff',
                     borderWidth: 2,
@@ -428,9 +426,9 @@
                 }]
             },
             options: {
-               ...commonChartOptions,
+              ...commonChartOptions,
                 plugins: {
-                   ...commonChartOptions.plugins,
+                  ...commonChartOptions.plugins,
                     title: {
                         display: true,
                         text: 'Relative Risk of Severe PBG Damage by Donor Type',
@@ -438,7 +436,7 @@
                         font: { size: 14, weight: '500' }
                     }
                 },
-                cutout: '50%' // Makes it a doughnut
+                cutout: '50%' 
             }
         });
 
@@ -448,14 +446,14 @@
             type: 'bar',
             data: {
                 labels: rejectionLabels.map(label => wrapLabel(label)),
-                datasets:, // Example data
+                datasets:, 
                     backgroundColor: brilliantBluesPalette.orange,
                     borderColor: brilliantBluesPalette.orange,
                     borderWidth: 1,
                     borderRadius: 4
                 }, {
                     label: 'Chronic (Ductopenic) Rejection',
-                    data: [3, 9, 8, 7], // Example data
+                    data: [3, 9, 8, 7], 
                     backgroundColor: brilliantBluesPalette.magenta,
                     borderColor: brilliantBluesPalette.magenta,
                     borderWidth: 1,
@@ -463,7 +461,7 @@
                 }]
             },
             options: {
-               ...commonChartOptions,
+              ...commonChartOptions,
                 indexAxis: 'y',
                 scales: {
                     x: {
@@ -479,7 +477,7 @@
                     }
                 },
                  plugins: {
-                    ...commonChartOptions.plugins,
+                   ...commonChartOptions.plugins,
                     title: {
                         display: true,
                         text: 'Hallmark Features of Rejection Types',
