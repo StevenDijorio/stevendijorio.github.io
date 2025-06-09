@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unseen Battle: Intramural Biliary Glands in Liver Transplantation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #003F5C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-node {
+            border: 2px solid #7A5195;
+            background-color: #f8fafc;
+        }
+        .flowchart-arrow {
+            color: #7A5195;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">The Unseen Battle</h1>
+            <p class="text-xl md:text-2xl text-gray-300">Intramural Biliary Glands in Liver Transplantation</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <section class="lg:col-span-3 bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Introduction: The Critical Resilience Unit</h2>
+                <p class="mb-4">Within the bile duct wall lie microscopic intramural peribiliary glands (PBGs), which are essential for biliary health. They not only provide a protective mucus lining but also house the biliary tree's stem cells, making them vital for regeneration after injury. However, their sole reliance on the arterial peribiliary vascular plexus (PVP) makes them extremely vulnerable in the transplant setting. This infographic explores the pathological changes these glands undergo and their profound impact on allograft survival.</p>
+                <div class="flex flex-col md:flex-row items-center justify-center p-4 rounded-lg bg-slate-50">
+                     <div class="text-center md:text-left md:w-2/3">
+                        <h3 class="text-xl font-semibold text-[#7A5195] mb-2">Anatomy of Vulnerability</h3>
+                        <p class="text-sm">The PBG/PVP complex acts as a single unit. A blow to the arterial supply (PVP) is a direct hit on the glands (PBGs), crippling the bile duct's ability to defend and repair itself.</p>
+                    </div>
+                    <div class="w-full md:w-1/3 mt-4 md:mt-0 flex justify-center">
+                        <div class="w-48 h-48 border-4 border-[#003F5C] rounded-lg p-2 relative flex items-center justify-center text-center text-xs">
+                            <div class="absolute -top-4 bg-white px-2 font-bold">Bile Duct Wall</div>
+                            <div class="font-semibold text-[#003F5C]">
+                                <div class="mb-2">Gland (PBG)</div>
+                                <div class="text-2xl">↓</div>
+                                <div class="text-red-500 font-bold">Sole Blood Supply</div>
+                                <div class="text-2xl">↓</div>
+                                <div>Vessel (PVP)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">The Initial Assault: Ischemia-Reperfusion Injury</h2>
+                <p class="mb-4">Ischemia-Reperfusion Injury (IRI) is the first major hurdle, causing direct damage to PBGs and their blood supply. Livers from Donors after Circulatory Death (DCD) suffer more severe ischemic damage, leading to a much higher incidence of subsequent biliary complications compared to Donors after Brain Death (DBD).</p>
+                <div class="chart-container">
+                    <canvas id="iriChart"></canvas>
+                </div>
+                 <p class="text-center text-sm mt-4 text-gray-600">This illustrates the relative risk of severe PBG damage and subsequent non-anastomotic strictures (NAS) based on donor type. The severe ischemic insult in DCD grafts critically impairs the PBG regenerative capacity from the outset.</p>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">The Immune Onslaught: Allograft Rejection</h2>
+                <p class="mb-4">The recipient's immune system can attack the allograft, with the biliary system being a primary target. These attacks manifest in acute or chronic forms, both of which damage PBGs and compromise their function.</p>
+                <div class="chart-container">
+                    <canvas id="rejectionChart"></canvas>
+                </div>
+                 <p class="text-center text-sm mt-4 text-gray-600">Acute rejection involves direct inflammatory attack, while chronic rejection leads to irreversible loss of bile ducts (ductopenia) and their associated PBGs, often due to vascular damage.</p>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-xl p-6 flex flex-col">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">The Opportunistic Invader: CMV Infection</h2>
+                <p class="mb-4">Cytomegalovirus (CMV) poses a unique threat. The virus preferentially infects actively dividing cells. When PBGs proliferate in an attempt to repair prior damage from IRI or rejection, they inadvertently become "fertile soil" for CMV, which then hijacks and destroys these critical regenerative units.</p>
+                <div class="flex-grow flex items-center justify-center space-x-4 p-4 bg-slate-50 rounded-lg">
+                    <div class="text-center">
+                        <div class="text-5xl">🌱</div>
+                        <p class="font-semibold">Activated PBG (Attempting Repair)</p>
+                    </div>
+                    <div class="text-4xl font-bold text-red-500">→</div>
+                     <div class="text-center">
+                        <div class="text-5xl">🦠</div>
+                        <p class="font-semibold">CMV Infection</p>
+                    </div>
+                    <div class="text-4xl font-bold text-red-500">→</div>
+                    <div class="text-center">
+                        <div class="text-5xl">💥</div>
+                        <p class="font-semibold">Regenerative Failure</p>
+                    </div>
+                </div>
+                 <p class="text-sm mt-4 text-gray-600">This synergistic pathology, where the healing process increases vulnerability, demonstrates how multiple insults can compound to cause severe biliary damage.</p>
+            </section>
+
+            <section class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Pathway to Failure: Non-Anastomotic Stricture (NAS) Formation</h2>
+                <p class="mb-4">Non-anastomotic strictures are a dreaded complication arising from a cascade of events, fundamentally rooted in the failure of PBG-mediated regeneration. When the biliary epithelium cannot be repaired, a vicious cycle of bile salt toxicity and fibrosis leads to scarring and narrowing of the ducts.</p>
+                <div class="flex flex-col items-center space-y-4 p-4">
+                    <div class="flowchart-node w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
+                        <h3 class="font-bold">Initial Insult</h3>
+                        <p class="text-sm">Ischemia-Reperfusion, Rejection, or Infection</p>
+                    </div>
+                    <div class="text-3xl flowchart-arrow">↓</div>
+                    <div class="flowchart-node w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
+                        <h3 class="font-bold">PBG / PVP Damage</h3>
+                        <p class="text-sm">Direct gland injury & compromised blood supply</p>
+                    </div>
+                    <div class="text-3xl flowchart-arrow">↓</div>
+                    <div class="flowchart-node w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
+                        <h3 class="font-bold text-red-600">Failed/Dysregulated Regeneration</h3>
+                        <p class="text-sm">PBG stem cells cannot repair the denuded bile duct lining</p>
+                    </div>
+                    <div class="text-3xl flowchart-arrow">↓</div>
+                    <div class="flowchart-node w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
+                        <h3 class="font-bold">Ongoing Injury & Fibrosis</h3>
+                        <p class="text-sm">Exposure to toxic bile salts promotes a chronic wound-healing response leading to scarring</p>
+                    </div>
+                    <div class="text-3xl flowchart-arrow">↓</div>
+                    <div class="flowchart-node bg-[#BC5090] text-white w-full md:w-3/4 text-center p-3 rounded-lg shadow-md">
+                        <h3 class="font-bold">Non-Anastomotic Stricture (NAS)</h3>
+                        <p class="text-sm">Permanent scarring and narrowing of the bile duct</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="md:col-span-2 lg:col-span-3 bg-white rounded-lg shadow-xl p-6 overflow-x-auto">
+                <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Diagnostic Summary: PBG Alterations at a Glance</h2>
+                 <p class="mb-4">Distinguishing between the causes of biliary injury is a diagnostic challenge. This table summarizes the key histopathological features affecting the PBG/PVP unit in different post-transplant conditions, aiding in differential diagnosis. Note that features often overlap.</p>
+                <div class="w-full">
+                    <table class="w-full text-sm text-left border-collapse">
+                        <thead>
+                            <tr class="bg-[#003F5C] text-white">
+                                <th class="p-3 border">Pathological Condition</th>
+                                <th class="p-3 border">Key PBG Changes</th>
+                                <th class="p-3 border">Key PVP Changes</th>
+                                <th class="p-3 border">Primary Injury Mechanism</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-slate-50">
+                                <td class="p-3 border font-semibold">Ischemia-Reperfusion Injury</td>
+                                <td class="p-3 border">Epithelial disruption, pyknotic nuclei, necrosis</td>
+                                <td class="p-3 border">Endothelial cell apoptosis, reduced density, edema</td>
+                                <td class="p-3 border">Hypoxia & Oxidative Stress</td>
+                            </tr>
+                            <tr class="border-b hover:bg-slate-50">
+                                <td class="p-3 border font-semibold">Acute Cellular Rejection</td>
+                                <td class="p-3 border">Lymphocytic infiltrates, epithelial damage (ductitis)</td>
+                                <td class="p-3 border">Endotheliitis (lymphocytic infiltration)</td>
+                                <td class="p-3 border">T-cell Mediated Cytotoxicity</td>
+                            </tr>
+                            <tr class="border-b hover:bg-slate-50">
+                                <td class="p-3 border font-semibold">Chronic (Ductopenic) Rejection</td>
+                                <td class="p-3 border">Atrophy, progressive loss, surrounding fibrosis</td>
+                                <td class="p-3 border">Obliterative arteriopathy (luminal narrowing)</td>
+                                <td class="p-3 border">Immune Attack & Chronic Ischemia</td>
+                            </tr>
+                            <tr class="border-b hover:bg-slate-50">
+                                <td class="p-3 border font-semibold">CMV Cholangiopathy</td>
+                                <td class="p-3 border">Cytomegalic cells with "owl's eye" inclusions, inflammation</td>
+                                <td class="p-3 border">Inflammation may be present</td>
+                                <td class="p-3 border">Direct Viral Cytopathic Effect</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+             <section class="lg:col-span-3 text-center mt-8">
+                <p class="text-gray-300 text-sm">This infographic synthesizes findings from clinical research on liver allograft pathology. It is intended for educational purposes. All visualizations are based on principles and relative data described in the source literature. Neither Mermaid JS nor SVG were used in this output.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const wrapLabel = (label, maxLength = 16) => {
+            if (typeof label !== 'string') return label;
+            if (label.length <= maxLength) return label;
+
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            });
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            }
+            return label;
+        };
+        
+        const brilliantBluesPalette = {
+            darkBlue: '#003F5C',
+            purpleBlue: '#374C80',
+            purple: '#7A5195',
+            magenta: '#BC5090',
+            pink: '#EF5675',
+            orange: '#FF764A',
+            yellow: '#FFA600'
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#4b5563'
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    }
+                }
+            }
+        };
+
+        const iriCtx = document.getElementById('iriChart').getContext('2d');
+        new Chart(iriCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['DBD Grafts', 'DCD Grafts'],
+                datasets: [{
+                    label: 'Risk of Severe PBG Damage/NAS',
+                    data: [25, 75],
+                    backgroundColor: [brilliantBluesPalette.yellow, brilliantBluesPalette.pink],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                plugins: {
+                    ...commonChartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'Relative Risk of Severe PBG Damage by Donor Type',
+                        color: '#1f2937',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+
+        const rejectionCtx = document.getElementById('rejectionChart').getContext('2d');
+        const rejectionLabels = ['Direct Glandular Inflammation', 'Bile Duct Loss (Ductopenia)', 'Irreversible Fibrosis', 'Obliterative Arteriopathy'];
+        new Chart(rejectionCtx, {
+            type: 'bar',
+            data: {
+                labels: rejectionLabels.map(label => wrapLabel(label)),
+                datasets: [{
+                    label: 'Acute Cellular Rejection',
+                    data: [8, 2, 1, 0],
+                    backgroundColor: brilliantBluesPalette.orange,
+                    borderColor: brilliantBluesPalette.orange,
+                    borderWidth: 1
+                }, {
+                    label: 'Chronic (Ductopenic) Rejection',
+                    data: [3, 9, 8, 7],
+                    backgroundColor: brilliantBluesPalette.magenta,
+                    borderColor: brilliantBluesPalette.magenta,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                ...commonChartOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 10,
+                        title: { display: true, text: 'Relative Severity/Prevalence (0-10)', color: '#4b5563' },
+                        grid: { color: '#e5e7eb' },
+                        ticks: { color: '#4b5563' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#4b5563' }
+                    }
+                },
+                 plugins: {
+                     ...commonChartOptions.plugins,
+                    title: {
+                        display: true,
+                        text: 'Hallmark Features of Rejection Types',
+                        color: '#1f2937',
+                        font: { size: 14 }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
