@@ -5,17 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Di Jorio | Biomedical Engineering & Research</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Visualization & Content Choices: 
-        - Hero: Name, Tagline, Photo. Goal: Immediate Introduction. Method: HTML/CSS.
-        - About Me: Narrative text. Goal: Personal & Professional Context. Method: HTML/CSS.
-        - Latest Research: Project descriptions (text), publication status. Goal: Showcase Research Acumen. Method: HTML/CSS. Beale's Sacculi review summary with a note for future full interactive HTML/JS integration.
-        - Resume/CV: Download link, summarized key information (Education, Skills, Experience). Goal: Detailed Qualifications. Method: HTML/CSS.
-        - Projects: Descriptive cards/list items for each project. Goal: Demonstrate Practical Skills & Initiative. Method: HTML/CSS.
-        - Clinical Experience: Descriptive paragraph. Goal: Highlight Clinical Exposure & Empathy. Method: HTML/CSS.
-        - Awards: Bulleted list. Goal: Showcase Achievements. Method: HTML/CSS.
-        - Contact: Email and professional social media links. Goal: Enable Connection. Method: HTML/CSS.
-        - No new complex charts are generated from the resume data itself. The interactive Beale's review (to be integrated) contains its own specific visual elements.
-    -->
     <style>
         body { font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .nav-link { transition: color 0.3s ease; }
@@ -24,7 +13,6 @@
         .card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
         #researchInteractiveReviewContainer { border: 1px solid #DBEAFE; /* Tailwind blue-100 */ padding: 1rem; border-radius: 0.375rem; background-color: #EFF6FF; /* Tailwind blue-50 */ }
-        /* Styles for potential Beale's Sacculi interactive content integration */
         .beale-accordion-button.active + .beale-accordion-content { max-height: 1000px; /* Adjust as needed */ }
         .beale-accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
     </style>
@@ -84,7 +72,14 @@
                         <li>Applying OCT to identify and quantify bile duct lesions, leveraging MATLAB, Python, and ImageJ for sophisticated image processing, segmentation, and feature extraction.</li>
                         <li>Currently co-authoring a peer-reviewed manuscript on photonics-based cancer diagnostics, collaborating closely with biomedical engineers and physician-scientists to translate imaging data into clinically actionable insights.</li>
                     </ul>
-                </div>
+
+                    <figure class="mt-6 bg-slate-50/50 p-4 rounded-lg shadow-inner">
+                        <img src="https://i.postimg.cc/7PchFWxk/IMG-2077.avif" alt="Steven Di Jorio presenting his CURE fellowship research poster at the OUHSC Graduate College Symposium." class="w-full rounded-md shadow-md">
+                        <figcaption class="mt-3 text-center text-sm italic text-slate-600">
+                            Presenting my research, "Evaluating Bile Ducts in Liver Transplantation Using OCT," at the 2025 CURE Summer Symposium. This fellowship was an incredible opportunity to contribute to cutting-edge cancer diagnostics.
+                        </figcaption>
+                    </figure>
+                    </div>
 
                 <div class="card p-6">
                     <h3 class="text-2xl font-semibold text-blue-700 mb-3">Neuro-Oncology Research Intern</h3>
@@ -92,7 +87,7 @@
                      <ul class="list-disc list-inside text-slate-600 space-y-1 leading-relaxed">
                         <li>Played a significant role in the development of an innovative AI model utilizing open-source data to detect early-stage brain tumors with high accuracy.</li>
                         <li>Assisted an Associate Professor in analyzing complex datasets and iteratively training the AI model, contributing to significant improvements in its diagnostic precision for early-stage brain tumors.</li>
-                    </ul>
+                     </ul>
                 </div>
                 
                 <div class="card p-6">
@@ -110,11 +105,10 @@
                         </p>
                         <div class="mt-3">
                              <button onclick="location.href='what_is_beales_sacculi.html'"
-                                      class="text-left text-md font-medium text-blue-600 hover:text-blue-700 py-1 w-full">
-                            Sample: What are Beale’s Sacculi? ▶
-                          </button>
+                                     class="text-left text-md font-medium text-blue-600 hover:text-blue-700 py-1 w-full">
+                                Sample: What are Beale’s Sacculi? ▶
+                            </button>
                         </div>
-
                     </div>
                 </div>
 
@@ -260,9 +254,6 @@
                     <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                     LinkedIn
                 </a>
-                <!-- Example:
-                <a href="#" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 font-semibold text-lg">GitHub</a>
-                -->
             </div>
         </div>
     </section>
