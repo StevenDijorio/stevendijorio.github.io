@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Paper Rewriter
 
 A free, ad-funded AI-powered writing style analysis and rewriting tool. This application helps users improve the naturalness and readability of their text while maintaining complete privacy.
@@ -267,3 +268,6 @@ For issues and questions:
 ---
 
 **Disclaimer**: This tool is designed as a writing style coach, not for bypassing academic integrity systems. Users are responsible for ethical use.
+=======
+# stevendijorio.github.io
+>>>>>>> 4eea19524cbd80a5bcaa4f407ed0afa44b630188
