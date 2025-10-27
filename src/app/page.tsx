@@ -302,7 +302,7 @@ function useStreamedRewrite(pushToast: ReturnType<typeof useToasts>["push"]) {
   const fetchWithRetryStream = useCallback(
     async (
       endpoint: string,
-      body: { input: string },
+      body: { text: string },
       onChunk: (text: string) => void,
       onStatus?: (code: number) => void
     ) => {
@@ -381,7 +381,7 @@ function useStreamedRewrite(pushToast: ReturnType<typeof useToasts>["push"]) {
 
         void fetchWithRetryStream(
           "/api/rewrite?stream=1",
-          { input: inputText },
+          { text: inputText },
           (chunk) => {
             // Support either raw text chunks or SSE "data:" lines
             const parts = chunk

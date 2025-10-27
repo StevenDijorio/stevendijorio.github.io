@@ -2,6 +2,8 @@
 import type { NextRequest } from "next/server";
 // import { cookies } from "next/headers";
 import { z } from "zod";
+import { isAllowed, record } from "@/lib/rate-limiter";
+import type { RateLimitContext } from "@/lib/rate-limiter";
 
 // IMPORTANT: adjust these imports to your local utils.
 // import * as rateLimiter from "@/lib/rate-limiter"; // must expose one of: default | rateLimit | limiter { limit() }
@@ -98,19 +100,15 @@ async function sessionHash(req: NextRequest): Promise<string> {
   return sha256Hex([headerId, ip, ua, salt].join("|"));
 }
 
-// Rate limiting disabled for now
-// function limiterHandle() {
-//   // Support a few possible shapes without adding deps.
-//   const candidate =
-//     // @ts-ignore
-//     rateLimiter.default ||
-//     // @ts-ignore
-//     rateLimiter.rateLimiter ||
-//     // @ts-ignore
-//     rateLimiter.rateLimit ||
-//     rateLimiter;
-//   return candidate;
-// }
+// Concrete limiter wrapper using local in-memory limiter
+async function checkRateLimitCtx(ctx: RateLimitContext): Promise<{ ok: true } | { ok: false; retryAfterSec: number }> {
+  const decision = isAllowed(ctx);
+  if (decision.allowed) {
+    record(ctx, decision);
+    return { ok: true };
+  }
+  return { ok: false, retryAfterSec: Math.max(1, decision.retryAfter || 30) };
+}
 
 // Rate limiting disabled for now
 // async function checkRateLimit(key: string): Promise<
@@ -473,13 +471,20 @@ export async function POST(req: NextRequest) {
   // Privacy: hash-based session id only.
   const sid = await sessionHash(req);
 
-  // Rate limit - DISABLED FOR NOW
-  // const rl = await checkRateLimit(`rewrite:${sid}`);
-  // if (!rl.ok) {
-  //   return jsonError(429, "RATE_LIMITED", "Too many requests", {
-  //     "Retry-After": String(rl.retryAfterSec),
-  //   });
-  // }
+  // Rate limit (IP + session + content fingerprint)
+  const rlCtx: RateLimitContext = {
+    route: "rewrite",
+    ip: firstIp(req),
+    sessionId: sid,
+    // lightweight fingerprint to detect duplicate bursts without sending full text
+    contentFingerprint: await sha256Hex(text.slice(0, 4096)),
+  };
+  const rl = await checkRateLimitCtx(rlCtx);
+  if (!rl.ok) {
+    return jsonError(429, "RATE_LIMITED", "Too many requests", {
+      "Retry-After": String(rl.retryAfterSec),
+    });
+  }
 
   // API key check
   const apiKey = process.env.GOOGLE_API_KEY || process.env.GOOGLE_GENAI_API_KEY;
