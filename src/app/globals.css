@@ -5,50 +5,178 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --chat-bg: #f7f7f8;
+  --border: #e5e7eb;
+  --accent: #10a37f;
+  --text-primary: #374151;
+  --text-secondary: #6b7280;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #212121;
     --foreground: #ededed;
+    --chat-bg: #2f2f2f;
+    --border: #404040;
+    --accent: #10a37f;
+    --text-primary: #f9f9f9;
+    --text-secondary: #a1a1aa;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--chat-bg);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
 }
 
-/* Custom styles for the paper app */
-.editor-textarea {
-  width: 100%;
+/* ChatGPT-style components */
+.chat-container {
+  max-width: 56rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.dark .chat-container {
+  background-color: #111827;
+}
+
+.chat-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.75rem 1rem;
+}
+
+.dark .chat-header {
+  background-color: #111827;
+  border-bottom-color: #374151;
+}
+
+.chat-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid #e5e7eb;
   padding: 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 0.5rem;
-  resize: none;
-  height: 24rem;
 }
 
-.editor-textarea:focus {
+.dark .chat-input-container {
+  background-color: #111827;
+  border-top-color: #374151;
+}
+
+.chat-input {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.message-input {
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 1rem;
+  resize: none;
+  min-height: 3rem;
+  max-height: 12rem;
+  background-color: white;
+  color: #111827;
+}
+
+.message-input:focus {
   outline: none;
   ring: 2px;
-  ring-color: #3b82f6;
+  ring-color: #10a37f;
 }
 
-.risk-card {
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+.dark .message-input {
+  background-color: #1f2937;
+  border-color: #4b5563;
+  color: white;
+}
+
+.send-button {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  background-color: #10a37f;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.send-button:hover {
+  background-color: #0d8f6f;
+}
+
+.send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.message-bubble {
+  max-width: 48rem;
+  margin: 0 auto 1rem;
+}
+
+.user-message {
+  background-color: #f3f4f6;
+  color: #111827;
   padding: 1rem;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 1rem 1rem 0.25rem 1rem;
 }
 
-.score-dial {
+.dark .user-message {
+  background-color: #1f2937;
+  color: white;
+}
+
+.assistant-message {
+  background-color: white;
+  color: #111827;
+  padding: 1rem;
+  border-radius: 1rem 1rem 1rem 0.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .assistant-message {
+  background-color: #1f2937;
+  color: white;
+  border-color: #374151;
+}
+
+.analysis-sidebar {
+  width: 20rem;
+  background-color: white;
+  border-left: 1px solid #e5e7eb;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.dark .analysis-sidebar {
+  background-color: #111827;
+  border-left-color: #374151;
+}
+
+.score-circle {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  border: 4px solid #e5e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -56,20 +184,170 @@ body {
   font-weight: bold;
 }
 
-.rewrite-button {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.75rem 1.5rem;
+.score-excellent {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.dark .score-excellent {
+  background-color: #14532d;
+  color: #bbf7d0;
+}
+
+.score-good {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.dark .score-good {
+  background-color: #1e3a8a;
+  color: #bfdbfe;
+}
+
+.score-fair {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.dark .score-fair {
+  background-color: #78350f;
+  color: #fde68a;
+}
+
+.score-poor {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.dark .score-poor {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.risk-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.risk-low {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.dark .risk-low {
+  background-color: #14532d;
+  color: #bbf7d0;
+}
+
+.risk-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.dark .risk-medium {
+  background-color: #78350f;
+  color: #fde68a;
+}
+
+.risk-high {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.dark .risk-high {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
 }
 
-.rewrite-button:hover {
-  background-color: #1d4ed8;
+.btn-primary {
+  background-color: #10a37f;
+  color: white;
 }
 
-.rewrite-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.btn-primary:hover {
+  background-color: #0d8f6f;
+}
+
+.btn-secondary {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.btn-secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.dark .btn-secondary {
+  background-color: #374151;
+  color: white;
+}
+
+.dark .btn-secondary:hover {
+  background-color: #4b5563;
+}
+
+.btn-outline {
+  border: 1px solid #d1d5db;
+  color: #374151;
+  background-color: transparent;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
+}
+
+.dark .btn-outline {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+.dark .btn-outline:hover {
+  background-color: #1f2937;
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+.loading-dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #9ca3af;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.dark .typing-indicator {
+  color: #9ca3af;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
 }
