@@ -143,7 +143,10 @@ function useStoreSelector<T>(selector: (s: AppState) => T, equals: (a: T, b: T) 
   selectorRef.current = selector;
   const getSnapshot = useCallback(() => selectorRef.current(store.get()), []);
   const [snap, setSnap] = useState<T>(getSnapshot);
-  useEffect(() => store.subscribe(() => setSnap(getSnapshot())), [getSnapshot]);
+  useEffect(() => {
+    const unsubscribe = store.subscribe(() => setSnap(getSnapshot()));
+    return () => { unsubscribe(); };
+  }, [getSnapshot]);
   const stable = useMemo(() => snap, [snap]); // prevent unnecessary rerenders
   return stable;
 }
@@ -502,7 +505,7 @@ const Tooltip = memo(function Tooltip({
   const onBlur = useCallback(() => setOpen(false), []);
   return (
     <span className="relative inline-flex" onMouseEnter={onEnter} onMouseLeave={onLeave} onFocus={onFocus} onBlur={onBlur}>
-      {React.cloneElement(children, { "aria-describedby": id })}
+      {React.cloneElement(children as React.ReactElement<any>, { "aria-describedby": id } as any)}
       <span
         id={id}
         role="tooltip"
@@ -526,7 +529,7 @@ const Tooltip = memo(function Tooltip({
 /** ================================
  *  UI: Virtualized list
  *  ================================ */
-const VirtualList = memo(function VirtualList<T>({
+const VirtualList = memo(function VirtualList({
   items,
   itemHeight,
   height,
@@ -534,11 +537,11 @@ const VirtualList = memo(function VirtualList<T>({
   renderItem,
   ariaLabel,
 }: {
-  items: readonly T[];
+  items: readonly any[];
   itemHeight: number;
   height: number;
   overscan?: number;
-  renderItem: (item: T, index: number) => React.ReactNode;
+  renderItem: (item: any, index: number) => React.ReactNode;
   ariaLabel: string;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);

@@ -20,7 +20,7 @@ export interface RewardedGateMetric {
   namespace: string;
 }
 
-export interface RewardedGateProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface RewardedGateProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onError'> {
   /** Controlled visibility. Backward-compat: will also honor `isOpen`. */
   open?: boolean;
   /** Backward-compat alias for `open`. */

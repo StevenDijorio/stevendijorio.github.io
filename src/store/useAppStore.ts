@@ -532,7 +532,7 @@ export const useAppStore = create<AppStore>()(
           return window.localStorage;
         }),
         partialize: partializeForPersist as any,
-        migrate: (persisted, fromVersion) => migratePersisted(persisted, fromVersion ?? 0),
+        migrate: (persisted, fromVersion) => migratePersisted(persisted, fromVersion ?? 0) as any,
         onRehydrateStorage: () => (state) => {
           // After hydration, ensure the store is valid
           try {

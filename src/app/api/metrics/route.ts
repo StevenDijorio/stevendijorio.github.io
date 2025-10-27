@@ -1,5 +1,17 @@
 import { z } from "zod";
-import { unstable_after as after } from "next/server";
+// Next 16 may not expose unstable_after in all runtimes; use a local wrapper.
+function after(task: () => Promise<void> | void) {
+  setTimeout(() => {
+    try {
+      const p = task();
+      if (p && typeof (p as any).then === "function") {
+        (p as Promise<void>).catch(() => {});
+      }
+    } catch {
+      // swallow
+    }
+  }, 0);
+}
 import { ratelimit } from "@/lib/ratelimit";
 
 type Json = Record<string, unknown>;
@@ -74,7 +86,7 @@ const MetricSchema = z
 event_name: z.string().min(1).max(128),
 ts: z.coerce.number().finite().positive(),
 session_id_hashed: z.string().min(16).max(256),
-props: z.record(z.unknown()).default({}),
+ props: z.record(z.string(), z.unknown()).default({}),
 })
 .strict();
 
@@ -82,7 +94,7 @@ type MetricInput = z.infer<typeof MetricSchema>;
 
 function selfOrigin(url: string): string {
 const base = process.env.NEXT_PUBLIC_BASE_URL?.trim();
-return new URL(base && /^https?:///i.test(base) ? base : url).origin;
+return new URL(base && /^https?:/i.test(base) ? base : url).origin;
 }
 
 function isSameOrigin(req: Request): boolean {
@@ -197,15 +209,17 @@ props: safeProps,
 // fire-and-forget queue
 after(async () => {
 try {
-// Prefer an existing queue util if available at this path.
-// This import is optional and errors are swallowed to avoid blocking response.
-const mod = await import("@/lib/metrics-queue").catch(() => null as any);
+  // Prefer an existing queue util if available at this path.
+  // This import is optional and errors are swallowed to avoid blocking response.
+  let mod: any = null;
+  try { mod = await import("@/lib/metrics-queue"); } catch { mod = null; }
 if (mod?.enqueueMetric && typeof mod.enqueueMetric === "function") {
 await mod.enqueueMetric(safeEvent);
 return;
 }
 // Fallback: try a generic ingestor if present.
-const alt = await import("@/lib/metrics").catch(() => null as any);
+  let alt: any = null;
+  try { alt = await import("@/lib/metrics"); } catch { alt = null; }
 if (alt?.ingestMetric && typeof alt.ingestMetric === "function") {
 await alt.ingestMetric(safeEvent);
 }

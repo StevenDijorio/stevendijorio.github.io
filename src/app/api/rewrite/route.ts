@@ -1,10 +1,10 @@
 // src/app/api/rewrite/route.ts
 import type { NextRequest } from "next/server";
-import { cookies, headers as nextHeaders } from "next/headers";
+// import { cookies } from "next/headers";
 import { z } from "zod";
 
 // IMPORTANT: adjust these imports to your local utils.
-import * as rateLimiter from "@/lib/rate-limiter"; // must expose one of: default | rateLimit | limiter { limit() }
+// import * as rateLimiter from "@/lib/rate-limiter"; // must expose one of: default | rateLimit | limiter { limit() }
 export const runtime = "nodejs";
 
 const DEFAULT_MODEL = "gemini-2.0-flash";
@@ -58,15 +58,11 @@ function jsonError(
 }
 
 function getHeader(req: NextRequest, name: string): string | null {
-  return req.headers.get(name) ?? nextHeaders().get(name);
+  return req.headers.get(name);
 }
 
-function parseCookie(name: string): string | undefined {
-  try {
-    return cookies().get(name)?.value;
-  } catch {
-    return undefined;
-  }
+function parseCookie(_name: string): string | undefined {
+  return undefined;
 }
 
 function firstIp(req: NextRequest): string {
@@ -102,49 +98,51 @@ async function sessionHash(req: NextRequest): Promise<string> {
   return sha256Hex([headerId, ip, ua, salt].join("|"));
 }
 
-function limiterHandle() {
-  // Support a few possible shapes without adding deps.
-  const candidate =
-    // @ts-ignore
-    rateLimiter.default ||
-    // @ts-ignore
-    rateLimiter.rateLimiter ||
-    // @ts-ignore
-    rateLimiter.rateLimit ||
-    rateLimiter;
-  return candidate;
-}
+// Rate limiting disabled for now
+// function limiterHandle() {
+//   // Support a few possible shapes without adding deps.
+//   const candidate =
+//     // @ts-ignore
+//     rateLimiter.default ||
+//     // @ts-ignore
+//     rateLimiter.rateLimiter ||
+//     // @ts-ignore
+//     rateLimiter.rateLimit ||
+//     rateLimiter;
+//   return candidate;
+// }
 
-async function checkRateLimit(key: string): Promise<
-  | { ok: true }
-  | { ok: false; retryAfterSec: number }
-> {
-  const rl = limiterHandle();
-  if (!rl) return { ok: true };
-  try {
-    // Common shapes:
-    // 1) rl.limit({ key }) => { success, reset, remaining, retryAfter }
-    // 2) rl.check(key) => { success, retryAfter }
-    // 3) rl({ key }) => { success, retryAfter }
-    const result =
-      (await (typeof rl.limit === "function" ? rl.limit({ key }) : undefined)) ??
-      (await (typeof rl.check === "function" ? rl.check(key) : undefined)) ??
-      (await (typeof rl === "function" ? rl({ key }) : undefined));
-    if (!result) return { ok: true };
-    const success = !!(result.success ?? result.ok ?? result.allowed ?? false);
-    if (success) return { ok: true };
-    const retryAfter =
-      result.retryAfter ??
-      result.retryAfterSec ??
-      (typeof result.reset === "number"
-        ? Math.max(0, Math.ceil((result.reset * 1000 - Date.now()) / 1000))
-        : 30);
-    return { ok: false, retryAfterSec: retryAfter };
-  } catch {
-    // Fail-open on limiter errors to avoid blocking all traffic.
-    return { ok: true };
-  }
-}
+// Rate limiting disabled for now
+// async function checkRateLimit(key: string): Promise<
+//   | { ok: true }
+//   | { ok: false; retryAfterSec: number }
+// > {
+//   const rl = limiterHandle();
+//   if (!rl) return { ok: true };
+//   try {
+//     // Common shapes:
+//     // 1) rl.limit({ key }) => { success, reset, remaining, retryAfter }
+//     // 2) rl.check(key) => { success, retryAfter }
+//     // 3) rl({ key }) => { success, retryAfter }
+//     const result =
+//       (await (typeof rl.limit === "function" ? rl.limit({ key }) : undefined)) ??
+//       (await (typeof rl.check === "function" ? rl.check(key) : undefined)) ??
+//       (await (typeof rl === "function" ? rl({ key }) : undefined));
+//     if (!result) return { ok: true };
+//     const success = !!(result.success ?? result.ok ?? result.allowed ?? false);
+//     if (success) return { ok: true };
+//     const retryAfter =
+//       result.retryAfter ??
+//       result.retryAfterSec ??
+//       (typeof result.reset === "number"
+//         ? Math.max(0, Math.ceil((result.reset * 1000 - Date.now()) / 1000))
+//         : 30);
+//     return { ok: false, retryAfterSec: retryAfter };
+//   } catch {
+//     // Fail-open on limiter errors to avoid blocking all traffic.
+//     return { ok: true };
+//   }
+// }
 
 function sanitizeUserText(s: string): string {
   // Remove common prompt-injection patterns that try to hijack tools or roles.
@@ -424,7 +422,6 @@ function textStreamResponse(
         const status: Metrics["status"] =
           aborted ? "aborted" : timeoutFired ? "timeout" : done ? "ok" : "error";
         fireAndForgetMetrics({
-          sid,
           ...metricsBase,
           output_chars: outChars,
           duration_ms: Date.now() - start,
@@ -468,7 +465,7 @@ export async function POST(req: NextRequest) {
 
   const parsed = BodySchema.safeParse(body);
   if (!parsed.success) {
-    return jsonError(400, "INVALID_INPUT", parsed.error.errors.map((e) => e.message).join("; "));
+    return jsonError(400, "INVALID_INPUT", parsed.error.issues.map((e) => e.message).join("; "));
   }
 
   const { text, mode, model } = parsed.data;
@@ -476,13 +473,13 @@ export async function POST(req: NextRequest) {
   // Privacy: hash-based session id only.
   const sid = await sessionHash(req);
 
-  // Rate limit
-  const rl = await checkRateLimit(`rewrite:${sid}`);
-  if (!rl.ok) {
-    return jsonError(429, "RATE_LIMITED", "Too many requests", {
-      "Retry-After": String(rl.retryAfterSec),
-    });
-  }
+  // Rate limit - DISABLED FOR NOW
+  // const rl = await checkRateLimit(`rewrite:${sid}`);
+  // if (!rl.ok) {
+  //   return jsonError(429, "RATE_LIMITED", "Too many requests", {
+  //     "Retry-After": String(rl.retryAfterSec),
+  //   });
+  // }
 
   // API key check
   const apiKey = process.env.GOOGLE_API_KEY || process.env.GOOGLE_GENAI_API_KEY;
