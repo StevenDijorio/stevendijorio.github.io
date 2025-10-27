@@ -1,32 +1,9 @@
 // src/lib/rate-limiter.ts
-import { isAllowed, record, RateLimitContext, RateLimitDecision } from '@/utils/rateLimiting';
+// Re-export runtime helpers and types from the rate limiting util.
+// Note: The rewrite route currently disables rate limiting at call sites.
 
-export { isAllowed, record, RateLimitContext, RateLimitDecision };
+import { isAllowed, record } from '@/utils/rateLimiting';
+import type { RateLimitContext, RateLimitDecision } from '@/utils/rateLimiting';
 
-// Export a default rate limiter instance for compatibility
-export default {
-  limit: async (ctx: RateLimitContext) => {
-    const decision = isAllowed(ctx);
-    if (decision.allowed) {
-      record(ctx, decision);
-    }
-    return {
-      success: decision.allowed,
-      retryAfter: decision.retryAfter,
-      remaining: decision.remaining,
-      limit: decision.limit
-    };
-  },
-  check: async (key: string) => {
-    const ctx: RateLimitContext = {
-      route: 'default',
-      ip: key.split(':')[0],
-      sessionId: key.split(':')[1]
-    };
-    const decision = isAllowed(ctx);
-    return {
-      success: decision.allowed,
-      retryAfter: decision.retryAfter
-    };
-  }
-};
+export { isAllowed, record };
+export type { RateLimitContext, RateLimitDecision };
