@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brawl Stars Strategy Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --accent: #facc15; /* Yellow/Gold */
+            --top-comp: #22c55e; /* Green */
+            --backup-comp: #3b82f6; /* Blue */
+            --ban-color: #ef4444; /* Red */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        /* Header & Search */
+        header {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        input#searchBar {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background-color: #2c2c2c;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input#searchBar:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px rgba(250, 204, 21, 0.3);
+        }
+
+        /* Quick Nav Buttons */
+        .nav-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--accent);
+            color: black;
+        }
+
+        /* Content Grid */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        /* Mode Cards */
+        .mode-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-left: 5px solid var(--accent);
+        }
+
+        .mode-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fff;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        /* Sub-sections within cards */
+        .strategy-box {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: rgba(255,255,255,0.03);
+        }
+
+        .strategy-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #000;
+        }
+
+        .top-comp .strategy-title { background-color: var(--top-comp); }
+        .backup-comp .strategy-title { background-color: var(--backup-comp); color: white; }
+        .bans .strategy-title { background-color: var(--ban-color); color: white; }
+
+        .comp-list {
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.1em;
+        }
+
+        .details {
+            font-size: 0.95em;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .mode-card:nth-last-child(1):nth-child(odd) {
+                grid-column: span 2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Ranked Strategy Hub</h1>
+    <input type="text" id="searchBar" placeholder="Search brawler (e.g., 'Mortis'), mode, or player..." onkeyup="filterContent()">
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="scrollToId('gem-grab')">Gem Grab</button>
+        <button class="nav-btn" onclick="scrollToId('brawl-ball')">Brawl Ball</button>
+        <button class="nav-btn" onclick="scrollToId('hot-zone')">Hot Zone</button>
+        <button class="nav-btn" onclick="scrollToId('knockout')">Knockout</button>
+        <button class="nav-btn" onclick="scrollToId('heist')">Heist</button>
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="mode-card" id="gem-grab" data-keywords="gem grab emz mortis spike pam tara ash steven abiel">
+        <div class="mode-title">Gem Grab</div>
+        
+        <div class="strategy-box top-comp">
+            <div class="strategy-title">Top Comp</div>
+            <div class="comp-list">Emz, Mortis, Spike</div>
+            <div class="details">
+                • <span class="highlight">Steven (Mortis):</span> Assassin to steal/carry gems.<br>
+                • <span class="highlight">Abiel (Emz):</span> Mid-area control & carrier.<br>
+                • <span class="highlight">Teammate (Spike):</span> Lane support DPS.<br>
+                <em>Note: Highest win-rate for your maxed roster.</em>
+            </div>
+        </div>
+
+        <div class="strategy-box backup-comp">
+            <div class="strategy-title">Backup</div>
+            <div class="comp-list">Pam, Tara, Ash</div>
+            <div class="details">
+                • Steven (Pam), Abiel (Tara), Teammate (Ash).<br>
+                Focuses on steady control and survivability.
+            </div>
+        </div>
+
+        <div class="strategy-box bans">
+            <div class="strategy-title">Ideal Bans</div>
+            <div class="details">
+                • <strong>Larry & Lawrie:</strong> Top win-rate, you don't own.<br>
+                • <strong>Mortis:</strong> If you aren't playing him.<br>
+                • <strong>Moe/Lumi:</strong> High threat mythics.
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-card" id="brawl-ball" data-keywords="brawl ball emz frank mortis bibi colt steven abiel">
+        <div class="mode-title">Brawl Ball</div>
+        
+        <div class="strategy-box top-comp">
+            <div class="strategy-title">Top Comp</div>
+            <div class="comp-list">Emz, Frank, Mortis</div>
+            <div class="details">
+                • <span class="highlight">Steven (Mortis):</span> Goal scorer/Assassin.<br>
+                • <span class="highlight">Abiel (Emz):</span> Mid control/Denial.<br>
+                • <span class="highlight">Teammate (Frank):</span> Frontline tank & stun.<br>
+            </div>
+        </div>
+
+        <div class="strategy-box backup-comp">
+            <div class="strategy-title">Backup</div>
+            <div class="comp-list">Bibi, Colt, Frank</div>
+            <div class="details">
+                • Steven (Colt), Abiel (Bibi), Teammate (Frank).<br>
+                Adds wall-break and aggressive carrying.
+            </div>
+        </div>
+
+        <div class="strategy-box bans">
+            <div class="strategy-title">Ideal Bans</div>
+            <div class="details">
+                • <strong>Pierce:</strong> Shreds tanks (~70% win rate).<br>
+                • <strong>Gigi/Ziggy:</strong> Game-breaking synergy.<br>
+                • <strong>Mortis:</strong> Prevent counter-assassination.
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-card" id="hot-zone" data-keywords="hot zone emz mortis spike frank tick steven abiel">
+        <div class="mode-title">Hot Zone</div>
+        
+        <div class="strategy-box top-comp">
+            <div class="strategy-title">Top Comp</div>
+            <div class="comp-list">Emz, Mortis, Spike</div>
+            <div class="details">
+                • <span class="highlight">Steven (Mortis):</span> Clear zone & pressure.<br>
+                • <span class="highlight">Abiel (Emz):</span> Area control (Must Pick).<br>
+                • <span class="highlight">Teammate (Spike):</span> Sustain DPS.<br>
+            </div>
+        </div>
+
+        <div class="strategy-box backup-comp">
+            <div class="strategy-title">Backup</div>
+            <div class="comp-list">Emz, Frank, Tick</div>
+            <div class="details">
+                • Steven (Frank), Abiel (Emz), Teammate (Tick).<br>
+                Use if assassins are banned; pure zone denial.
+            </div>
+        </div>
+
+        <div class="strategy-box bans">
+            <div class="strategy-title">Ideal Bans</div>
+            <div class="details">
+                • <strong>Pierce:</strong> Strong long-range damage.<br>
+                • <strong>Trunk:</strong> Oppressive tank on zones.<br>
+                • <strong>Mortis:</strong> Can disrupt your control setup.
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-card" id="knockout" data-keywords="knockout brock mandy piper byron steven abiel">
+        <div class="mode-title">Knockout</div>
+        
+        <div class="strategy-box top-comp">
+            <div class="strategy-title">Top Comp</div>
+            <div class="comp-list">Brock, Mandy, Piper</div>
+            <div class="details">
+                • <span class="highlight">Steven (Piper):</span> Max range burst.<br>
+                • <span class="highlight">Abiel (Mandy):</span> Artillery zoning.<br>
+                • <span class="highlight">Teammate (Brock):</span> Wall break & poke.<br>
+            </div>
+        </div>
+
+        <div class="strategy-box backup-comp">
+            <div class="strategy-title">Backup</div>
+            <div class="comp-list">Brock, Byron, Piper</div>
+            <div class="details">
+                • Steven (Piper), Abiel (Byron), Teammate (Brock).<br>
+                Use if Mandy is banned; adds healing sustain.
+            </div>
+        </div>
+
+        <div class="strategy-box bans">
+            <div class="strategy-title">Ideal Bans</div>
+            <div class="details">
+                • <strong>Mortis:</strong> Hard counter to triple-sniper.<br>
+                • <strong>Pierce:</strong> 71% winrate sniper.<br>
+                • <strong>Gigi:</strong> High carry potential.
+            </div>
+        </div>
+    </div>
+
+    <div class="mode-card" id="heist" data-keywords="heist colt edgar emz amber mandy spike steven abiel">
+        <div class="mode-title">Heist</div>
+        
+        <div class="strategy-box top-comp">
+            <div class="strategy-title">Top Comp</div>
+            <div class="comp-list">Colt, Edgar, Emz</div>
+            <div class="details">
+                • <span class="highlight">Steven (Colt):</span> DPS & Wall-break (Silver Bullet).<br>
+                • <span class="highlight">Abiel (Emz):</span> Defend vs tanks.<br>
+                • <span class="highlight">Teammate (Edgar):</span> Jump on safe.<br>
+            </div>
+        </div>
+
+        <div class="strategy-box backup-comp">
+            <div class="strategy-title">Backup</div>
+            <div class="comp-list">Amber, Mandy, Spike</div>
+            <div class="details">
+                • Steven (Amber), Abiel (Mandy), Teammate (Spike).<br>
+                Continuous safe burn and lane control.
+            </div>
+        </div>
+
+        <div class="strategy-box bans">
+            <div class="strategy-title">Ideal Bans</div>
+            <div class="details">
+                • <strong>Chuck:</strong> Ambush mobility (4% pick rate).<br>
+                • <strong>Bull:</strong> Classic base rusher.<br>
+                • <strong>Nita:</strong> Bear is devastating on safe.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Simple filter function for searching
+    function filterContent() {
+        var input = document.getElementById('searchBar');
+        var filter = input.value.toLowerCase();
+        var cards = document.getElementsByClassName('mode-card');
+
+        for (var i = 0; i < cards.length; i++) {
+            var keywords = cards[i].getAttribute('data-keywords');
+            var textContent = cards[i].textContent.toLowerCase();
+            
+            if (keywords.includes(filter) || textContent.includes(filter)) {
+                cards[i].style.display = "";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+
+    // Scroll to section function
+    function scrollToId(id) {
+        var element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Highlight effect
+            element.style.border = "2px solid #fff";
+            setTimeout(() => {
+                element.style.border = "none";
+                element.style.borderLeft = "5px solid var(--accent)";
+            }, 1000);
+        }
+    }
+</script>
+
+</body>
+</html>
