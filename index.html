@@ -4,262 +4,786 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Di Jorio | Biomedical Engineering & Research</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+                        serif: ['Playfair Display', 'ui-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50:  '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    },
+                    animation: {
+                        'fade-up': 'fadeUp 0.7s ease-out both',
+                        'fade-in': 'fadeIn 0.6s ease-out both',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4,0,0.6,1) infinite',
+                    },
+                    keyframes: {
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(28px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .nav-link { transition: color 0.3s ease; }
-        .nav-link:hover, .nav-link.active { color: #2563EB; /* Tailwind blue-600 */ }
-        .section-title { border-bottom-width: 2px; border-color: #3B82F6; /* Tailwind blue-500 */ padding-bottom: 0.5rem; }
-        .card { background-color: white; border-radius: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
-        #researchInteractiveReviewContainer { border: 1px solid #DBEAFE; /* Tailwind blue-100 */ padding: 1rem; border-radius: 0.375rem; background-color: #EFF6FF; /* Tailwind blue-50 */ }
-        .beale-accordion-button.active + .beale-accordion-content { max-height: 1000px; /* Adjust as needed */ }
-        .beale-accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        /* ── Base ── */
+        body { font-family: 'Inter', sans-serif; }
+
+        /* ── Scroll spy highlight ── */
+        .nav-link { position: relative; transition: color 0.25s; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: #2563eb;
+            transition: width 0.25s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active::after { width: 100%; }
+        .nav-link:hover, .nav-link.active { color: #2563eb; }
+
+        /* ── Hero gradient animation ── */
+        @keyframes gradientShift {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe, #dbeafe, #eff6ff, #f0fdf4);
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease infinite;
+        }
+
+        /* ── Section reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── Section title accent ── */
+        .section-title {
+            display: inline-block;
+            position: relative;
+            padding-bottom: 0.4rem;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 48px; height: 3px;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            border-radius: 2px;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 32px rgba(37,99,235,.12), 0 2px 8px rgba(0,0,0,.08);
+        }
+
+        /* ── Timeline ── */
+        .timeline-line {
+            position: absolute;
+            left: 16px; top: 0; bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #bfdbfe, #dbeafe 80%, transparent);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 8px; top: 6px;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+        }
+
+        /* ── Skill tags ── */
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            border-radius: 9999px;
+            padding: 0.3rem 0.85rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+        .skill-tag:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        /* ── Stat badge ── */
+        .stat-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.06);
+        }
+
+        /* ── Award badge ── */
+        .award-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .award-item:last-child { border-bottom: none; }
+
+        /* ── Mobile menu ── */
+        #mobile-menu {
+            display: none;
+        }
+        #mobile-menu.open {
+            display: flex;
+        }
+
+        /* ── Scroll indicator ── */
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(8px); opacity: .5; }
+        }
+        .scroll-indicator { animation: scrollBounce 1.8s ease-in-out infinite; }
+
+        /* ── Beale's accordion ── */
+        .beale-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease-out;
+        }
+        .beale-accordion-button.active + .beale-accordion-content {
+            max-height: 1000px;
+        }
+
+        /* ── Progress bar ── */
+        .progress-bar {
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            width: 0;
+            transition: width 1s ease 0.3s;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700 antialiased">
 
-    <header class="bg-slate-100/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#hero" class="text-2xl font-bold text-blue-700 hover:text-blue-600 transition-colors">Steven Di Jorio</a>
-            <div class="space-x-4 md:space-x-6 text-sm sm:text-base">
-                <a href="#about" class="nav-link text-slate-600 font-medium">About</a>
-                <a href="#research" class="nav-link text-slate-600 font-medium">Research</a>
-                <a href="#resume" class="nav-link text-slate-600 font-medium">Resume</a>
-                <a href="#projects" class="nav-link text-slate-600 font-medium">Projects</a>
-                <a href="#contact" class="nav-link text-slate-600 font-medium">Contact</a>
+    <!-- ═══════════════  NAV  ═══════════════ -->
+    <header id="site-header" class="bg-white/80 backdrop-blur-lg border-b border-slate-100 sticky top-0 z-50 transition-shadow duration-300">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center max-w-6xl">
+            <a href="#hero" class="font-serif text-xl font-bold text-brand-700 tracking-tight">Steven Di Jorio</a>
+
+            <!-- Desktop links -->
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-600">
+                <a href="#about"    class="nav-link">About</a>
+                <a href="#research" class="nav-link">Research</a>
+                <a href="#resume"   class="nav-link">Resume</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#contact"  class="nav-link">Contact</a>
+                <a href="mailto:steven.dijorio@gmail.com"
+                   class="ml-2 bg-brand-600 text-white px-4 py-2 rounded-lg hover:bg-brand-700 transition-colors text-sm font-semibold shadow-sm">
+                    Get in touch
+                </a>
             </div>
+
+            <!-- Mobile hamburger -->
+            <button id="menu-toggle" class="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100" aria-label="Toggle menu">
+                <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
         </nav>
+
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden flex-col px-6 pb-5 space-y-3 text-slate-700 font-medium border-t border-slate-100 bg-white">
+            <a href="#about"    class="block py-1 hover:text-brand-600 transition-colors">About</a>
+            <a href="#research" class="block py-1 hover:text-brand-600 transition-colors">Research</a>
+            <a href="#resume"   class="block py-1 hover:text-brand-600 transition-colors">Resume</a>
+            <a href="#projects" class="block py-1 hover:text-brand-600 transition-colors">Projects</a>
+            <a href="#contact"  class="block py-1 hover:text-brand-600 transition-colors">Contact</a>
+        </div>
     </header>
 
-    <section id="hero" class="min-h-[80vh] bg-gradient-to-br from-slate-100 via-blue-50 to-sky-100 flex items-center py-12">
-        <div class="container mx-auto px-6 text-center">
-            <img src="https://i.postimg.cc/wxQQDMD5/Steven-Di-Jorio.png" alt="Steven Di Jorio" class="w-32 h-32 sm:w-40 sm:h-40 rounded-full mx-auto mb-6 shadow-lg border-4 border-white">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-800 mb-4">Steven Di Jorio</h1>
-            <p class="text-lg sm:text-xl md:text-2xl text-blue-700 font-semibold">
-                Biomedical Engineering Student & Researcher | CURE Fellow at OUHSC Stephenson Cancer Center | Specializing in Photonics for Early Cancer Detection
+    <!-- ═══════════════  HERO  ═══════════════ -->
+    <section id="hero" class="hero-bg min-h-[92vh] flex flex-col items-center justify-center py-20 px-6 relative overflow-hidden">
+        <!-- decorative blobs -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-sky-200/30 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4 pointer-events-none"></div>
+
+        <div class="text-center relative z-10 max-w-3xl mx-auto">
+            <div class="mb-6 relative inline-block">
+                <div class="absolute inset-0 rounded-full bg-gradient-to-br from-brand-400 to-sky-300 blur-md opacity-50 scale-110"></div>
+                <img src="https://i.postimg.cc/wxQQDMD5/Steven-Di-Jorio.png"
+                     alt="Steven Di Jorio"
+                     class="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full mx-auto shadow-2xl border-4 border-white object-cover">
+            </div>
+
+            <p class="text-brand-600 font-semibold tracking-widest text-sm uppercase mb-3 animate-fade-in">Biomedical Engineering · Research · Medicine</p>
+            <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl font-bold text-slate-800 leading-tight mb-5 animate-fade-up" style="animation-delay:.1s">
+                Steven Di Jorio
+            </h1>
+            <p class="text-slate-600 text-lg sm:text-xl leading-relaxed mb-8 max-w-2xl mx-auto animate-fade-up" style="animation-delay:.2s">
+                CURE Fellow at OUHSC Stephenson Cancer Center &mdash; specializing in photonics and AI for early cancer detection. Future <em>Physicianeer.</em>
             </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay:.3s">
+                <a href="#research"
+                   class="bg-brand-600 text-white font-semibold px-7 py-3.5 rounded-xl shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all hover:-translate-y-0.5">
+                    View Research
+                </a>
+                <a href="#contact"
+                   class="bg-white text-brand-700 font-semibold px-7 py-3.5 rounded-xl border border-brand-200 hover:border-brand-400 shadow-sm transition-all hover:-translate-y-0.5">
+                    Get in Touch
+                </a>
+            </div>
         </div>
+
+        <!-- Scroll indicator -->
+        <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-400 hover:text-brand-500 transition-colors scroll-indicator" aria-label="Scroll down">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/></svg>
+        </a>
     </section>
 
-    <section id="about" class="py-16 sm:py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">About Me</h2>
-            <div class="max-w-3xl mx-auto text-lg text-slate-600 leading-relaxed space-y-4">
-                <p>
-                    I am an undergraduate student at the University of Oklahoma, diligently pursuing a B.S. in Biomedical Engineering with minors in Chemistry, Biology, and Math, on a Pre-Medical track (Expected Graduation: May 2027). My academic journey is driven by a profound interest in the intersection of engineering innovation and medical science.
-                </p>
-                <p>
-                    My career aspiration is to become a "Physicianeer," dedicating my efforts to research focused on the early detection of cancer using advanced photonic methods. This goal is rooted in my experiences as a CURE Undergraduate Research Fellow at the OUHSC Stephenson Cancer Center and my work in neuro-oncology research, where I've had the privilege of applying cutting-edge imaging techniques like Optical Coherence Tomography (OCT) and AI to challenging diagnostic problems.
-                </p>
-                <p>
-                    Beyond the lab, I am passionate about translating technical skills into tangible community impact. Co-founding the Prosthetics Club to connect students with internship opportunities and establishing "Askus coding pathways" to provide free programming education reflect my belief in mentorship and accessible learning. My clinical volunteering at Gospel of Life Disciples - Hospice has further solidified my commitment to compassionate patient care, teaching me the importance of empathy and support in healthcare. I strive to bring a holistic, solution-oriented, and empathetic approach to all my endeavors in engineering and medicine.
-                </p>
+    <!-- ═══════════════  STATS STRIP  ═══════════════ -->
+    <div class="bg-white border-y border-slate-100 py-10">
+        <div class="container mx-auto px-6 max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
+            <div class="stat-card">
+                <p class="text-3xl font-bold text-brand-700">200+</p>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Clinical Hours</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-3xl font-bold text-brand-700">4×</p>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Dean's List</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-3xl font-bold text-brand-700">$15K</p>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Microsoft Funding Secured</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-3xl font-bold text-brand-700">84%</p>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Club Internship Placement</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════  ABOUT  ═══════════════ -->
+    <section id="about" class="py-20 sm:py-28">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="section-title font-serif text-4xl font-bold text-slate-800 mb-8">About Me</h2>
+                    <div class="space-y-5 text-slate-600 leading-relaxed text-[1.05rem]">
+                        <p>
+                            I am an undergraduate student at the <strong class="text-slate-800">University of Oklahoma</strong>, pursuing a B.S. in Biomedical Engineering with minors in Chemistry, Biology, and Math, on a Pre-Medical track (Expected Graduation: May 2027).
+                        </p>
+                        <p>
+                            My goal is to become a <strong class="text-slate-800">"Physicianeer"</strong> &mdash; dedicating my career to early cancer detection through advanced photonic methods. This aspiration is rooted in my work as a CURE Fellow at the OUHSC Stephenson Cancer Center, where I apply Optical Coherence Tomography and AI to challenging diagnostic problems.
+                        </p>
+                        <p>
+                            Beyond the lab, I co-founded the Prosthetics Club, established the "Askus coding pathways" non-profit, and volunteered 200+ hours in hospice care &mdash; reflecting a commitment to both technical innovation and compassionate community impact.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reveal grid grid-cols-2 gap-4">
+                    <div class="card p-5 flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <p class="font-semibold text-slate-800 text-sm">Photonics Research</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">OCT imaging for bile duct and cancer diagnostics</p>
+                    </div>
+                    <div class="card p-5 flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+                        </div>
+                        <p class="font-semibold text-slate-800 text-sm">AI & Imaging</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Deep learning models for tumor detection</p>
+                    </div>
+                    <div class="card p-5 flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                        </div>
+                        <p class="font-semibold text-slate-800 text-sm">Clinical Care</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">200+ hours hospice volunteering</p>
+                    </div>
+                    <div class="card p-5 flex flex-col gap-2">
+                        <div class="w-10 h-10 rounded-lg bg-purple-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                        </div>
+                        <p class="font-semibold text-slate-800 text-sm">Education</p>
+                        <p class="text-xs text-slate-500 leading-relaxed">Founded free K-12 coding non-profit</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="research" class="py-16 sm:py-20 bg-slate-100">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Latest Research</h2>
-            <div class="space-y-10">
-                <div class="card p-6">
-                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">CURE Undergraduate Research Fellow</h3>
-                    <p class="text-sm text-slate-500 mb-1">OUHSC Stephenson Cancer Center | May 2025 - Aug 2025</p>
-                    <ul class="list-disc list-inside text-slate-600 space-y-1 leading-relaxed">
-                        <li>Selected as one of six fellows for the competitive CURE (Cancer Undergraduate Research Experience) Program to conduct and advance cancer research.</li>
-                        <li>Specializing in the early detection of cancer using photonic imaging techniques, including Optical Coherence Tomography (OCT) and spectral analysis.</li>
-                        <li>Applying OCT to identify and quantify bile duct lesions, leveraging MATLAB, Python, and ImageJ for sophisticated image processing, segmentation, and feature extraction.</li>
-                        <li>Currently co-authoring a peer-reviewed manuscript on photonics-based cancer diagnostics, collaborating closely with biomedical engineers and physician-scientists to translate imaging data into clinically actionable insights.</li>
-                    </ul>
+    <!-- ═══════════════  RESEARCH  ═══════════════ -->
+    <section id="research" class="py-20 sm:py-28 bg-slate-50/80">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="reveal mb-14">
+                <h2 class="section-title font-serif text-4xl font-bold text-slate-800 mb-3">Latest Research</h2>
+                <p class="text-slate-500 mt-6 max-w-xl">Applying engineering principles and photonics to advance early cancer diagnostics.</p>
+            </div>
 
-                    <figure class="mt-6 max-w-md mx-auto bg-slate-50/50 p-4 rounded-lg shadow-inner">
-                        <img src="https://i.postimg.cc/7PchFWxk/IMG-2077.avif" alt="Steven Di Jorio presenting his CURE fellowship research poster at the OUHSC Graduate College Symposium." class="w-full rounded-md shadow-md">
-                        <figcaption class="mt-3 text-center text-sm italic text-slate-600">
-                            Presenting my research, "Evaluating Bile Ducts in Liver Transplantation Using OCT," at the 2025 CURE Summer Symposium. This fellowship was an incredible opportunity to contribute to cutting-edge cancer diagnostics.
-                        </figcaption>
-                    </figure>
+            <!-- Timeline -->
+            <div class="relative pl-10 space-y-10">
+                <div class="timeline-line"></div>
+
+                <!-- CURE Fellowship -->
+                <div class="reveal relative">
+                    <div class="timeline-dot"></div>
+                    <div class="card p-7">
+                        <div class="flex flex-wrap gap-3 items-start justify-between mb-4">
+                            <div>
+                                <span class="text-xs font-semibold uppercase tracking-widest text-brand-500 mb-1 block">OUHSC Stephenson Cancer Center</span>
+                                <h3 class="text-xl font-bold text-slate-800">CURE Undergraduate Research Fellow</h3>
+                            </div>
+                            <span class="text-xs bg-brand-50 text-brand-700 border border-brand-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">May – Aug 2025</span>
+                        </div>
+                        <ul class="space-y-2 text-slate-600 text-sm leading-relaxed mb-6">
+                            <li class="flex gap-2"><span class="text-brand-400 mt-0.5">▸</span>Selected as one of six fellows for the competitive CURE cancer research program.</li>
+                            <li class="flex gap-2"><span class="text-brand-400 mt-0.5">▸</span>Specializing in early cancer detection via Optical Coherence Tomography (OCT) and spectral analysis to identify bile duct lesions.</li>
+                            <li class="flex gap-2"><span class="text-brand-400 mt-0.5">▸</span>Leveraging MATLAB, Python, and ImageJ for image processing, segmentation, and feature extraction.</li>
+                            <li class="flex gap-2"><span class="text-brand-400 mt-0.5">▸</span>Co-authoring a peer-reviewed manuscript on photonics-based cancer diagnostics with biomedical engineers and physician-scientists.</li>
+                        </ul>
+
+                        <figure class="bg-slate-50 rounded-xl overflow-hidden border border-slate-100">
+                            <img src="https://i.postimg.cc/7PchFWxk/IMG-2077.avif"
+                                 alt="Steven Di Jorio presenting CURE fellowship research poster"
+                                 class="w-full max-h-72 object-cover object-top">
+                            <figcaption class="px-5 py-3 text-xs text-slate-500 italic leading-relaxed">
+                                Presenting "Evaluating Bile Ducts in Liver Transplantation Using OCT" at the 2025 CURE Summer Symposium.
+                            </figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+                <!-- Neuro-Oncology -->
+                <div class="reveal relative">
+                    <div class="timeline-dot"></div>
+                    <div class="card p-7">
+                        <div class="flex flex-wrap gap-3 items-start justify-between mb-4">
+                            <div>
+                                <span class="text-xs font-semibold uppercase tracking-widest text-sky-500 mb-1 block">University of Oklahoma</span>
+                                <h3 class="text-xl font-bold text-slate-800">Neuro-Oncology Research Intern</h3>
+                            </div>
+                            <span class="text-xs bg-sky-50 text-sky-700 border border-sky-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Mar – Dec 2024</span>
+                        </div>
+                        <ul class="space-y-2 text-slate-600 text-sm leading-relaxed">
+                            <li class="flex gap-2"><span class="text-sky-400 mt-0.5">▸</span>Contributed to development of an AI model leveraging open-source data for early-stage brain tumor detection with high accuracy.</li>
+                            <li class="flex gap-2"><span class="text-sky-400 mt-0.5">▸</span>Assisted an Associate Professor in dataset analysis and iterative model training, improving diagnostic precision.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Beale's Sacculi -->
+                <div class="reveal relative">
+                    <div class="timeline-dot"></div>
+                    <div class="card p-7">
+                        <div class="flex flex-wrap gap-3 items-start justify-between mb-4">
+                            <div>
+                                <span class="text-xs font-semibold uppercase tracking-widest text-emerald-500 mb-1 block">Literature Review</span>
+                                <h3 class="text-xl font-bold text-slate-800">Cystic Dilation of Beale's Sacculi</h3>
+                            </div>
+                            <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Interactive</span>
+                        </div>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            A comprehensive literature review defining thresholds for cystic dilation of Beale's sacculi (peribiliary glands). Key findings: ectasia defined as &lt;2 mm; peribiliary cysts ≥2 mm and up to 2.5 cm. Cysts are lined by benign biliary epithelium and linked to chronic liver disease and potential neoplastic precursors.
+                        </p>
+                        <a href="what_is_beales_sacculi.html"
+                           class="inline-flex items-center gap-2 text-brand-600 hover:text-brand-700 font-medium text-sm transition-colors group">
+                            Explore Interactive Review
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publications note -->
+            <div class="reveal mt-10 flex items-center gap-3 bg-brand-50 border border-brand-100 rounded-xl p-5 max-w-xl">
+                <svg class="w-5 h-5 text-brand-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <p class="text-sm text-brand-800"><strong>Publication in preparation:</strong> Manuscript on photonics-based cancer diagnostics (2025).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════  RESUME  ═══════════════ -->
+    <section id="resume" class="py-20 sm:py-28 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="reveal flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+                <div>
+                    <h2 class="section-title font-serif text-4xl font-bold text-slate-800 mb-3">Resume / CV</h2>
+                    <p class="text-slate-500 mt-6">Education, skills, and professional experience.</p>
+                </div>
+                <a href="#resume-link-placeholder" target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 bg-brand-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-brand-200 hover:bg-brand-700 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                    Download PDF
+                </a>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Education -->
+                <div class="reveal card p-7 lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-9 h-9 rounded-lg bg-brand-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"/><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800">Education</h3>
+                    </div>
+                    <p class="font-semibold text-slate-700">University of Oklahoma</p>
+                    <p class="text-sm text-slate-500 mb-1">Gallogly College of Engineering | Norman, OK</p>
+                    <p class="text-sm text-slate-600">B.S. Biomedical Engineering</p>
+                    <p class="text-sm text-slate-500 mb-3">Expected May 2027 · Pre-Med Track</p>
+                    <p class="text-xs text-slate-500 font-medium uppercase tracking-wide mb-1">Minors</p>
+                    <p class="text-sm text-slate-600 mb-4">Chemistry · Biology · Mathematics</p>
+                    <p class="text-xs text-slate-500 font-medium uppercase tracking-wide mb-2">Awards</p>
+                    <p class="text-sm text-slate-600 leading-relaxed">Dean's List (Fall '23, Spring '24, Fall '24, Spring '25) · President's Outstanding Programming Award '24–'25</p>
+                </div>
+
+                <!-- Skills -->
+                <div class="reveal card p-7 lg:col-span-2">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800">Key Skills</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">Biophotonics</span>
+                        <span class="skill-tag">Optical Coherence Tomography</span>
+                        <span class="skill-tag">Spectral Analysis</span>
+                        <span class="skill-tag">AI Model Development</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">MATLAB</span>
+                        <span class="skill-tag">ImageJ</span>
+                        <span class="skill-tag">Image Processing</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Scientific Writing</span>
+                        <span class="skill-tag">LLM Development</span>
+                        <span class="skill-tag">ScrumMaster</span>
+                        <span class="skill-tag">Clinical Research</span>
+                        <span class="skill-tag">Community Outreach</span>
+                        <span class="skill-tag">Mentorship</span>
                     </div>
 
-                <div class="card p-6">
-                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">Neuro-Oncology Research Intern</h3>
-                    <p class="text-sm text-slate-500 mb-1">University of Oklahoma | Mar 2024 - Dec 2024</p>
-                     <ul class="list-disc list-inside text-slate-600 space-y-1 leading-relaxed">
-                        <li>Played a significant role in the development of an innovative AI model utilizing open-source data to detect early-stage brain tumors with high accuracy.</li>
-                        <li>Assisted an Associate Professor in analyzing complex datasets and iteratively training the AI model, contributing to significant improvements in its diagnostic precision for early-stage brain tumors.</li>
-                     </ul>
-                </div>
-                
-                <div class="card p-6">
-                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">Interactive Review: Cystic Dilation of Beale's Sacculi</h3>
-                    <p class="text-slate-600 leading-relaxed mb-2">
-                        This research involved a comprehensive literature review to define and discuss thresholds (qualitative or quantitative) for cystic dilation of Beale’s sacculi (peribiliary glands) versus normal sacculi. The work explored histological criteria, morphological measurements, imaging findings across modalities like MRI, ERCP, EUS, and histopathology, and the clinical relevance of dilation in association with conditions like inflammation, obstruction, or malignancy.
-                    </p>
-                    <p class="text-slate-600 leading-relaxed">
-                        <strong>Key findings include:</strong> Normal Beale's sacculi are microscopic and dilation is typically "absent or slight." Pathological dilation presents as a spectrum, with "ectasia" defined as <2 mm diameter and "peribiliary cysts" as ≥2 mm. These cysts can range up to 2.5 cm. Histologically, cysts are lined by benign biliary epithelium and do not communicate with the biliary lumen. Imaging reveals fluid-filled structures, and clinical relevance links them to chronic liver diseases and potential neoplastic precursors.
-                    </p>
-                    <div id="researchInteractiveReviewContainer" class="mt-4">
-                        <h4 class="text-lg font-semibold text-slate-700 mb-2">Explore the Interactive Review:</h4>
-                        <p class="text-sm text-slate-600">
-                            <i>[The full interactive HTML content for the Beale's Sacculi review, including accordions for detailed information on histology, imaging, clinical relevance, comparative views, and knowledge gaps, will be integrated here. This will allow users to dynamically explore the research findings directly on this page.]</i>
-                        </p>
-                        <div class="mt-3">
-                             <button onclick="location.href='what_is_beales_sacculi.html'"
-                                     class="text-left text-md font-medium text-blue-600 hover:text-blue-700 py-1 w-full">
-                                Sample: What are Beale’s Sacculi? ▶
-                            </button>
+                    <div class="mt-7 space-y-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-slate-500 mb-1"><span>Python / MATLAB</span><span>Advanced</span></div>
+                            <div class="progress-bar"><div class="progress-fill" data-width="88%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-slate-500 mb-1"><span>OCT & Spectral Imaging</span><span>Proficient</span></div>
+                            <div class="progress-bar"><div class="progress-fill" data-width="80%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-slate-500 mb-1"><span>AI / Machine Learning</span><span>Proficient</span></div>
+                            <div class="progress-bar"><div class="progress-fill" data-width="74%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-medium text-slate-500 mb-1"><span>Scientific Writing</span><span>Proficient</span></div>
+                            <div class="progress-bar"><div class="progress-fill" data-width="76%"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="text-center sm:text-left">
-                    <h4 class="text-xl font-semibold text-slate-700 mb-2">Publications</h4>
-                    <p class="text-slate-600">Manuscript in preparation (Photonics-based cancer diagnostics).</p>
+                <!-- Experience -->
+                <div class="reveal card p-7 lg:col-span-3">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-9 h-9 rounded-lg bg-emerald-50 flex items-center justify-center">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800">Experience Highlights</h3>
+                    </div>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-brand-600 font-semibold uppercase tracking-wide mb-1">Research</p>
+                            <p class="text-sm font-semibold text-slate-700">CURE Research Fellow</p>
+                            <p class="text-xs text-slate-500">OUHSC Stephenson Cancer Center</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-sky-600 font-semibold uppercase tracking-wide mb-1">Research</p>
+                            <p class="text-sm font-semibold text-slate-700">Neuro-Oncology Intern</p>
+                            <p class="text-xs text-slate-500">University of Oklahoma</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-purple-600 font-semibold uppercase tracking-wide mb-1">Industry</p>
+                            <p class="text-sm font-semibold text-slate-700">Behavioral Research Intern</p>
+                            <p class="text-xs text-slate-500">Storylinez Inc. (OU Innovation Hub)</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-emerald-600 font-semibold uppercase tracking-wide mb-1">Leadership</p>
+                            <p class="text-sm font-semibold text-slate-700">Co-founder, Prosthetics Club</p>
+                            <p class="text-xs text-slate-500">University of Oklahoma</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-orange-600 font-semibold uppercase tracking-wide mb-1">Non-profit</p>
+                            <p class="text-sm font-semibold text-slate-700">Founder, Askus coding pathways</p>
+                            <p class="text-xs text-slate-500">K-12 Programming Education</p>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                            <p class="text-xs text-rose-600 font-semibold uppercase tracking-wide mb-1">Clinical</p>
+                            <p class="text-sm font-semibold text-slate-700">Hospice Volunteer (200+ hrs)</p>
+                            <p class="text-xs text-slate-500">Gospel of Life Disciples</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="resume" class="py-16 sm:py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Resume / CV</h2>
-            <div class="text-center mb-10">
-                <a href="#resume-link-placeholder" 
-                   class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 transition-colors text-lg"
-                   target="_blank" rel="noopener noreferrer">
-                   Download Full Resume (PDF)
-                </a>
+    <!-- ═══════════════  PROJECTS  ═══════════════ -->
+    <section id="projects" class="py-20 sm:py-28 bg-slate-50">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="reveal mb-14">
+                <h2 class="section-title font-serif text-4xl font-bold text-slate-800 mb-3">Projects &amp; Initiatives</h2>
+                <p class="text-slate-500 mt-6">Research tools, community programs, and entrepreneurial ventures.</p>
             </div>
-
-            <div class="space-y-8 max-w-4xl mx-auto">
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Education</h3>
-                    <p class="text-slate-700 font-semibold">University of Oklahoma, Gallogly College of Engineering | Norman, OK</p>
-                    <p class="text-slate-600">B.S. Biomedical Engineering (Expected May 2027)</p>
-                    <p class="text-slate-600">Minors: Chemistry, Biology, Math</p>
-                    <p class="text-slate-600">Pre-Medical Track</p>
-                    <p class="text-slate-600 mt-1"><strong>Awards:</strong> Dean's List (Fall '23, Spring '24, Fall '24, Spring '25), President's Outstanding Programming Award '24-'25.</p>
-                    <p class="text-slate-600 mt-1"><strong>Relevant Coursework:</strong> Signals and Systems, Circuits 1, Programming with Python, Applied Engineering Statistics, Organic Chemistry I and II, Differential Equations, Genetics, Engineering Physics I and II.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <div class="reveal card p-7 border-l-4 border-brand-500">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="text-lg font-bold text-slate-800">Askus Coding Pathways</h3>
+                        <span class="text-xs bg-orange-50 text-orange-700 border border-orange-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Non-profit</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mb-3">Founder &amp; Instructor</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Founded an online coding non-profit empowering K-12 learners with accessible programming education. Secured <strong>$15,000 in match funding from Microsoft</strong> to sustain and scale the initiative.</p>
                 </div>
 
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Key Skills</h3>
-                    <ul class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-slate-600">
-                        <li>Biophotonics</li>
-                        <li>Optical Coherence Tomography (OCT)</li>
-                        <li>Spectral Analysis</li>
-                        <li>AI Model Development</li>
-                        <li>Image Processing (MATLAB, Python, ImageJ)</li>
-                        <li>Programming (Python)</li>
-                        <li>Data Analysis</li>
-                        <li>Scientific Writing</li>
-                        <li>LLM Development</li>
-                        <li>ScrumMaster</li>
-                        <li>Clinical Research Support</li>
-                        <li>Community Outreach</li>
-                        <li>Mentorship</li>
-                    </ul>
+                <div class="reveal card p-7 border-l-4 border-purple-500">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="text-lg font-bold text-slate-800">AI for Advertising Optimization</h3>
+                        <span class="text-xs bg-purple-50 text-purple-700 border border-purple-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Industry</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mb-3">Behavioral Research Intern · Storylinez Inc.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Developed a custom LLM to optimize AI-generated advertisements using psychographic research and real-time consumer behavior analysis. Served as ScrumMaster for executive presentations.</p>
                 </div>
 
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-3">Experience Highlights</h3>
-                    <ul class="list-disc list-inside text-slate-600 space-y-1 leading-relaxed">
-                        <li>CURE Undergraduate Research Fellow, OUHSC Stephenson Cancer Center</li>
-                        <li>Neuro Oncology Research Intern, University of Oklahoma</li>
-                        <li>Behavioral Research Intern (LLM Development), Storylinez Inc. (OU Innovation Hub)</li>
-                        <li>Cofounder/Executive Outreach Manager, Prosthetics Club</li>
-                        <li>Founder/Instructor, Askus coding pathways (Non-profit)</li>
-                        <li>Clinical Volunteer, Gospel of Life Disciples - Hospice (200+ hours)</li>
-                    </ul>
+                <div class="reveal card p-7 border-l-4 border-emerald-500">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="text-lg font-bold text-slate-800">Prosthetics Club Initiative</h3>
+                        <span class="text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Leadership</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mb-3">Co-founder &amp; Executive Outreach Manager</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Co-founded the Prosthetics Club; outreach efforts secured internships from local companies for <strong>~84% of members</strong> seeking positions. Collaborated with veterans organizations and grew membership via social media.</p>
+                </div>
+
+                <div class="reveal card p-7 border-l-4 border-sky-500">
+                    <div class="flex items-start justify-between gap-4 mb-3">
+                        <h3 class="text-lg font-bold text-slate-800">OCT Image Processing Toolkit</h3>
+                        <span class="text-xs bg-sky-50 text-sky-700 border border-sky-200 rounded-full px-3 py-1 font-medium whitespace-nowrap">Personal Project</span>
+                    </div>
+                    <p class="text-xs text-slate-500 font-medium mb-3">Python · MATLAB · ImageJ</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Python-based toolkit for processing and analyzing OCT images, including noise reduction filters, segmentation algorithms, and feature extraction for quantitative biomedical research analysis.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="py-16 sm:py-20 bg-slate-100">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Projects & Initiatives</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-2">Askus coding pathways (Non-Profit)</h3>
-                    <p class="text-sm text-slate-500 mb-2">Role: Founder & Instructor</p>
-                    <p class="text-slate-600 leading-relaxed">Founded and instructed at an online coding nonprofit, focusing on empowering K-12 learners through accessible programming education. Successfully secured $15,000 in match funding from Microsoft to support the initiative.</p>
-                </div>
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-2">AI for Advertising Optimization</h3>
-                    <p class="text-sm text-slate-500 mb-2">Role: Behavioral Research Intern, Storylinez Inc. (OU Innovation Hub)</p>
-                    <p class="text-slate-600 leading-relaxed">Developed a custom Large Language Model (LLM) to optimize AI-generated advertisements by leveraging psychographic research and real-time consumer behavior analysis. Also contributed as a Scrummaster in preparing presentations for senior engineers and executives.</p>
-                </div>
-                <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-2">Prosthetics Club Initiative</h3>
-                    <p class="text-sm text-slate-500 mb-2">Role: Cofounder & Executive Outreach Manager</p>
-                    <p class="text-slate-600 leading-relaxed">Co-founded the Prosthetics Club, leading outreach efforts that secured and facilitated internships from local prosthetic companies for approximately 84% of club members seeking positions. Established collaborations with local organizations and veterans, and managed social media (Instagram) to significantly increase membership and event attendance.</p>
-                </div>
-                 <div class="card p-6">
-                    <h3 class="text-xl font-semibold text-blue-700 mb-2">OCT Image Processing Toolkit</h3>
-                    <p class="text-sm text-slate-500 mb-2">Role: Personal Project</p>
-                    <p class="text-slate-600 leading-relaxed">Developed a Python-based toolkit for processing and analyzing Optical Coherence Tomography (OCT) images. The toolkit includes noise reduction filters, segmentation algorithms, and feature extraction capabilities for quantitative analysis in biomedical research contexts, leveraging skills demonstrated in CURE fellowship.</p>
-                </div>
+    <!-- ═══════════════  AWARDS  ═══════════════ -->
+    <section id="awards" class="py-20 sm:py-28 bg-white">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="reveal mb-12">
+                <h2 class="section-title font-serif text-4xl font-bold text-slate-800 mb-3">Awards &amp; Recognition</h2>
             </div>
-        </div>
-    </section>
-    
-    <section id="clinical-experience" class="py-16 sm:py-20">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Clinical Experience</h2>
-            <div class="max-w-3xl mx-auto card p-6">
-                <h3 class="text-xl font-semibold text-blue-700 mb-2">Hospice Volunteer</h3>
-                <p class="text-sm text-slate-500 mb-2">Gospel of Life Disciples - Hospice | 200+ hours</p>
-                <p class="text-slate-600 leading-relaxed">Provided dedicated hospice care, supporting patients with medication reminders, hygiene care, ambulation assistance, and crucial emotional comfort during end-of-life transitions in a clinical setting. This experience offered profound insights into patient care and the importance of empathy in medicine.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="awards" class="py-16 sm:py-20 bg-slate-100">
-        <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Awards & Recognition</h2>
-            <div class="max-w-3xl mx-auto card p-6">
-                <ul class="list-disc list-inside text-slate-600 space-y-2 leading-relaxed text-lg">
-                    <li>CURE Undergraduate Research Fellow, OUHSC Stephenson Cancer Center</li>
-                    <li>Dean's List (Fall '23, Spring '24, Fall '24, Spring '25), University of Oklahoma</li>
-                    <li>President's Outstanding Programming Award '24-'25, University of Oklahoma</li>
-                    <li>Runner-up, Norman Animal Welfare Volunteer of the Year Award for 2025</li>
-                </ul>
+            <div class="reveal card p-7">
+                <div class="award-item">
+                    <div class="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">CURE Undergraduate Research Fellow</p>
+                        <p class="text-sm text-slate-500">OUHSC Stephenson Cancer Center</p>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">Dean's List (Fall '23, Spring '24, Fall '24, Spring '25)</p>
+                        <p class="text-sm text-slate-500">University of Oklahoma</p>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">President's Outstanding Programming Award '24–'25</p>
+                        <p class="text-sm text-slate-500">University of Oklahoma</p>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800">Runner-up, Norman Animal Welfare Volunteer of the Year</p>
+                        <p class="text-sm text-slate-500">2025</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="blog" class="py-16 sm:py-20 hidden"> <div class="container mx-auto px-6">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 text-center sm:text-left">Blog / Insights</h2>
-            <div class="text-center text-slate-600">
-                <p>This section is a placeholder for future blog posts or insights on science, med-tech, or research reflections.</p>
-                <p class="mt-2">Check back soon for updates!</p>
-            </div>
-        </div>
-    </section>
+    <!-- ═══════════════  CONTACT  ═══════════════ -->
+    <section id="contact" class="py-20 sm:py-28 bg-gradient-to-br from-brand-700 via-brand-800 to-slate-900 text-white relative overflow-hidden">
+        <!-- decorative bg circle -->
+        <div class="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-brand-500/20 blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-sky-500/15 blur-3xl pointer-events-none"></div>
 
-    <section id="contact" class="py-16 sm:py-20">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="section-title text-3xl sm:text-4xl font-bold text-slate-800 mb-10 sm:mb-12 inline-block">Get In Touch</h2>
-            <p class="text-lg text-slate-600 mb-8 max-w-xl mx-auto">
-                I'm always open to discussing research collaborations, new projects, or opportunities to contribute to the fields of biomedical engineering and medicine.
+        <div class="container mx-auto px-6 max-w-2xl text-center relative z-10 reveal">
+            <h2 class="font-serif text-4xl sm:text-5xl font-bold mb-5">Let's Connect</h2>
+            <p class="text-brand-200 text-lg leading-relaxed mb-10">
+                Open to research collaborations, new projects, or opportunities in biomedical engineering and medicine.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="mailto:steven.dijorio@gmail.com" 
-                   class="inline-block bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition-colors text-lg">
-                   Email Me: steven.dijorio@gmail.com
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="mailto:steven.dijorio@gmail.com"
+                   class="inline-flex items-center justify-center gap-2 bg-white text-brand-800 font-semibold py-3.5 px-7 rounded-xl shadow-lg hover:bg-brand-50 transition-all hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    steven.dijorio@gmail.com
                 </a>
                 <a href="https://www.linkedin.com/in/steven-di-jorio-7634082b1/" target="_blank" rel="noopener noreferrer"
-                   class="inline-flex items-center text-blue-600 hover:text-blue-700 font-semibold text-lg transition-colors">
-                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
+                   class="inline-flex items-center justify-center gap-2 bg-brand-600/50 border border-brand-400/40 text-white font-semibold py-3.5 px-7 rounded-xl hover:bg-brand-600 transition-all hover:-translate-y-0.5">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
                     LinkedIn
                 </a>
             </div>
         </div>
     </section>
 
-    <footer class="text-center py-8 border-t border-slate-200 bg-slate-100">
-        <p class="text-sm text-slate-500">&copy; <span id="currentYear"></span> Steven Di Jorio. All rights reserved.</p>
-        
+    <!-- ═══════════════  FOOTER  ═══════════════ -->
+    <footer class="bg-slate-900 text-slate-400 py-8">
+        <div class="container mx-auto px-6 max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+            <p>&copy; <span id="currentYear"></span> Steven Di Jorio. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <a href="#about"    class="hover:text-white transition-colors">About</a>
+                <a href="#research" class="hover:text-white transition-colors">Research</a>
+                <a href="#contact"  class="hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ── Year ──
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // ── Mobile menu ──
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const iconOpen   = document.getElementById('icon-open');
+        const iconClose  = document.getElementById('icon-close');
+
+        menuToggle.addEventListener('click', () => {
+            const open = mobileMenu.classList.toggle('open');
+            iconOpen.classList.toggle('hidden', open);
+            iconClose.classList.toggle('hidden', !open);
+        });
+
+        // Close on link click
+        mobileMenu.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                iconOpen.classList.remove('hidden');
+                iconClose.classList.add('hidden');
+            });
+        });
+
+        // ── Scroll reveal ──
+        const revealEls = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('visible');
+                    revealObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.12 });
+        revealEls.forEach(el => revealObserver.observe(el));
+
+        // ── Progress bars (animate when visible) ──
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.progress-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.width;
+                    });
+                    progressObserver.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        document.querySelectorAll('.card').forEach(card => {
+            if (card.querySelector('.progress-fill')) progressObserver.observe(card);
+        });
+
+        // ── Active nav highlight on scroll ──
+        const sections = document.querySelectorAll('section[id], div.bg-white[id]');
+        const navLinks  = document.querySelectorAll('.nav-link');
+
+        const navObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === '#' + e.target.id);
+                    });
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' });
+
+        document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+
+        // ── Header shadow on scroll ──
+        window.addEventListener('scroll', () => {
+            document.getElementById('site-header').classList.toggle('shadow-md', window.scrollY > 10);
+        }, { passive: true });
+    </script>
 </body>
 </html>
