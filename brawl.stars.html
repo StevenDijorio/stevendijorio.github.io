@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brawl Stars Strategy Dashboard</title>
+    <meta name="robots" content="noindex,follow">
     <style>
         :root {
             --bg-color: #121212;
@@ -42,6 +43,7 @@
         }
 
         input#searchBar {
+            box-sizing: border-box;
             width: 100%;
             max-width: 400px;
             padding: 12px;
@@ -131,8 +133,8 @@
         }
 
         .top-comp .strategy-title { background-color: var(--top-comp); }
-        .backup-comp .strategy-title { background-color: var(--backup-comp); color: white; }
-        .bans .strategy-title { background-color: var(--ban-color); color: white; }
+        .backup-comp .strategy-title { background-color: var(--backup-comp); }
+        .bans .strategy-title { background-color: var(--ban-color); }
 
         .comp-list {
             font-weight: bold;
@@ -166,7 +168,7 @@
 
 <header>
     <h1>Ranked Strategy Hub</h1>
-    <input type="text" id="searchBar" placeholder="Search brawler (e.g., 'Mortis'), mode, or player..." onkeyup="filterContent()">
+    <input type="text" id="searchBar" aria-label="Search brawler, mode, or player" placeholder="Search brawler (e.g., 'Mortis'), mode, or player..." onkeyup="filterContent()">
     <div class="nav-buttons">
         <button class="nav-btn" onclick="scrollToId('gem-grab')">Gem Grab</button>
         <button class="nav-btn" onclick="scrollToId('brawl-ball')">Brawl Ball</button>
@@ -176,7 +178,7 @@
     </div>
 </header>
 
-<div class="container">
+<main class="container">
 
     <div class="mode-card" id="gem-grab" data-keywords="gem grab emz mortis spike pam tara ash steven abiel">
         <div class="mode-title">Gem Grab</div>
@@ -339,7 +341,7 @@
         </div>
     </div>
 
-</div>
+</main>
 
 <script>
     // Simple filter function for searching
@@ -364,7 +366,7 @@
     function scrollToId(id) {
         var element = document.getElementById(id);
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            element.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
             // Highlight effect
             element.style.border = "2px solid #fff";
             setTimeout(() => {

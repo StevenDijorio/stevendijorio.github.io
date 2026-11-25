@@ -1,0 +1,437 @@
+{
+  "person": {
+    "name": "Steven Di Jorio",
+    "identity": "Biomedical engineering student and undergraduate researcher",
+    "institution": "University of Oklahoma",
+    "degree": "B.S. in Biomedical Engineering",
+    "minor": "Chemistry minor",
+    "graduation": "Expected May 2027",
+    "intro": "My work spans optical imaging for liver transplantation, machine learning for resource-constrained devices, and analog neuromorphic hardware.",
+    "email": "steven.dijorio@gmail.com",
+    "profiles": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/StevenDijorio"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/steven-di-jorio-7634082b1/"
+      },
+      {
+        "label": "Google Scholar",
+        "url": "https://scholar.google.com/citations?user=Hxj1rXIAAAAJ&hl=en"
+      }
+    ]
+  },
+  "documents": {
+    "cv": {
+      "label": "Public curriculum vitae",
+      "updated": "November 2026",
+      "path": "/assets/pdfs/steven-di-jorio-cv.pdf",
+      "modified": "2026-11-24"
+    }
+  },
+  "research": [
+    {
+      "id": "bile-duct-oct",
+      "title": "Optical imaging for liver transplantation",
+      "affiliation": "Tang Biophotonic Imaging Lab · CURE Fellowship",
+      "summary": "Can high-resolution optical imaging help characterize bile duct tissue before liver transplantation?",
+      "context": "Bile duct injury can complicate liver transplantation. Optical coherence tomography (OCT) captures cross-sectional images of tissue, giving the research team a way to study microstructural changes before comparing them with reference methods.",
+      "contribution": "I processed donor bile duct OCT scans, annotated tissue boundaries, and extracted image features. I standardized acquisition metadata, compared adjacent scans, and flagged ambiguous boundaries for review.",
+      "methods": [
+        "Optical coherence tomography",
+        "Python",
+        "MATLAB",
+        "ImageJ"
+      ],
+      "outcome": "The team studied 20 donor bile ducts ex vivo and compared OCT findings with confocal microscopy and histology. I presented my work at the CURE Summer Research Symposium and the OU UReCA Showcase. The team’s conference abstract appeared in the 2025 END2CANCER program.",
+      "limit": "The study evaluated tissue ex vivo. A transplant viability decision rule would require prospective clinical validation.",
+      "links": [
+        {
+          "label": "END2CANCER abstract",
+          "url": "https://www.ouhealth.com/documents/2025-END2Cancer-Program-Book.pdf#page=135"
+        },
+        {
+          "label": "University of Oklahoma feature",
+          "url": "https://ou.edu/news/articles/2025/october/undergrad-research-program-nih-grant"
+        },
+        {
+          "label": "Interactive peribiliary gland review",
+          "url": "/what_is_beales_sacculi.html"
+        }
+      ]
+    },
+    {
+      "id": "edge-imaging",
+      "title": "Model quantization for portable imaging",
+      "affiliation": "INQUIRE Lab · Provost’s Summer UReCA Fellowship",
+      "summary": "How does model compression change the trade-off between accuracy, inference time, and file size on a CPU?",
+      "context": "For resource-constrained imaging systems, a smaller model can be attractive. Image classification on a held-out public microscopy dataset provided a controlled setting to measure how compression affected the full set of deployment metrics.",
+      "contribution": "I built a reusable Python preprocessing pipeline for public NIH/NLM malaria cell images and benchmarked two TensorFlow Lite classifier variants. I held the split fixed, checked for file-path overlap, and used confusion matrices to examine errors.",
+      "methods": [
+        "Python",
+        "TensorFlow Lite",
+        "Class-stratified splits",
+        "Single-thread CPU benchmarking"
+      ],
+      "outcome": "I prepared the 2026 UReCA fellowship poster on quantization for portable biomedical imaging. The benchmark measured classification accuracy, model footprint, and inference time under matched conditions.",
+      "limit": "This was a dataset and CPU benchmark. Deployment latency, power use, and clinical performance would require additional testing.",
+      "links": []
+    },
+    {
+      "id": "edge-inference",
+      "title": "Controlled evaluation of edge inference",
+      "affiliation": "INQUIRE Lab · Undergraduate research",
+      "summary": "How can matched baselines and realistic evaluation splits isolate where a model architecture helps?",
+      "context": "When evaluating spiking architectures, preprocessing choices and differences in decision rules can obscure which component affects performance. An ECG experiment poses a related challenge because samples from the same patient can be correlated.",
+      "contribution": "I led the design and evaluation of a spoken-action benchmark with matched controls, applying calibration, risk–coverage analysis, and paired resampling. I also contributed to ECG edge-inference research using patient-grouped recordings and simulated inference deadlines.",
+      "methods": [
+        "Matched baselines",
+        "Calibration",
+        "Paired resampling",
+        "Patient-grouped evaluation"
+      ],
+      "outcome": "The spoken-action and ECG work are research projects. My published IEEE coauthorship is a separate comparative study of neuromorphic hardware for edge intelligence.",
+      "limit": "These evaluations address specific datasets and timing assumptions. Performance in prospective or hardware-in-the-loop settings requires separate evaluation.",
+      "links": [
+        {
+          "label": "Published IEEE proceedings paper",
+          "url": "/publications/#neuromorphic-hardware"
+        }
+      ]
+    }
+  ],
+  "engineering": [
+    {
+      "id": "fugaz",
+      "title": "Analog spiking-neuron hardware",
+      "affiliation": "INQUIRE Lab · ART InTRO Fellowship",
+      "summary": "Design, simulation, and bench testing of a Zener-clamped analog spiking-neuron circuit.",
+      "context": "Analog spiking circuits offer a hardware path for event-based computation. My work on the FUGAZ circuit studied how measured firing behavior compares with simulation and supported a fellowship proposal for low-power neuroprosthetic applications.",
+      "contribution": "I designed and assembled the circuit board, bench-tested it with an oscilloscope and function generator, and compared the measured waveforms with NGSpice and COMSOL simulations. I analyzed spike trains in Python and MATLAB.",
+      "methods": [
+        "Analog circuit design",
+        "PCB assembly",
+        "Oscilloscope",
+        "NGSpice",
+        "COMSOL"
+      ],
+      "outcome": "I used bench and simulation comparisons to evaluate the prototype and developed an ART InTRO proposal to adapt the design for low-power neuroprosthetics.",
+      "limit": "The circuit is research hardware. The proposed application would require device-level testing and validation.",
+      "links": [
+        {
+          "label": "INQUIRE Lab fellowship announcement",
+          "url": "https://inquirelab.ai/news/steven-di-jorio-awarded-art-intro-fellowship-b2fa5f07"
+        }
+      ]
+    },
+    {
+      "id": "wearable-sensor",
+      "title": "Wearable stretch-sensor prototype",
+      "affiliation": "University of Oklahoma · Biomedical instrumentation",
+      "summary": "A wearable sensing prototype for exploring limb circumference monitoring in lymphedema.",
+      "context": "The team explored using a stretch sensor to detect changes in circumference, which required conditioning a small resistance change for readout on a microcontroller.",
+      "contribution": "I built the team’s Wheatstone-bridge sensor circuit and used Arduino Uno serial voltage readings to troubleshoot bridge imbalance.",
+      "methods": [
+        "Wheatstone bridge",
+        "Stretch sensing",
+        "Arduino Uno",
+        "Serial voltage measurements"
+      ],
+      "outcome": "Serial readouts provided a way to inspect the electrical response and investigate imbalance as the team developed the prototype.",
+      "limit": "The work was a course prototype. Sensor calibration and clinical measurement accuracy would require further validation.",
+      "links": []
+    },
+    {
+      "id": "adaptive-toothbrush",
+      "title": "Adaptive toothbrush holder",
+      "affiliation": "University of Oklahoma · Senior design",
+      "summary": "Requirements, concept selection, and prototype fit checks for an assistive oral-care device.",
+      "context": "The capstone team explored an adaptive toothbrush holder, with design decisions shaped by fit, adjustability, and ease of use.",
+      "contribution": "I documented requirements, compared three concepts with a weighted decision matrix, and used fit checks to inform a crown-strap revision. I applied standards knowledge while reviewing design choices.",
+      "methods": [
+        "Requirements",
+        "Concept selection",
+        "CAD",
+        "Physical prototyping",
+        "Fit checks"
+      ],
+      "outcome": "The team iterated the prototype following fit checks. The revised strap addressed an issue identified during that process.",
+      "limit": "Fit checks informed development. Formal device verification, compliance testing, and user validation would be separate steps.",
+      "links": []
+    }
+  ],
+  "publications": [
+    {
+      "id": "neuromorphic-hardware",
+      "type": "Published conference proceedings",
+      "title": "Comparative Analysis of Neuromorphic Hardware Architectures for Real-Time, Energy-Efficient Edge Intelligence",
+      "authors": [
+        "Abiel M. Berhanu",
+        "Steven Di Jorio",
+        "Dagim T. Worku",
+        "Sarah Sharif",
+        "Yaser Banad"
+      ],
+      "person-author": "Steven Di Jorio",
+      "venue": "2026 International Conference on AI x Data and Knowledge Engineering (AIxDKE), IEEE",
+      "date": "2026-02-02",
+      "details": "2026 · pp. 157–161",
+      "doi": "10.1109/AIxDKE67294.2026.00035",
+      "links": [
+        {
+          "label": "DOI",
+          "url": "https://doi.org/10.1109/AIxDKE67294.2026.00035"
+        },
+        {
+          "label": "IEEE Xplore",
+          "url": "https://ieeexplore.ieee.org/document/11486456"
+        }
+      ],
+      "pages": "157–161"
+    },
+    {
+      "id": "end2cancer-abstract",
+      "type": "Conference abstracts",
+      "title": "Optical Coherence Tomography Detects Biliary Microstructural Alterations for Evaluating Bile Duct Viability in Liver Transplantation",
+      "authors": [
+        "Ronghao Liu",
+        "Feng Yan",
+        "Chen Wang",
+        "Mutembei Bornface M.",
+        "Paulo N. Martins",
+        "Qinghao Zhang",
+        "Yan Cui",
+        "Narendra R. Battula",
+        "Ke Zhang",
+        "Junyuan Liu",
+        "Steven O. Di Jorio",
+        "Dan M. Duong",
+        "Kar-Ming A. Fung",
+        "Walid Ali",
+        "Clint A. Hostetler",
+        "Ashley N. Milam",
+        "Bradon Nave",
+        "Ron Squires",
+        "Qinggong Tang"
+      ],
+      "person-author": "Steven O. Di Jorio",
+      "venue": "END2CANCER, Oklahoma City",
+      "date": "2025",
+      "details": "December 2025 · program p. 135",
+      "links": [
+        {
+          "label": "Official conference program (PDF)",
+          "url": "https://www.ouhealth.com/documents/2025-END2Cancer-Program-Book.pdf#page=135"
+        }
+      ]
+    },
+    {
+      "id": "oct-cure-poster",
+      "type": "Research posters",
+      "title": "Evaluating Bile Ducts in Liver Transplantation Using Optical Coherence Tomography",
+      "authors": [
+        "Steven Di Jorio",
+        "Ronghao Liu",
+        "Qinggong Tang"
+      ],
+      "person-author": "Steven Di Jorio",
+      "venue": "CURE Summer Research Symposium",
+      "date": "2025-07-25",
+      "details": "July 2025",
+      "links": [
+        {
+          "label": "Tang Lab presentation record",
+          "url": "https://tang-lab-org.github.io/conferences/"
+        }
+      ]
+    },
+    {
+      "id": "oct-ureca-poster",
+      "type": "Research posters",
+      "title": "Evaluating Bile Ducts in Liver Transplantation Using OCT",
+      "authors": [],
+      "venue": "University of Oklahoma UReCA Showcase",
+      "date": "2025",
+      "details": "October 2025",
+      "links": [
+        {
+          "label": "UReCA showcase booklet (PDF)",
+          "url": "https://www.ou.edu/content/dam/ureca/docs/2025%20UReCA%20Showcase%20Booklet%20.pdf"
+        }
+      ]
+    },
+    {
+      "id": "quantization-poster",
+      "type": "Research posters",
+      "title": "Quantization for Portable Biomedical Imaging",
+      "authors": [],
+      "venue": "Provost’s Summer UReCA Fellowship, University of Oklahoma",
+      "date": "2026",
+      "details": "2026 · fellowship poster",
+      "links": []
+    }
+  ],
+  "experience": [
+    {
+      "id": "pemrap",
+      "title": "Student Research Associate",
+      "organization": "Oklahoma Children’s Hospital OU Health · PEMRaP",
+      "date": "Fall 2026",
+      "description": "Supported pediatric emergency medicine research through participant recruitment discussions, explanations of study objectives and expectations, and entry of study data in REDCap.",
+      "links": [
+        {
+          "label": "OU undergraduate clinical research program",
+          "url": "https://www.ou.edu/cas/students/student-success-center/undergraduate-research"
+        }
+      ]
+    },
+    {
+      "id": "inquire",
+      "title": "Undergraduate Researcher",
+      "organization": "INQUIRE Lab · University of Oklahoma",
+      "date": "Current",
+      "description": "Work across analog neuromorphic circuits and computational evaluation for edge inference.",
+      "links": [
+        {
+          "label": "Research portfolio",
+          "url": "/research/"
+        },
+        {
+          "label": "INQUIRE Lab team",
+          "url": "https://inquirelab.ai/team"
+        }
+      ]
+    },
+    {
+      "id": "tang",
+      "title": "CURE Research Fellow",
+      "organization": "Tang Biophotonic Imaging Lab · OU Health Stephenson Cancer Center",
+      "date": "Summer 2025",
+      "description": "Worked on OCT image processing and annotation for transplant imaging and presented the bile duct work at two university research events.",
+      "links": [
+        {
+          "label": "OCT project",
+          "url": "/research/#bile-duct-oct"
+        }
+      ]
+    },
+    {
+      "id": "ta",
+      "title": "Undergraduate Teaching Assistant",
+      "organization": "Gallogly College of Engineering · University of Oklahoma",
+      "date": "August 2025–present",
+      "description": "Coach engineering students on design documentation, CAD prototypes, test planning, and technical presentations.",
+      "links": []
+    },
+    {
+      "id": "hospice",
+      "title": "Hospice Care Assistant and Volunteer",
+      "organization": "Gospel of Life Disciples + Dwellings",
+      "date": "August 2024–May 2026",
+      "description": "Provided supervised patient support and relayed family questions to care staff, including during overnight shifts.",
+      "links": []
+    },
+    {
+      "id": "camp",
+      "title": "Volunteer Camp Counselor",
+      "organization": "No Limits Neuromuscular Camp",
+      "date": "Summer 2026",
+      "description": "Provided one-on-one support for a camper with limited mobility.",
+      "links": []
+    }
+  ],
+  "fellowships": [
+    {
+      "title": "ART InTRO Fellowship",
+      "date": "Announced 2026",
+      "description": "Proposal to adapt an analog spiking-neuron circuit for low-power neuroprosthetic applications.",
+      "link": {
+        "label": "Lab announcement",
+        "url": "https://inquirelab.ai/news/steven-di-jorio-awarded-art-intro-fellowship-b2fa5f07"
+      }
+    },
+    {
+      "title": "Provost’s Summer UReCA Fellowship",
+      "date": "Summer 2026",
+      "description": "Model quantization and benchmarking for portable biomedical imaging.",
+      "link": {
+        "label": "Imaging benchmark",
+        "url": "/research/#edge-imaging"
+      }
+    },
+    {
+      "title": "Cancer Undergraduate Research Experience (CURE) Fellowship",
+      "date": "Summer 2025",
+      "description": "Optical coherence tomography research with the Tang Lab.",
+      "link": {
+        "label": "OU program feature",
+        "url": "https://ou.edu/news/articles/2025/october/undergrad-research-program-nih-grant"
+      }
+    }
+  ],
+  "competencies": [
+    {
+      "title": "Programming and analysis",
+      "description": "Python, pandas, NumPy, MATLAB, and reproducible preprocessing.",
+      "link": {
+        "label": "Portable imaging benchmark",
+        "url": "/research/#edge-imaging"
+      }
+    },
+    {
+      "title": "Machine learning and statistics",
+      "description": "TensorFlow Lite evaluation, matched controls, calibration, and paired resampling.",
+      "link": {
+        "label": "Edge inference research",
+        "url": "/research/#edge-inference"
+      }
+    },
+    {
+      "title": "Biomedical imaging",
+      "description": "OCT processing, ImageJ annotation, feature extraction, and acquisition metadata review.",
+      "link": {
+        "label": "Transplant imaging case study",
+        "url": "/research/#bile-duct-oct"
+      }
+    },
+    {
+      "title": "Electronics and instrumentation",
+      "description": "Analog circuit design, PCB assembly, oscilloscopes, and Arduino data acquisition.",
+      "link": {
+        "label": "Analog hardware case study",
+        "url": "/engineering/#fugaz"
+      }
+    },
+    {
+      "title": "Engineering design and simulation",
+      "description": "CAD prototyping, fit checks, NGSpice, and COMSOL.",
+      "link": {
+        "label": "Engineering projects",
+        "url": "/engineering/"
+      }
+    },
+    {
+      "title": "Clinical research and scientific communication",
+      "description": "Participant-facing research discussions, REDCap data entry, and research poster presentations.",
+      "link": {
+        "label": "Pediatric emergency research",
+        "url": "/experience/#pemrap"
+      }
+    }
+  ],
+  "featured": {
+    "research": [
+      "bile-duct-oct",
+      "edge-imaging",
+      "edge-inference"
+    ],
+    "engineering": [
+      "fugaz",
+      "wearable-sensor",
+      "adaptive-toothbrush"
+    ],
+    "publication": "neuromorphic-hardware"
+  }
+}

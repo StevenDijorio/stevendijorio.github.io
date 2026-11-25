@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Engineering | Steven Di Jorio</title>
+  <meta name="description" content="Circuit design, sensor troubleshooting, and assistive device prototyping.">
+  <link rel="canonical" href="https://stevendijorio.com/engineering/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Engineering | Steven Di Jorio">
+  <meta property="og:description" content="Circuit design, sensor troubleshooting, and assistive device prototyping.">
+  <meta property="og:url" content="https://stevendijorio.com/engineering/">
+  <meta property="og:site_name" content="Steven Di Jorio">
+  <meta property="og:image" content="https://stevendijorio.com/assets/social-preview.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Steven Di Jorio beside his CURE research poster">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/assets/icon.png" type="image/png">
+  <link rel="stylesheet" href="/assets/site.css">
+  <script src="/assets/navigation.js" defer></script>
+
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="wordmark" href="/">Steven Di Jorio</a>
+        <nav class="desktop-nav" aria-label="Main"><ul><li><a class="" href="/research/">Research</a></li><li><a class="" href="/publications/">Publications</a></li><li><a class="" href="/engineering/" aria-current="page">Engineering</a></li><li><a class="" href="/experience/">Experience</a></li><li><a class="" href="/#contact">Contact</a></li><li><a class="nav-cv" href="/cv/">CV</a></li></ul></nav>
+        <details class="mobile-menu">
+          <summary>Menu <span class="menu-icon" aria-hidden="true"></span></summary>
+          <nav aria-label="Main"><ul><li><a class="" href="/research/">Research</a></li><li><a class="" href="/publications/">Publications</a></li><li><a class="" href="/engineering/" aria-current="page">Engineering</a></li><li><a class="" href="/experience/">Experience</a></li><li><a class="" href="/#contact">Contact</a></li><li><a class="nav-cv" href="/cv/">CV</a></li></ul></nav>
+        </details>
+      </div>
+    </header>
+  <main id="main" tabindex="-1">
+    <header class="page-heading wrap">
+
+      <h1>Engineering projects</h1><p class="page-description">Circuit design, sensor troubleshooting, and assistive device prototyping.</p>
+    </header><div class="wrap editorial-layout">
+      <nav class="contents" aria-label="Engineering projects on this page"><p class="eyebrow">On this page</p><ul class="link-list"><li><a class="text-link" href="#fugaz">Analog spiking-neuron hardware</a></li><li><a class="text-link" href="#wearable-sensor">Wearable stretch-sensor prototype</a></li><li><a class="text-link" href="#adaptive-toothbrush">Adaptive toothbrush holder</a></li></ul></nav>
+      <div><article class="case-study" id="fugaz">
+      <header><p class="eyebrow">INQUIRE Lab · ART InTRO Fellowship</p>
+        <h2>Analog spiking-neuron hardware</h2><p class="case-summary">Design, simulation, and bench testing of a Zener-clamped analog spiking-neuron circuit.</p>
+      </header>
+      <div class="case-layout">
+        <div class="case-main">
+          <p>Analog spiking circuits offer a hardware path for event-based computation. My work on the FUGAZ circuit studied how measured firing behavior compares with simulation and supported a fellowship proposal for low-power neuroprosthetic applications.</p>
+          <h3>My contribution</h3><p>I designed and assembled the circuit board, bench-tested it with an oscilloscope and function generator, and compared the measured waveforms with NGSpice and COMSOL simulations. I analyzed spike trains in Python and MATLAB.</p>
+
+          <h3>Outcome and status</h3><p>I used bench and simulation comparisons to evaluate the prototype and developed an ART InTRO proposal to adapt the design for low-power neuroprosthetics.</p>
+          <h3>Limitations</h3><p>The circuit is research hardware. The proposed application would require device-level testing and validation.</p>
+        </div>
+        <aside class="case-evidence">
+          <h3>Methods &amp; tools</h3>
+          <ul class="method-list"><li>Analog circuit design</li><li>PCB assembly</li><li>Oscilloscope</li><li>NGSpice</li><li>COMSOL</li></ul>
+          <h3>Sources &amp; related work</h3><ul class="link-list"><li><a class="text-link" href="https://inquirelab.ai/news/steven-di-jorio-awarded-art-intro-fellowship-b2fa5f07">INQUIRE Lab fellowship announcement</a></li></ul>
+        </aside>
+      </div>
+    </article><article class="case-study" id="wearable-sensor">
+      <header><p class="eyebrow">University of Oklahoma · Biomedical instrumentation</p>
+        <h2>Wearable stretch-sensor prototype</h2><p class="case-summary">A wearable sensing prototype for exploring limb circumference monitoring in lymphedema.</p>
+      </header>
+      <div class="case-layout">
+        <div class="case-main">
+          <p>The team explored using a stretch sensor to detect changes in circumference, which required conditioning a small resistance change for readout on a microcontroller.</p>
+          <h3>My contribution</h3><p>I built the team’s Wheatstone-bridge sensor circuit and used Arduino Uno serial voltage readings to troubleshoot bridge imbalance.</p>
+          <figure class="poster">
+      <img src="/assets/bridge-prototype.webp" width="980" height="679" loading="lazy"
+        alt="Breadboard circuit with resistors, jumper wires, and a blue trimmer">
+      <figcaption>Breadboard used while troubleshooting the wearable sensor’s Wheatstone bridge.</figcaption>
+    </figure>
+          <h3>Outcome and status</h3><p>Serial readouts provided a way to inspect the electrical response and investigate imbalance as the team developed the prototype.</p>
+          <h3>Limitations</h3><p>The work was a course prototype. Sensor calibration and clinical measurement accuracy would require further validation.</p>
+        </div>
+        <aside class="case-evidence">
+          <h3>Methods &amp; tools</h3>
+          <ul class="method-list"><li>Wheatstone bridge</li><li>Stretch sensing</li><li>Arduino Uno</li><li>Serial voltage measurements</li></ul>
+
+        </aside>
+      </div>
+    </article><article class="case-study" id="adaptive-toothbrush">
+      <header><p class="eyebrow">University of Oklahoma · Senior design</p>
+        <h2>Adaptive toothbrush holder</h2><p class="case-summary">Requirements, concept selection, and prototype fit checks for an assistive oral-care device.</p>
+      </header>
+      <div class="case-layout">
+        <div class="case-main">
+          <p>The capstone team explored an adaptive toothbrush holder, with design decisions shaped by fit, adjustability, and ease of use.</p>
+          <h3>My contribution</h3><p>I documented requirements, compared three concepts with a weighted decision matrix, and used fit checks to inform a crown-strap revision. I applied standards knowledge while reviewing design choices.</p>
+
+          <h3>Outcome and status</h3><p>The team iterated the prototype following fit checks. The revised strap addressed an issue identified during that process.</p>
+          <h3>Limitations</h3><p>Fit checks informed development. Formal device verification, compliance testing, and user validation would be separate steps.</p>
+        </div>
+        <aside class="case-evidence">
+          <h3>Methods &amp; tools</h3>
+          <ul class="method-list"><li>Requirements</li><li>Concept selection</li><li>CAD</li><li>Physical prototyping</li><li>Fit checks</li></ul>
+
+        </aside>
+      </div>
+    </article></div>
+    </div>
+  </main>
+  <footer class="site-footer" id="contact">
+      <div class="wrap footer-inner">
+        <div><p class="eyebrow">Contact</p><h2>Get in touch</h2>
+          <a class="text-link" href="mailto:steven.dijorio@gmail.com">steven.dijorio@gmail.com</a>
+        </div>
+        <div class="footer-right">
+          <ul class="footer-profiles"><li><a class="text-link" href="https://github.com/StevenDijorio">GitHub</a></li><li><a class="text-link" href="https://www.linkedin.com/in/steven-di-jorio-7634082b1/">LinkedIn</a></li><li><a class="text-link" href="https://scholar.google.com/citations?user=Hxj1rXIAAAAJ&amp;hl=en">Google Scholar</a></li></ul>
+          <p>Steven Di Jorio · University of Oklahoma</p>
+        </div>
+      </div>
+    </footer>
+</body>
+</html>

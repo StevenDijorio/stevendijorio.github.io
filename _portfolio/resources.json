@@ -1,0 +1,27 @@
+{
+  "review": [
+    {"id": "overview", "title": "Peribiliary glands and cysts", "text": "Peribiliary glands sit in and around the walls of larger bile ducts. Cysts of peribiliary gland origin commonly lie beside bile ducts, including near the hepatic hilum. The published literature includes extrahepatic as well as intrahepatic lesions.", "source": "cysts"},
+    {"id": "definitions", "title": "What counts as dilation?", "text": "Bosselmann and colleagues used 2 mm to distinguish ectasia from cysts in their study of end-stage alcohol-related liver disease. Their cutoff describes that study’s histologic classification. A systematic review documented a wider range of cyst sizes across the included studies.", "source": "size"},
+    {"id": "imaging", "title": "What imaging can show", "text": "Cysts can appear as a series of small fluid-filled structures alongside the ducts. Their position and lack of visible communication with the biliary lumen help distinguish them from duct dilation. An ex vivo OCT study investigated tissue microstructure at a different scale from conventional imaging.", "source": "cysts"},
+    {"id": "clinical", "title": "Clinical context", "text": "Peribiliary cysts are often incidental. The systematic review describes cases associated with underlying liver disease, and a smaller subset with obstruction or diagnostic confusion. Case reports can overrepresent unusual or symptomatic presentations.", "source": "cysts"},
+    {"id": "comparison", "title": "Dilation versus mimics", "text": "A cyst adjacent to a bile duct, a dilated bile duct, and a lesion arising inside a duct are different structures. Anatomic location and communication with the duct help frame the differential. A single size measurement provides limited information.", "source": "cysts"},
+    {"id": "takeaways", "title": "Open research questions", "text": "Longitudinal data and consistent definitions would improve comparisons across populations. For OCT studies, useful next steps include testing reproducibility, quantifying agreement with histology, and evaluating performance in the intended setting.", "source": "cysts"}
+  ],
+  "topics": [
+    {"path": "/criticalresilienceunit.html", "title": "Peribiliary glands and their blood supply", "text": "The peribiliary vascular plexus supplies the bile duct wall. A donor-biopsy study found that injury to deeper peribiliary glands and the surrounding vascular plexus was more common in grafts that later developed non-anastomotic strictures.", "sources": ["injury", "vascular"]},
+    {"path": "/IRI.html", "title": "Ischemia–reperfusion injury", "text": "Histologic injury to donor bile ducts before implantation provides a way to study later biliary complications. The association between deeper gland injury and subsequent strictures makes the gland compartment a target for transplant research.", "sources": ["injury"]},
+    {"path": "/allograftrejection.html", "title": "Allograft rejection", "text": "The Banff Working Group describes patterns of bile duct injury in liver allograft rejection and considers alternative explanations for the findings. This raises a research question about how to distinguish overlapping injury patterns.", "sources": ["banff"]},
+    {"path": "/CMVInfection.html", "title": "Cytomegalovirus and biliary complications", "text": "Observational studies have reported differing associations between cytomegalovirus infection and biliary complications after transplantation. One retrospective study did not find an independent association with non-anastomotic strictures. Differences in definitions and cohorts limit comparison.", "sources": ["cmv", "cmv-later"]},
+    {"path": "/NASFormation.html", "title": "Non-anastomotic biliary strictures", "text": "These strictures occur away from the surgical connection. Donor-biopsy work links them to gland and microvascular injury, supporting further study of how the bile duct epithelium repairs after transplantation.", "sources": ["injury", "vascular"]},
+    {"path": "/DiagnosticSummary.html", "title": "Comparing evidence on biliary injury", "text": "Donor-biopsy studies, rejection criteria, and imaging studies answer different questions. When comparing findings, consider the sampled tissue, how the outcome was defined, and whether the measurements were made ex vivo or in the intended clinical setting.", "sources": ["injury", "banff"]}
+  ],
+  "sources": {
+    "cysts": {"label": "Bazerbachi et al. · Systematic review (2018)", "url": "https://doi.org/10.1136/bmjgast-2018-000204"},
+    "size": {"label": "Bosselmann et al. · Histopathology study (2020)", "url": "https://pubmed.ncbi.nlm.nih.gov/32506156/"},
+    "injury": {"label": "op den Dries et al. · Donor biopsy cohort (2014)", "url": "https://doi.org/10.1016/j.jhep.2014.02.010"},
+    "vascular": {"label": "Franchitto et al. · Peribiliary gland and vascular changes (2019)", "url": "https://pubmed.ncbi.nlm.nih.gov/31113191/"},
+    "banff": {"label": "Banff Working Group · Liver allograft pathology (2016)", "url": "https://doi.org/10.1111/ajt.13909"},
+    "cmv": {"label": "CMV infection and biliary complications (2003)", "url": "https://pubmed.ncbi.nlm.nih.gov/12811245/"},
+    "cmv-later": {"label": "CMV and post-transplant biliary stenosis (2024)", "url": "https://pubmed.ncbi.nlm.nih.gov/39091648/"}
+  }
+}
