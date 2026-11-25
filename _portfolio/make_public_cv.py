@@ -10,7 +10,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer
 
-from build import CONTENT, CV, ORIGIN, PERSON, ROOT, e
+from build import CONTENT, CV, ORIGIN, PERSON, ROOT, cv_records, e
 
 INK = colors.HexColor("#172136")
 BODY = colors.HexColor("#344057")
@@ -68,17 +68,11 @@ def make():
     section("Education")
     item(PERSON["institution"], f'{PERSON["degree"]} · {PERSON["minor"]}. {PERSON["graduation"]}.')
     section("Research experience")
-    item("Undergraduate Researcher | INQUIRE Lab",
-         "Design and evaluate analog spiking-neuron circuits, compare bench measurements with simulations, "
-         "and develop controlled computational benchmarks for edge inference.")
-    item("Provost’s Summer UReCA Fellow | INQUIRE Lab | Summer 2026",
-         "Built a reproducible Python preprocessing pipeline for public microscopy images and evaluated "
-         "TensorFlow Lite model quantization under matched CPU benchmark conditions.")
-    item("CURE Research Fellow | Tang Biophotonic Imaging Lab | Summer 2025",
-         "Processed and annotated donor bile duct optical coherence tomography scans, reviewed acquisition "
-         "metadata, and extracted tissue features. Presented at the CURE symposium and OU UReCA Showcase.")
+    for role in CV["research"]:
+        label = " | ".join(role[field] for field in ("title", "organization", "date") if field in role)
+        item(label, role["description"])
     section("Selected scholarly work")
-    for record in CONTENT["publications"][:3]:
+    for record in cv_records("publications", "publication_ids"):
         byline = ", ".join(f"<b>{e(name)}</b>" if name == record["person-author"] else e(name) for name in record["authors"])
         add(e(record["title"]), "entry")
         add(f'{byline}. {e(record["venue"])}. {e(record["details"])}.')
@@ -91,15 +85,13 @@ def make():
     for project in CONTENT["engineering"]:
         item(project["title"], project["contribution"])
     section("Clinical research, teaching, and service")
-    for experience in CONTENT["experience"]:
-        if experience["id"] in ("pemrap", "ta", "hospice", "camp"):
-            item(f'{experience["title"]} | {experience["organization"]}', f'{experience["date"]}. {experience["description"]}')
+    for experience in cv_records("experience", "experience_ids"):
+        item(f'{experience["title"]} | {experience["organization"]}', f'{experience["date"]}. {experience["description"]}')
     section("Research fellowships")
     for fellowship in CONTENT["fellowships"]:
         add(f'<b>{e(fellowship["title"])}</b> · {e(fellowship["date"])}.')
     section("Selected methods and tools")
-    add("Python, MATLAB, TensorFlow Lite, ImageJ, REDCap, NGSpice, COMSOL, PCB assembly, oscilloscope and "
-        "function-generator bench testing, CAD prototyping, and Arduino data acquisition.")
+    add(e(CV["methods"]))
 
     output = ROOT / CV["path"].lstrip("/")
     output.parent.mkdir(parents=True, exist_ok=True)

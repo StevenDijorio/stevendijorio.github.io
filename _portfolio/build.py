@@ -83,13 +83,15 @@ def header(route):
 
 
 def footer():
+    contact = next(profile for profile in PERSON["profiles"] if profile["label"] == PERSON["contact_profile"])
+    other_profiles = [profile for profile in PERSON["profiles"] if profile != contact]
     return f'''<footer class="site-footer" id="contact">
       <div class="wrap footer-inner">
         <div><p class="eyebrow">Contact</p><h2>Get in touch</h2>
-          {link(PERSON["email"], "mailto:" + PERSON["email"])}
+          {link("Connect on " + contact["label"], contact["url"])}
         </div>
         <div class="footer-right">
-          {links(PERSON["profiles"], "footer-profiles")}
+          {links(other_profiles, "footer-profiles")}
           <p>{e(PERSON["name"])} · {e(PERSON["institution"])}</p>
         </div>
       </div>
@@ -154,29 +156,50 @@ def page(route, title, description, body, structured=None, canonical=None, index
 
 
 def portrait():
+    sizes = "(max-width: 630px) min(calc(100vw - 40px), 384px), (max-width: 900px) 36vw, 424px"
     return f'''<figure class="hero-portrait">
-      <img src="/assets/portrait-460.webp" srcset="/assets/portrait-460.webp 460w, /assets/portrait-800.webp 800w"
-        sizes="(max-width: 630px) calc(100vw - 40px), (max-width: 900px) 36vw, 430px"
-        width="460" height="460" alt="Portrait of Steven Di Jorio" fetchpriority="high">
+      <picture>
+        <source type="image/avif" srcset="/assets/portrait-460.avif 460w, /assets/portrait-800.avif 800w" sizes="{sizes}">
+        <img src="/assets/portrait-460.webp" srcset="/assets/portrait-460.webp 460w, /assets/portrait-800.webp 800w"
+          sizes="{sizes}" width="460" height="460" alt="Portrait of Steven Di Jorio" fetchpriority="high">
+      </picture>
       <figcaption>{e(PERSON["degree"])} <span>{e(PERSON["graduation"])}</span></figcaption>
     </figure>'''
 
 
 def poster(caption=False):
     credit = '<figcaption>Presenting bile duct OCT research at the 2025 CURE Summer Research Symposium.</figcaption>' if caption else ""
+    sizes = "(max-width: 630px) calc(100vw - 40px), (max-width: 900px) 54vw, 660px"
     return f'''<figure class="poster">
-      <img src="/assets/cure-poster-600.webp" srcset="/assets/cure-poster-600.webp 600w, /assets/cure-poster-1200.webp 1200w"
-        sizes="(max-width: 760px) 100vw, 590px" width="600" height="400" loading="lazy"
-        alt="Steven Di Jorio stands beside his poster on optical coherence tomography for bile duct evaluation">
+      <picture>
+        <source type="image/avif" srcset="/assets/cure-poster-600.avif 600w, /assets/cure-poster-1200.avif 1200w" sizes="{sizes}">
+        <img src="/assets/cure-poster-600.webp" srcset="/assets/cure-poster-600.webp 600w, /assets/cure-poster-1200.webp 1200w"
+          sizes="{sizes}" width="600" height="400" loading="lazy"
+          alt="Steven Di Jorio stands beside his poster on optical coherence tomography for bile duct evaluation">
+      </picture>
       {credit}
+    </figure>'''
+
+
+def dataset_figure():
+    return '''<figure class="poster dataset-figure">
+      <img src="/assets/red-blood-cell-segmentation-reference.webp" width="752" height="568" loading="lazy"
+        alt="Three rows show blood-smear images, detected red blood cells, segmentation masks, and the corresponding overlays.">
+      <figcaption>Reference figure from the dataset study. It shows how red blood cells were segmented before release of the cell images used in this project.
+        <a href="https://pubmed.ncbi.nlm.nih.gov/29682411/">Rajaraman et al. (2018), figure 2</a> ·
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.
+      </figcaption>
     </figure>'''
 
 
 def bridge(caption=True):
     credit = '<figcaption>Breadboard used while troubleshooting the wearable sensor’s Wheatstone bridge.</figcaption>' if caption else ""
     return f'''<figure class="poster">
-      <img src="/assets/bridge-prototype.webp" width="980" height="679" loading="lazy"
-        alt="Breadboard circuit with resistors, jumper wires, and a blue trimmer">
+      <picture>
+        <source type="image/avif" srcset="/assets/bridge-prototype.avif">
+        <img src="/assets/bridge-prototype.webp" width="980" height="679" loading="lazy"
+          alt="Breadboard circuit with resistors, jumper wires, and a blue trimmer">
+      </picture>
       {credit}
     </figure>'''
 
@@ -280,8 +303,18 @@ def contents(items, label):
     ) + "</nav>"
 
 
+def workflow_figure(workflow):
+    steps = "".join(f'<li><strong>{e(label)}</strong><span>{e(detail)}</span></li>'
+                    for label, detail in workflow["steps"])
+    return f'''<figure class="workflow-figure">
+      <figcaption><strong>{e(workflow["title"])}</strong>{e(workflow["caption"])}</figcaption>
+      <ol>{steps}</ol>
+    </figure>'''
+
+
 def case_study(item, asset=""):
     tags = "".join(f"<li>{e(method)}</li>" for method in item["methods"])
+    workflow = workflow_figure(item["workflow"]) if "workflow" in item else ""
     references = links(item["links"])
     if references:
         references = f'<h3>Sources &amp; related work</h3>{references}'
@@ -293,7 +326,7 @@ def case_study(item, asset=""):
         <div class="case-main">
           <p>{e(item['context'])}</p>
           <h3>My contribution</h3><p>{e(item['contribution'])}</p>
-          {asset}
+          {workflow}{asset}
           <h3>Outcome and status</h3><p>{e(item['outcome'])}</p>
           <h3>Limitations</h3><p>{e(item['limit'])}</p>
         </div>
@@ -325,16 +358,19 @@ def authors(item):
 def publications():
     groups = defaultdict(list)
     for item in CONTENT["publications"]:
-        publication = f'''<article class="citation" id="{e(item["id"])}">
-          <h3>{e(item['title'])}</h3>
-          {authors(item)}
-          <p class="citation-venue">{e(item['venue'])} <span>·</span> {e(item['details'])}</p>
-          {links(item['links'])}
-        </article>'''
-        groups[item["type"]].append(publication)
+        groups[item["type"]].append(item)
     sections = []
     for label, records in groups.items():
-        sections.append(f'<section class="citation-group"><h2>{e(label)}</h2><div>{"".join(records)}</div></section>')
+        citations = "".join(
+            f'''<article class="citation" id="{e(item["id"])}">
+              <h3>{e(item['title'])}</h3>
+              {authors(item)}
+              <p class="citation-venue">{e(item['venue'])} <span>·</span> {e(item['details'])}</p>
+              {links(item['links'])}
+            </article>'''
+            for item in sorted(records, key=lambda item: item["date"], reverse=True)
+        )
+        sections.append(f'<section class="citation-group"><h2>{e(label)}</h2><div>{citations}</div></section>')
     return heading("Scholarship", "Publications & presentations", "Peer-reviewed proceedings, conference abstracts, and research posters.") + '<div class="wrap listing">' + "".join(sections) + "</div>"
 
 
@@ -400,17 +436,62 @@ def experience():
       </div>'''
 
 
+def cv_records(collection, selection):
+    by_id = {item["id"]: item for item in CONTENT[collection]}
+    return [by_id[identifier] for identifier in CV[selection]]
+
+
+def cv_entry(title, description, meta=""):
+    metadata = f'<p class="cv-meta">{e(meta)}</p>' if meta else ""
+    return f'<div class="cv-entry"><h3>{e(title)}</h3>{metadata}<p>{e(description)}</p></div>'
+
+
+def cv_role(role):
+    meta = " · ".join(role[key] for key in ("organization", "date") if key in role)
+    return cv_entry(role["title"], role["description"], meta)
+
+
 def cv():
-    return heading("Professional documents", "Curriculum vitae", "Education, research appointments, scholarly work, and selected engineering and clinical experience.") + f'''
+    scholarship = "".join(
+        f'''<div class="cv-entry">
+          <h3>{e(item["title"])}</h3>{authors(item)}
+          <p class="cv-meta">{e(item["venue"])} · {e(item["details"])}</p>
+          {links(item["links"][:1])}
+        </div>'''
+        for item in cv_records("publications", "publication_ids")
+    )
+    sections = [
+        ("education", "Education", cv_entry(PERSON["institution"],
+            f'{PERSON["degree"]} · {PERSON["minor"]}. {PERSON["graduation"]}.')),
+        ("research-experience", "Research experience", "".join(cv_role(role) for role in CV["research"])),
+        ("scholarly-work", "Selected scholarly work", scholarship),
+        ("engineering-projects", "Selected engineering projects", "".join(
+            cv_entry(project["title"], project["contribution"]) for project in CONTENT["engineering"]
+        )),
+        ("clinical-research-and-service", "Clinical research, teaching, and service", "".join(
+            cv_role(role) for role in cv_records("experience", "experience_ids")
+        )),
+        ("fellowships", "Research fellowships", '<ul class="cv-fellowships">' + "".join(
+            f'<li><strong>{e(record["title"])}</strong> · {e(record["date"])}</li>'
+            for record in CONTENT["fellowships"]
+        ) + "</ul>"),
+        ("methods", "Selected methods and tools", f'<p>{e(CV["methods"])}</p>'),
+    ]
+    index = contents([{"id": identifier, "title": label} for identifier, label, _ in sections], "CV sections")
+    body = "".join(
+        f'<section class="cv-section" id="{identifier}"><h2>{e(label)}</h2>{details}</section>'
+        for identifier, label, details in sections
+    )
+    return heading(PERSON["name"], "Curriculum vitae") + f'''
       <div class="wrap document-layout">
-        <section class="document-card" aria-labelledby="cv-title">
-          <div><h2 id="cv-title">{e(CV["label"])}</h2><p>PDF · Updated {e(CV["updated"])}</p></div>
+        <div class="document-card">
+          <p>Updated {e(CV["updated"])}</p>
           {action("Download CV (PDF)", CV["path"], download=True)}
-        </section>
-        <ul class="link-list">
-          <li>{link("Experience and technical competencies", "/experience/")}</li>
-          <li>{link("Publications and presentations", "/publications/")}</li>
-        </ul>
+        </div>
+      </div>
+      <div class="wrap editorial-layout cv-layout">
+        {index}
+        <div>{body}</div>
       </div>'''
 
 
@@ -480,7 +561,8 @@ def validate():
                         raise ValueError(f"Missing {field} for {identifier}")
             if group == "publications":
                 if len(item["date"]) > 4:
-                    date.fromisoformat(item["date"])
+                    value = item["date"]
+                    date.fromisoformat(value + "-01" if len(value) == 7 else value)
                 if item["authors"] and item.get("person-author") not in item["authors"]:
                     raise ValueError(f"Portfolio author missing from {identifier}")
                 if item["type"] == "Published conference proceedings" and "doi" not in item:
@@ -518,11 +600,11 @@ def render():
     engineering_intro = "Circuit design, sensor troubleshooting, and assistive device prototyping."
     rendered = {
         "/": page("/", "Home", HOME_DESCRIPTION, home(), structured_profile()),
-        "/research/": page("/research/", "Research", research_intro, case_page("research", "Research", research_intro, {"bile-duct-oct": poster(True)})),
+        "/research/": page("/research/", "Research", research_intro, case_page("research", "Research", research_intro, {"bile-duct-oct": poster(True), "edge-imaging": dataset_figure()})),
         "/engineering/": page("/engineering/", "Engineering", engineering_intro, case_page("engineering", "Engineering projects", engineering_intro, {"wearable-sensor": bridge()})),
         "/publications/": page("/publications/", "Publications & presentations", "Steven Di Jorio’s published IEEE proceedings paper, END2CANCER abstract, and research posters.", publications(), scholarly_schema()),
         "/experience/": page("/experience/", "Experience", "Education, clinical and research experience, fellowships, and technical competencies.", experience()),
-        "/cv/": page("/cv/", "Curriculum vitae", "Download Steven Di Jorio’s public curriculum vitae.", cv()),
+        "/cv/": page("/cv/", "Curriculum vitae", "Read Steven Di Jorio’s curriculum vitae online or download the PDF.", cv()),
         "/what_is_beales_sacculi.html": page("/what_is_beales_sacculi.html", "Peribiliary glands & cystic dilation", "An interactive, sourced review of peribiliary glands, cystic dilation, and imaging.", review()),
         "/infographic.html": page("/infographic.html", "Biliary injury in liver transplantation", "A source-linked overview of peribiliary glands and biliary injury after liver transplantation.", overview()),
         "/cystic_dilation_review/": alias(),

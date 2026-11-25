@@ -6,8 +6,8 @@
     "degree": "B.S. in Biomedical Engineering",
     "minor": "Chemistry minor",
     "graduation": "Expected May 2027",
-    "intro": "My work spans optical imaging for liver transplantation, machine learning for resource-constrained devices, and analog neuromorphic hardware.",
-    "email": "steven.dijorio@gmail.com",
+    "intro": "I study optical imaging for liver transplant assessment and how machine learning and analog circuits could work on resource-constrained devices.",
+    "contact_profile": "LinkedIn",
     "profiles": [
       {
         "label": "GitHub",
@@ -25,10 +25,40 @@
   },
   "documents": {
     "cv": {
-      "label": "Public curriculum vitae",
       "updated": "November 2026",
       "path": "/assets/pdfs/steven-di-jorio-cv.pdf",
-      "modified": "2026-11-24"
+      "modified": "2026-11-24",
+      "research": [
+        {
+          "title": "Undergraduate Researcher",
+          "organization": "INQUIRE Lab",
+          "description": "Design and evaluate analog spiking-neuron circuits, compare bench measurements with simulations, and develop controlled computational benchmarks for edge inference."
+        },
+        {
+          "title": "Provost’s Summer UReCA Fellow",
+          "organization": "INQUIRE Lab",
+          "date": "Summer 2026",
+          "description": "Built a reproducible Python preprocessing pipeline for public microscopy images and evaluated TensorFlow Lite model quantization under matched CPU benchmark conditions."
+        },
+        {
+          "title": "CURE Research Fellow",
+          "organization": "Tang Biophotonic Imaging Lab",
+          "date": "Summer 2025",
+          "description": "Processed and annotated donor bile duct optical coherence tomography scans, reviewed acquisition metadata, and extracted tissue features. Presented at the CURE symposium and OU UReCA Showcase."
+        }
+      ],
+      "publication_ids": [
+        "neuromorphic-hardware",
+        "end2cancer-abstract",
+        "oct-cure-poster"
+      ],
+      "experience_ids": [
+        "pemrap",
+        "ta",
+        "hospice",
+        "camp"
+      ],
+      "methods": "Python, MATLAB, TensorFlow Lite, ImageJ, REDCap, NGSpice, COMSOL, PCB assembly, oscilloscope and function-generator bench testing, CAD prototyping, and Arduino data acquisition."
     }
   },
   "research": [
@@ -77,7 +107,25 @@
       ],
       "outcome": "I prepared the 2026 UReCA fellowship poster on quantization for portable biomedical imaging. The benchmark measured classification accuracy, model footprint, and inference time under matched conditions.",
       "limit": "This was a dataset and CPU benchmark. Deployment latency, power use, and clinical performance would require additional testing.",
-      "links": []
+      "links": [],
+      "workflow": {
+        "title": "How the benchmark controls the comparison",
+        "steps": [
+          [
+            "Fix the inputs",
+            "Use the same held-out microscopy images for both models."
+          ],
+          [
+            "Run both models",
+            "Benchmark the full-precision and quantized variants on one CPU thread."
+          ],
+          [
+            "Compare trade-offs",
+            "Check accuracy, model size, and inference time together."
+          ]
+        ],
+        "caption": "Holding inputs and runtime conditions steady makes the two TensorFlow Lite variants directly comparable."
+      }
     },
     {
       "id": "edge-inference",
@@ -99,7 +147,25 @@
           "label": "Published IEEE proceedings paper",
           "url": "/publications/#neuromorphic-hardware"
         }
-      ]
+      ],
+      "workflow": {
+        "title": "How the spoken-action evaluation isolates the model",
+        "steps": [
+          [
+            "Match the baselines",
+            "Compare models under the same evaluation setup."
+          ],
+          [
+            "Calibrate confidence",
+            "Check which predictions remain when the decision threshold changes."
+          ],
+          [
+            "Resample pairs",
+            "Assess variation using paired comparisons."
+          ]
+        ],
+        "caption": "The workflow separates the model comparison from decisions about confidence and coverage."
+      }
     }
   ],
   "engineering": [
@@ -124,7 +190,25 @@
           "label": "INQUIRE Lab fellowship announcement",
           "url": "https://inquirelab.ai/news/steven-di-jorio-awarded-art-intro-fellowship-b2fa5f07"
         }
-      ]
+      ],
+      "workflow": {
+        "title": "From circuit design to bench evaluation",
+        "steps": [
+          [
+            "Assemble the circuit",
+            "Build the analog spiking-neuron board."
+          ],
+          [
+            "Capture its response",
+            "Drive the circuit with a function generator and record waveforms on an oscilloscope."
+          ],
+          [
+            "Compare with simulation",
+            "Review measured spike trains against NGSpice and COMSOL simulations."
+          ]
+        ],
+        "caption": "The comparison was performed on research hardware in the lab."
+      }
     },
     {
       "id": "wearable-sensor",
@@ -253,7 +337,7 @@
       "title": "Evaluating Bile Ducts in Liver Transplantation Using OCT",
       "authors": [],
       "venue": "University of Oklahoma UReCA Showcase",
-      "date": "2025",
+      "date": "2025-10",
       "details": "October 2025",
       "links": [
         {

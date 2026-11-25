@@ -13,7 +13,12 @@ ORIGIN = "https://stevendijorio.com"
 ARCHIVE = {"/brawl.stars.html", "/cystic_dilation_review/"}
 KEY_PATTERN = re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|"
                          r"gh[pousr]_[A-Za-z0-9]{30,}|sk-(?:proj-)?[A-Za-z0-9]{40,}|AKIA[A-Z0-9]{16}")
-ALLOWED_SUFFIXES = {".html", ".xml", ".txt", ".css", ".js", ".woff2", ".pdf", ".webp", ".png", ".jpg"}
+EMAIL_PATTERN = re.compile(r"(?<![\w.])[\w.!#$%&'*+/=?^`{|}~-]+@[\w.-]+\.[A-Za-z]{2,}(?![\w.])")
+PHONE_PATTERN = re.compile(
+    r"(?<![\w.])(?:\+?1[ .-]?)?(?:(?:\([2-9][0-9]{2}\)[ .-]?|[2-9][0-9]{2}[ .-])[0-9]{3}[ .-][0-9]{4}"
+    r"|[2-9][0-9]{2}[2-9][0-9]{6})(?![\w.])"
+)
+ALLOWED_SUFFIXES = {".html", ".xml", ".txt", ".css", ".js", ".woff2", ".pdf", ".avif", ".webp", ".png", ".jpg"}
 
 
 class Document(HTMLParser):
@@ -63,6 +68,8 @@ def verify(root):
             if KEY_PATTERN.search(contents):
                 errors.append(f"Credential-like token in {relative}")
             if file.suffix == ".html":
+                if EMAIL_PATTERN.search(contents) or PHONE_PATTERN.search(contents):
+                    errors.append(f"Direct contact information in {relative}")
                 documents[route(relative)] = Document(contents)
 
     if pdfs != ["assets/pdfs/steven-di-jorio-cv.pdf"]:
@@ -88,6 +95,9 @@ def verify(root):
                 errors.append(f"{address} must have one h1")
         for raw in doc.navigation:
             parsed = urlsplit(raw)
+            if parsed.scheme in {"mailto", "tel", "sms"}:
+                errors.append(f"{address} contains a direct contact link")
+                continue
             if parsed.scheme or parsed.netloc:
                 external.add(raw)
                 continue

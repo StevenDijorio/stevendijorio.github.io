@@ -49,9 +49,12 @@
           <p>Bile duct injury can complicate liver transplantation. Optical coherence tomography (OCT) captures cross-sectional images of tissue, giving the research team a way to study microstructural changes before comparing them with reference methods.</p>
           <h3>My contribution</h3><p>I processed donor bile duct OCT scans, annotated tissue boundaries, and extracted image features. I standardized acquisition metadata, compared adjacent scans, and flagged ambiguous boundaries for review.</p>
           <figure class="poster">
-      <img src="/assets/cure-poster-600.webp" srcset="/assets/cure-poster-600.webp 600w, /assets/cure-poster-1200.webp 1200w"
-        sizes="(max-width: 760px) 100vw, 590px" width="600" height="400" loading="lazy"
-        alt="Steven Di Jorio stands beside his poster on optical coherence tomography for bile duct evaluation">
+      <picture>
+        <source type="image/avif" srcset="/assets/cure-poster-600.avif 600w, /assets/cure-poster-1200.avif 1200w" sizes="(max-width: 630px) calc(100vw - 40px), (max-width: 900px) 54vw, 660px">
+        <img src="/assets/cure-poster-600.webp" srcset="/assets/cure-poster-600.webp 600w, /assets/cure-poster-1200.webp 1200w"
+          sizes="(max-width: 630px) calc(100vw - 40px), (max-width: 900px) 54vw, 660px" width="600" height="400" loading="lazy"
+          alt="Steven Di Jorio stands beside his poster on optical coherence tomography for bile duct evaluation">
+      </picture>
       <figcaption>Presenting bile duct OCT research at the 2025 CURE Summer Research Symposium.</figcaption>
     </figure>
           <h3>Outcome and status</h3><p>The team studied 20 donor bile ducts ex vivo and compared OCT findings with confocal microscopy and histology. I presented my work at the CURE Summer Research Symposium and the OU UReCA Showcase. The team’s conference abstract appeared in the 2025 END2CANCER program.</p>
@@ -71,7 +74,17 @@
         <div class="case-main">
           <p>For resource-constrained imaging systems, a smaller model can be attractive. Image classification on a held-out public microscopy dataset provided a controlled setting to measure how compression affected the full set of deployment metrics.</p>
           <h3>My contribution</h3><p>I built a reusable Python preprocessing pipeline for public NIH/NLM malaria cell images and benchmarked two TensorFlow Lite classifier variants. I held the split fixed, checked for file-path overlap, and used confusion matrices to examine errors.</p>
-
+          <figure class="workflow-figure">
+      <figcaption><strong>How the benchmark controls the comparison</strong>Holding inputs and runtime conditions steady makes the two TensorFlow Lite variants directly comparable.</figcaption>
+      <ol><li><strong>Fix the inputs</strong><span>Use the same held-out microscopy images for both models.</span></li><li><strong>Run both models</strong><span>Benchmark the full-precision and quantized variants on one CPU thread.</span></li><li><strong>Compare trade-offs</strong><span>Check accuracy, model size, and inference time together.</span></li></ol>
+    </figure><figure class="poster dataset-figure">
+      <img src="/assets/red-blood-cell-segmentation-reference.webp" width="752" height="568" loading="lazy"
+        alt="Three rows show blood-smear images, detected red blood cells, segmentation masks, and the corresponding overlays.">
+      <figcaption>Reference figure from the dataset study. It shows how red blood cells were segmented before release of the cell images used in this project.
+        <a href="https://pubmed.ncbi.nlm.nih.gov/29682411/">Rajaraman et al. (2018), figure 2</a> ·
+        <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>.
+      </figcaption>
+    </figure>
           <h3>Outcome and status</h3><p>I prepared the 2026 UReCA fellowship poster on quantization for portable biomedical imaging. The benchmark measured classification accuracy, model footprint, and inference time under matched conditions.</p>
           <h3>Limitations</h3><p>This was a dataset and CPU benchmark. Deployment latency, power use, and clinical performance would require additional testing.</p>
         </div>
@@ -89,7 +102,10 @@
         <div class="case-main">
           <p>When evaluating spiking architectures, preprocessing choices and differences in decision rules can obscure which component affects performance. An ECG experiment poses a related challenge because samples from the same patient can be correlated.</p>
           <h3>My contribution</h3><p>I led the design and evaluation of a spoken-action benchmark with matched controls, applying calibration, risk–coverage analysis, and paired resampling. I also contributed to ECG edge-inference research using patient-grouped recordings and simulated inference deadlines.</p>
-
+          <figure class="workflow-figure">
+      <figcaption><strong>How the spoken-action evaluation isolates the model</strong>The workflow separates the model comparison from decisions about confidence and coverage.</figcaption>
+      <ol><li><strong>Match the baselines</strong><span>Compare models under the same evaluation setup.</span></li><li><strong>Calibrate confidence</strong><span>Check which predictions remain when the decision threshold changes.</span></li><li><strong>Resample pairs</strong><span>Assess variation using paired comparisons.</span></li></ol>
+    </figure>
           <h3>Outcome and status</h3><p>The spoken-action and ECG work are research projects. My published IEEE coauthorship is a separate comparative study of neuromorphic hardware for edge intelligence.</p>
           <h3>Limitations</h3><p>These evaluations address specific datasets and timing assumptions. Performance in prospective or hardware-in-the-loop settings requires separate evaluation.</p>
         </div>
@@ -105,10 +121,10 @@
   <footer class="site-footer" id="contact">
       <div class="wrap footer-inner">
         <div><p class="eyebrow">Contact</p><h2>Get in touch</h2>
-          <a class="text-link" href="mailto:steven.dijorio@gmail.com">steven.dijorio@gmail.com</a>
+          <a class="text-link" href="https://www.linkedin.com/in/steven-di-jorio-7634082b1/">Connect on LinkedIn</a>
         </div>
         <div class="footer-right">
-          <ul class="footer-profiles"><li><a class="text-link" href="https://github.com/StevenDijorio">GitHub</a></li><li><a class="text-link" href="https://www.linkedin.com/in/steven-di-jorio-7634082b1/">LinkedIn</a></li><li><a class="text-link" href="https://scholar.google.com/citations?user=Hxj1rXIAAAAJ&amp;hl=en">Google Scholar</a></li></ul>
+          <ul class="footer-profiles"><li><a class="text-link" href="https://github.com/StevenDijorio">GitHub</a></li><li><a class="text-link" href="https://scholar.google.com/citations?user=Hxj1rXIAAAAJ&amp;hl=en">Google Scholar</a></li></ul>
           <p>Steven Di Jorio · University of Oklahoma</p>
         </div>
       </div>

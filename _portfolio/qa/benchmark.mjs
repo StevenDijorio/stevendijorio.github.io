@@ -47,7 +47,7 @@ try {
         if (stage === 'after' && path === '/what_is_beales_sacculi.html') {
           await page.locator('details.reading-panel').evaluateAll(items => items.forEach(item => item.open = true));
         }
-        const audit = await new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']).analyze();
+        const audit = await new AxeBuilder({page}).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa', 'best-practice']).analyze();
         results.accessibility.push({path, width, passed: audit.passes.length, incomplete: audit.incomplete.map(({id}) => id),
           violations: audit.violations.map(({id, impact, description, nodes}) => ({id, impact, description, targets: nodes.map(({target}) => target)}))});
       }

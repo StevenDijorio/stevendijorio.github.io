@@ -115,9 +115,14 @@ try {
       await visible(link(page, 'Analog hardware case study'));
       return 'Competencies are grouped and linked to their evidence.';
     });
-    await check('CV PDF download', 2, async () => {
+    await check('CV in the browser and PDF download', 2, async () => {
       await open(page);
       await link(page, 'View CV').click();
+      await visible(heading(page, 'Research experience'));
+      const section = page.getByRole('navigation', {name: 'CV sections'}).getByRole('link', {name: 'Selected scholarly work'});
+      await section.focus();
+      await page.keyboard.press('Enter');
+      assert.equal(new URL(page.url()).hash, '#scholarly-work');
       const [download] = await Promise.all([
         page.waitForEvent('download'), link(page, 'Download CV (PDF)').click(),
       ]);
@@ -144,8 +149,11 @@ try {
       await open(page);
       await link(page, 'Contact').click();
       assert.equal(new URL(page.url()).hash, '#contact');
-      await visible(page.locator('#contact a[href^="mailto:"]'));
-      return 'Header Contact lands on the public email.';
+      const contact = page.locator('#contact').getByRole('link', {name: 'Connect on LinkedIn'});
+      await visible(contact);
+      assert.match(await contact.getAttribute('href'), /^https:\/\/www\.linkedin\.com\/in\//);
+      assert.equal(await page.locator('a[href^="mailto:"], a[href^="tel:"]').count(), 0);
+      return 'Header Contact lands on the professional LinkedIn link.';
     });
     await check('Mobile navigation and keyboard focus', 2, async () => {
       for (const [label, path] of [['Research','/research/'],['Publications','/publications/'],
